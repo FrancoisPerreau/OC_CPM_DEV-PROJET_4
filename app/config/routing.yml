@@ -1,3 +1,4 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+cl_ticketing:
+    resource: "@CLTicketingBundle/Controller/"
+    type:     annotation
+    prefix:   /
