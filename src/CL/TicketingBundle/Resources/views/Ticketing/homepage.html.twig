@@ -1,0 +1,208 @@
+{# src/CL/TicketingBundle/Resources/views/Ticketing/homepage.html.twig #}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link href=" {{ asset('theme/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
+  <link href=" {{ asset('theme/font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('theme/js/moment.js') }}"></script>
+  <script src="{{ asset('theme/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+  <script src="{{ asset('theme/js/fr.js') }}"></script>
+
+  <!-- ******** Config Datapicker ******** -->
+  <!-- *********************************** -->
+  <script type="text/javascript">
+    $(function() {
+      var today = new Date();
+      // alert(
+      // today.getFullYear()
+      // );
+      $('#datetimepicker13').datetimepicker(
+        {locale: '{{ app.request.getLocale() }}',
+        format: 'L',
+        daysOfWeekDisabled: [2],
+        minDate: moment(),
+        disabledDates: [
+          moment("05/01/"+today.getFullYear()),
+          moment("11/01/"+today.getFullYear()),
+          moment("12/25/"+today.getFullYear())
+        ]
+      });
+    });
+  </script>
+  <!-- *********************************** -->
+{% endblock %}
+
+{% block body %}
+  <h1>BILLETTERIE</h1>
+  <p class="intro">
+    Réservez vos tickets en ligne et évitez les files d’attente.
+  </p>
+  <hr>
+
+  <!-- ============================ -->
+  <!-- HORAIRES =================== -->
+  <!-- ============================ -->
+  <div class="table-container">
+    <h2>Horaires</h2>
+    <table class="table table-rate">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" class="td-first">Jour</th>
+          <th scope="col">Ouverture</th>
+          <th scope="col">Fermeture</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-first">Lundi</td>
+          <td>9h00</td>
+          <td>18h00</td>
+        </tr>
+        <tr class="table-info">
+          <td class="td-first">Mardi</td>
+          <td>
+            <strong>FERMÉ</strong>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="td-first">Mercredi</td>
+          <td>9h00</td>
+          <td>21h45</td>
+        </tr>
+        <tr>
+          <td class="td-first">Jeudi</td>
+          <td>9h00</td>
+          <td>18h00</td>
+        </tr>
+        <tr>
+          <td class="td-first">Vendredi</td>
+          <td>9h00</td>
+          <td>21h45</td>
+        </tr>
+        <tr>
+          <td class="td-first">Samedi</td>
+          <td>9h00</td>
+          <td>18h00<span class="text-danger asterisque">*</span></td>
+        </tr>
+        <tr>
+          <td class="td-first">Dimanche</td>
+          <td>9h00</td>
+          <td>18h00</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="text-muted text-comment">
+      <span class="text-danger asterisque">*</span>
+      Jusqu'à 21h45 le premier samedi de chaque mois.
+    </p>
+    <p class="text-muted text-comment">
+      <strong>
+        - L'évacuation des salles débute à 17h30 ou 21h30 les jours de nocturne.
+      </strong>
+    </p>
+    <p class="text-muted text-comment">
+      <strong>
+        - Le musée est fermé les 1<sup>er</sup>
+        mai, 1<sup>er</sup>
+        novembre et 25 décembre.
+      </strong>
+    </p>
+    <hr>
+  </div>
+
+  <!-- ============================ -->
+  <!-- TARIFS ===================== -->
+  <!-- ============================ -->
+  <div class="table-container">
+    <h2>Tarifs</h2>
+    <table class="table table-rate">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" class="td-first">Tarifs</th>
+          <th scope="col">Journée</th>
+          <th scope="col">Demi-journée
+            <span class="asterisque">*</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-first">Normal (à partir de 12 ans)</td>
+          <td>16 €</td>
+          <td>9 €</td>
+        </tr>
+        <tr>
+          <td class="td-first">Enfant (de 4 à 12 ans)</td>
+          <td>8 €</td>
+          <td>5 €</td>
+        </tr>
+        <tr>
+          <td class="td-first">Senior (à partir de 60 ans)</td>
+          <td>12 €</td>
+          <td>7 €</td>
+        </tr>
+        <tr>
+          <td class="td-first">Réduit<span class="text-danger asterisque">**</span></td>
+          <td>10 €</td>
+          <td>6 €</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="text-muted text-comment">
+      <span class="text-danger asterisque">*</span>
+      À partir de 14h00.</p>
+    <p class="text-muted text-comment">
+      <span class="text-danger asterisque">**</span>
+      Tarif accordé dans certaines conditions (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…)</p>
+    <hr>
+  </div>
+
+  <!-- ============================ -->
+  <!-- Formulaire ================= -->
+  <!-- ============================ -->
+
+  <div class="table-container">
+    <h2>Réservation</h2>
+
+    {{ form_start(form) }}
+    <div class="form-group text-left">
+      {{ form_label(form.ticketDate) }}
+      {{ form_errors(form.ticketDate) }}
+      <div class="input-group date" id="datetimepicker13" data-target-input="nearest">
+        {{ form_widget(form.ticketDate, {'target' : 'datetimepicker13'}) }}
+        <div class="input-group-append" data-target="#datetimepicker13" data-toggle="datetimepicker">
+          <div class="input-group-text">
+            <i class="fa fa-calendar"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group text-left">
+      {{ form_label(form.ticketDayType) }}
+      {{ form_errors(form.ticketDayType) }}
+      {{ form_widget(form.ticketDayType) }}
+    </div>
+
+    <div class="form-group text-left">
+      {{ form_label(form.TicketNb) }}
+      {{ form_errors(form.TicketNb) }}
+      {{ form_widget(form.TicketNb) }}
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-info" type="submit">Réservez vos billets</button>
+    </div>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+  </div>
+
+{% endblock %}
