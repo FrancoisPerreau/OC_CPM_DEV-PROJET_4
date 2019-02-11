@@ -23,12 +23,17 @@ a:hover {
 /*
  * Base structure
  */
+/* html,
+body {
+  min-height: 100%;
+} */
+
 
 html,
 body,
 main,
 .cover-container {
-  /* height: 100%; */
+  min-height: 100%!important;
 
 }
 
