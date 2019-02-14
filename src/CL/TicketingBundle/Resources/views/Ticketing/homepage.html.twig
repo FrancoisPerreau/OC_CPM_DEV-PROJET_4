@@ -1,5 +1,5 @@
 {# src/CL/TicketingBundle/Resources/views/Ticketing/homepage.html.twig #}
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
 {% extends 'layout.html.twig' %}
 
 {% block stylesheets %}
@@ -171,38 +171,9 @@
   <div class="table-container">
     <h2>Réservation</h2>
 
-    {{ form_start(form) }}
-    <div class="form-group text-left">
-      {{ form_label(form.ticketDate) }}
-      {{ form_errors(form.ticketDate) }}
-      <div class="input-group date" id="datetimepicker13" data-target-input="nearest">
-        {{ form_widget(form.ticketDate, {'target' : 'datetimepicker13'}) }}
-        <div class="input-group-append" data-target="#datetimepicker13" data-toggle="datetimepicker">
-          <div class="input-group-text">
-            <i class="fa fa-calendar"></i>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% embed "@CLTicketing/Ticketing/form/choiceDateTicket.html.twig" %}
+    {% endembed %}
 
-    <div class="form-group text-left">
-      {{ form_label(form.ticketDayType) }}
-      {{ form_errors(form.ticketDayType) }}
-      {{ form_widget(form.ticketDayType) }}
-    </div>
-
-    <div class="form-group text-left">
-      {{ form_label(form.TicketNb) }}
-      {{ form_errors(form.TicketNb) }}
-      {{ form_widget(form.TicketNb) }}
-    </div>
-
-    <div class="form-group">
-      <button class="btn btn-info" type="submit">Réservez vos billets</button>
-    </div>
-
-    {{ form_rest(form) }}
-    {{ form_end(form) }}
   </div>
 
 {% endblock %}

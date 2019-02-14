@@ -1,0 +1,14 @@
+{# src/CL/TicketingBundle/Resources/views/Ticketing/purchase.html.twig #}
+
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+  <h1>Création des billets</h1>
+
+  <!-- ============================ -->
+  <!-- Formulaire ================= -->
+  <!-- ============================ -->
+  {% embed "@CLTicketing/Ticketing/form/createTicket.html.twig" %}
+  {% endembed %}
+
+{% endblock %}

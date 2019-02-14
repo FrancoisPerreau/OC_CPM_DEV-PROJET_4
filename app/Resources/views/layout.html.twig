@@ -21,23 +21,21 @@
       <link href=" {{ asset('theme/css/cover.css') }}" rel="stylesheet">
       <link href=" {{ asset('theme/css/globalstyle.css') }}" rel="stylesheet">
     {% endblock %}
-
   </head>
+
+
   <body class="text-center" style="background-image:url('{{ asset('theme/img/louvre-1920x1066.jpg') }}')">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column container-bg">
+
       <header class="masthead">
         {% embed "@CLTicketing/Ticketing/navbar.html.twig" %}
         {% endembed %}
       </header>
 
       <main role="main" class="inner cover">
-        {% block body %}
-          <!-- <h1 class="cover-heading">Cover your page.</h1>
-          <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-          <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-          </p> -->
-        {% endblock %}
+
+        {% block body %}{% endblock %}
+
       </main>
 
       <footer class="mastfoot">

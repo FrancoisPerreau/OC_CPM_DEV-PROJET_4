@@ -9,11 +9,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 // use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+// use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-/**
- *
- */
+
 class TicketDateChoiceType extends AbstractType
 {
 
@@ -22,18 +20,22 @@ class TicketDateChoiceType extends AbstractType
         $builder
             ->add('ticketDate', TextType::class, [
               'error_bubbling' => true,
+              'required' => true,
               'label' => 'Date'
             ])
             ->add('ticketDayType', ChoiceType::class, [
               'error_bubbling' => true,
+              'required' => true,
+              'label' => 'Type de billet',
               'choices' => [
                 'Journée' => 0,
                 'Demi-journée' => 1
-              ],
-              'label' => 'Type de billet'
+              ]
             ])
             ->add('TicketNb', ChoiceType::class, [
               'error_bubbling' => true,
+              'required' => true,
+              'label' =>'Nombre de billet(s)',
               'choices' => [
                 '1' => 1,
                 '2' => 2,
@@ -44,8 +46,7 @@ class TicketDateChoiceType extends AbstractType
                 '7' => 7,
                 '8' => 8,
                 '9' => 9
-              ],
-              'label' =>'Nombre de billet(s)'
+              ]
             ])
             // ->add('save', SubmitType::class)
         ;

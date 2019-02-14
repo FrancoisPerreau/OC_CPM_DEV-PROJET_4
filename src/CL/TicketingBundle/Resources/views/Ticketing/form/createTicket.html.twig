@@ -1,0 +1,49 @@
+{# src/CL/TicketingBundle/Resources/views/Ticketing/form/createTicket.html.twig #}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{{ form_start(form) }}
+
+  {% for ticket in form.tickets %}
+    <div class="ticket-container">
+      <h3 class="text-left ticket-title">Billet n°{{ loop.index }}</h3>
+
+      <div class="form-group text-left">
+        {{ form_label(ticket.firstname) }}
+        {{ form_errors(ticket.firstname) }}
+        {{ form_widget(ticket.firstname) }}
+      </div>
+
+      <div class="form-group text-left">
+        {{ form_label(ticket.lastname) }}
+        {{ form_errors(ticket.lastname) }}
+        {{ form_widget(ticket.lastname) }}
+      </div>
+
+      <div class="form-group text-left">
+        {{ form_label(ticket.country) }}
+        {{ form_errors(ticket.country) }}
+        {{ form_widget(ticket.country) }}
+      </div>
+
+      <div class="form-group text-left">
+        {{ form_label(ticket.birthday) }}
+        {{ form_errors(ticket.birthday) }}
+        {{ form_widget(ticket.birthday) }}
+      </div>
+
+      <div class="form-group text-left">
+        {{ form_label(ticket.reducedPrice) }}
+        {{ form_errors(ticket.reducedPrice) }}
+        {{ form_widget(ticket.reducedPrice) }}
+      </div>
+
+      {{ form_rest(ticket) }}
+    </div>
+    {% if not loop.last %} <hr> {% endif %}
+
+  {% endfor %}
+  <div class="form-group">
+    <button class="btn btn-info" type="submit">Réservez vos billets</button>
+  </div>
+
+{{ form_end(form) }}
