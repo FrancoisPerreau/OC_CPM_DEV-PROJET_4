@@ -4,6 +4,7 @@
 namespace CL\TicketingBundle\Services\DefinePrices;
 
 use CL\TicketingBundle\TicketingConstants\TicketPrices;
+use CL\TicketingBundle\TicketingConstants\AgeRanges;
 
 class PriceByBirthday
 {
@@ -17,15 +18,15 @@ class PriceByBirthday
 
     switch ($diff)
     {
-      case ($diff < 4):
+      case ($diff < AgeRanges::CHILD_AGE_MINI):
         return 0;
         break;
 
-      case (3 < $diff && $diff < 13):
+      case (AgeRanges::CHILD_AGE_MINI - 1 < $diff && $diff < AgeRanges::CHILD_AGE_MAXI + 1):
         return TicketPrices::CHILD_PRICE_DAY;
         break;
 
-        case ($diff > 59):
+        case ($diff > AgeRanges::SENIOR_AGE_MINI - 1):
           return TicketPrices::SENIOR_PRICE_DAY;
           break;
 
@@ -45,15 +46,15 @@ class PriceByBirthday
 
     switch ($diff)
     {
-      case ($diff < 4):
+      case ($diff < AgeRanges::CHILD_AGE_MINI):
         return 0;
         break;
 
-      case (3 < $diff && $diff < 13):
+      case (AgeRanges::CHILD_AGE_MINI - 1 < $diff && $diff < AgeRanges::CHILD_AGE_MAXI + 1):
         return TicketPrices::CHILD_PRICE_HALF;
         break;
 
-        case ($diff > 59):
+        case ($diff > AgeRanges::SENIOR_AGE_MINI - 1):
           return TicketPrices::SENIOR_PRICE_HALF;
           break;
 

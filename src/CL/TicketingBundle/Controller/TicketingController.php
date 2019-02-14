@@ -72,9 +72,9 @@ class TicketingController extends Controller
 
             $serviceDefinePrice = $this->container->get('cl_ticketing.definePriceByBirthday');
 
-            $birthday = new \DateTime('1959-01-01');
+            $birthday = new \DateTime('2006-01-01');
 
-            $priceDay = $serviceDefinePrice->defineHalfDayPrice($birthday);
+            $priceDay = $serviceDefinePrice->defineDayPrice($birthday);
             dump($priceDay);die;
 
             // return $this->redirectToRoute('purchase_regitration');
