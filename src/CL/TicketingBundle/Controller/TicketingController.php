@@ -64,7 +64,12 @@ class TicketingController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             $formTicket = $form->getData();
-            dump($formTicket);die;
+            // dump($formTicket);die;
+
+            $serviceCode = $this->container->get('cl_ticketing.generateCode');
+            $code = $serviceCode->createCode(new \DateTime('now'));
+            dump($code);die;
+
             // return $this->redirectToRoute('purchase_regitration');
         }
 
