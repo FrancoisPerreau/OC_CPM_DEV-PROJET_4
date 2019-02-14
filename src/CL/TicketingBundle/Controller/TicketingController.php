@@ -66,9 +66,16 @@ class TicketingController extends Controller
             $formTicket = $form->getData();
             // dump($formTicket);die;
 
-            $serviceCode = $this->container->get('cl_ticketing.generateCode');
-            $code = $serviceCode->createCode(new \DateTime('now'));
-            dump($code);die;
+            // $serviceCode = $this->container->get('cl_ticketing.generateCode');
+            // $code = $serviceCode->createCode(new \DateTime('now'));
+            // dump($code);die;
+
+            $serviceDefinePrice = $this->container->get('cl_ticketing.definePriceByBirthday');
+
+            $birthday = new \DateTime('1959-01-01');
+
+            $priceDay = $serviceDefinePrice->defineHalfDayPrice($birthday);
+            dump($priceDay);die;
 
             // return $this->redirectToRoute('purchase_regitration');
         }
