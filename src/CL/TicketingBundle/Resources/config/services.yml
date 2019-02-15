@@ -5,8 +5,20 @@ services:
    #     class: CL\TicketingBundle\Example
    #     arguments: ["@service_id", "plain_value", "%parameter%"]
 
+   cl_ticketing.manager:
+       class: CL\TicketingBundle\Services\TicketingManager
+       arguments: ["@session"]
+
+
    cl_ticketing.generateCode:
-       class: CL\TicketingBundle\Services\GenerateCode\GenerateCodeWithDate
+       class: CL\TicketingBundle\Services\GenerateCodeWithDate
 
    cl_ticketing.definePriceByBirthday:
-       class: CL\TicketingBundle\Services\DefinePrices\PriceByBirthday
+       class: CL\TicketingBundle\Services\PriceByBirthday
+
+   cl_ticketing.hydrateTicket:
+       class: CL\TicketingBundle\Services\HydrateTicket
+       arguments:
+          - "@session"
+          - "@cl_ticketing.generateCode"
+          - "@cl_ticketing.definePriceByBirthday"

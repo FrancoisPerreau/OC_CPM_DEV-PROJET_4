@@ -1,7 +1,7 @@
 <?php
 // src/CL/TicketingBundle/Services/DefinePrices/PriceByBirthday.php
 
-namespace CL\TicketingBundle\Services\DefinePrices;
+namespace CL\TicketingBundle\Services;
 
 use CL\TicketingBundle\TicketingConstants\TicketPrices;
 use CL\TicketingBundle\TicketingConstants\AgeRanges;

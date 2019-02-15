@@ -8,12 +8,14 @@ use Symfony\Component\HttpFoundation\Request;
 // use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Routing\Annotation\Route;
 // use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 use CL\TicketingBundle\Entity\Purchase;
 use CL\TicketingBundle\Entity\Ticket;
 
 use CL\TicketingBundle\Form\TicketDateChoiceType;
 use CL\TicketingBundle\Form\PurchaseType;
+
 
 
 class TicketingController extends Controller
@@ -28,8 +30,12 @@ class TicketingController extends Controller
 
       if ($form->isSubmitted() && $form->isValid())
       {
-          $_SESSION['data'] = $form->getData();
-          // dump($_SESSION['data']);die;
+          $session = new Session;
+          // $session->start();
+          $session->set('TicketDateChoiceFomData', $form->getData());
+          // dump($session->get('TicketDateChoiceFomData'));die;
+          // $_SESSION['TicketDateChoiceFomData'] = $form->getData();
+          // dump($_SESSION['TicketDateChoiceFomData']);die;
           return $this->redirectToRoute('purchase_regitration');
       }
 
@@ -44,15 +50,17 @@ class TicketingController extends Controller
      */
     public function orderAction(Request $request)
     {
-        $data = $_SESSION['data'];
+        $session = new Session;
+        $data = $session->get('TicketDateChoiceFomData');
         // dump($data);die;
         $ticketNb = $data['TicketNb'];
         // dump($ticketNb);die;
         $purchase = new Purchase;
-        // $ticket = new Ticket;
 
         for ($i=0; $i < $ticketNb; $i++) {
             $ticket = new Ticket;
+            // $this->container->get('cl_ticketing.hydrateTicket')->hydrate($ticket);
+
             $purchase->getTickets()->add($ticket);
         }
 
@@ -64,11 +72,20 @@ class TicketingController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             $formTicket = $form->getData();
-            // dump($formTicket);die;
 
-            // $serviceCode = $this->container->get('cl_ticketing.generateCode');
-            // $code = $serviceCode->createCode(new \DateTime('now'));
-            // dump($code);die;
+            $tickets = $purchase->getTickets();
+            foreach ($tickets as $ticket) {
+                $this->container->get('cl_ticketing.hydrateTicket')->hydrate($ticket);
+            }
+            // dump($tickets); die;
+
+
+            // // $tickets = $formTicket['Purchase'];
+            // dump($tickets); die;
+
+
+            // dump($formTicket);die;
+            dump($purchase); die;
 
             $serviceDefinePrice = $this->container->get('cl_ticketing.definePriceByBirthday');
 
