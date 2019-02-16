@@ -1,0 +1,87 @@
+{# src/CL/TicketingBundle/Resources/views/Ticketing/confirmation.html.twig #}
+
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+  <h1>Détail de la commande</h1>
+  <div class="purchase-detail text-left">
+    <p>
+      Date de la commande :
+      {{ app.session.get('savePurchase').createdAt|localizeddate('long', 'none', app.request.locale) }}
+      <br>
+
+      N° de la réservation :
+      {{ app.session.get('savePurchase').code }}
+    </p>
+  </div>
+
+  <h3>Vous avez commandé
+    {{ app.session.get('savePurchase').tickets|length }}
+    {% if app.session.get('savePurchase').tickets | length < 2 %}
+      billet
+    {% else %}
+      billets
+    {% endif %}
+    :
+  </h3>
+
+
+  {% for ticket in app.session.get('savePurchase').tickets %}
+    <div class="table-container text-left">
+      {% set counter = (counter | default(0)) + 1 %}
+
+      <table class="table table-rate">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="td-first">
+              {% if app.session.get('savePurchase').tickets | length > 1 %}
+                Billet n°{{ counter }}
+              {% else %}
+                Billet
+              {% endif %}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Code : {{ ticket.code }}</td>
+          </tr>
+          <tr>
+            <td>
+              Date de la visite :
+              {{ ticket.visitDate|localizeddate('full', 'none', app.request.locale) }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Type de viste :
+                {% if ticket.type == 0 %}
+                  Journée
+                {% else %}
+                  Demi-journée
+                {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Billet au nom de : {{ ticket.lastname|upper }} {{ ticket.firstname|capitalize }}
+            </td>
+          </tr>
+          <tr class="table-info">
+            <td>
+              <strong>Tarif : {{ ticket.price }} €</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {% endfor %}
+
+
+  {{ dump(app.session.get('savePurchase'))}}
+
+  <!-- ============================ -->
+  <!-- Formulaire ================= -->
+  <!-- ============================ -->
+
+{% endblock %}

@@ -3,22 +3,19 @@
 
 namespace CL\TicketingBundle\Services;
 
-use Symfony\Component\HttpFoundation\Session\Session;
 use CL\TicketingBundle\Entity\Purchase;
 
 class HydratePurchase
 {
-  private $session;
   private $serviceGenerateCode;
   private $serviceAddedPrices;
 
   public function __construct(
-    Session $session,
     GenerateCodeWithDate $serviceGenerateCode,
     AddedPrices $serviceAddedPrices
     )
   {
-    $this->session = $session;
+
     $this->serviceGenerateCode = $serviceGenerateCode;
     $this->serviceAddedPrices = $serviceAddedPrices;
   }

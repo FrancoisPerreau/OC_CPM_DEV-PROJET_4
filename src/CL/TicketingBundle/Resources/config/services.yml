@@ -5,9 +5,15 @@ services:
    #     class: CL\TicketingBundle\Example
    #     arguments: ["@service_id", "plain_value", "%parameter%"]
 
+   twig.extension.intl:
+       class: Twig_Extensions_Extension_Intl
+       tags:
+          - { name: twig.extension }
+
    cl_ticketing.manager:
        class: CL\TicketingBundle\Services\TicketingManager
-       arguments: ["@session"]
+       arguments:
+         - "@session"
 
 
    cl_ticketing.generateCode:
@@ -29,6 +35,5 @@ services:
    cl_ticketing.hydratePurchase:
        class: CL\TicketingBundle\Services\HydratePurchase
        arguments:
-          - "@session"
           - "@cl_ticketing.generateCode"
           - "@cl_ticketing.defineTotalPrice"

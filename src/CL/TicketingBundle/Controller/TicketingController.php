@@ -33,9 +33,6 @@ class TicketingController extends Controller
           $session = new Session;
 
           $session->set('TicketDateChoiceFomData', $form->getData());
-          // dump($session->get('TicketDateChoiceFomData'));die;
-          // $_SESSION['TicketDateChoiceFomData'] = $form->getData();
-          // dump($_SESSION['TicketDateChoiceFomData']);die;
           return $this->redirectToRoute('purchase_regitration');
       }
 
@@ -52,9 +49,8 @@ class TicketingController extends Controller
     {
         $session = new Session;
         $data = $session->get('TicketDateChoiceFomData');
-        // dump($data);die;
+
         $ticketNb = $data['TicketNb'];
-        // dump($ticketNb);die;
         $purchase = new Purchase;
 
         // Collection de formulaires
@@ -63,7 +59,6 @@ class TicketingController extends Controller
 
             $purchase->getTickets()->add($ticket);
         }
-
 
         $form = $this->createForm(PurchaseType::class, $purchase);
         $form->handleRequest($request);
@@ -81,29 +76,25 @@ class TicketingController extends Controller
 
             // Hydrate le ou les Ticket(s)
             $this->container->get('cl_ticketing.hydratePurchase')->hydrate($purchase);
-            // dump($tickets); die;
 
+            // $session = new Session;
+            $session->set('savePurchase', $purchase);
 
-            // // $tickets = $formTicket['Purchase'];
-            // dump($tickets); die;
-
-
-            // dump($formTicket);die;
-            dump($purchase); die;
-
-            $serviceDefinePrice = $this->container->get('cl_ticketing.definePriceByBirthday');
-
-            $birthday = new \DateTime('2006-01-01');
-
-            $priceDay = $serviceDefinePrice->defineDayPrice($birthday);
-            dump($priceDay);die;
-
-            // return $this->redirectToRoute('purchase_regitration');
+            return $this->redirectToRoute('purchase_confirmation');
         }
-
 
         return $this->render('@CLTicketing/Ticketing/purchase.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/confirmation", name="purchase_confirmation")
+     */
+    public function confirmationAction(Request $request)
+    {
+
+
+        return $this->render('@CLTicketing/Ticketing/confirmation.html.twig');
     }
 }
