@@ -31,7 +31,7 @@ class TicketingController extends Controller
       if ($form->isSubmitted() && $form->isValid())
       {
           $session = new Session;
-          // $session->start();
+
           $session->set('TicketDateChoiceFomData', $form->getData());
           // dump($session->get('TicketDateChoiceFomData'));die;
           // $_SESSION['TicketDateChoiceFomData'] = $form->getData();
@@ -57,13 +57,12 @@ class TicketingController extends Controller
         // dump($ticketNb);die;
         $purchase = new Purchase;
 
+        // Collection de formulaires
         for ($i=0; $i < $ticketNb; $i++) {
             $ticket = new Ticket;
-            // $this->container->get('cl_ticketing.hydrateTicket')->hydrate($ticket);
 
             $purchase->getTickets()->add($ticket);
         }
-
 
 
         $form = $this->createForm(PurchaseType::class, $purchase);
@@ -72,11 +71,16 @@ class TicketingController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             $formTicket = $form->getData();
-
             $tickets = $purchase->getTickets();
-            foreach ($tickets as $ticket) {
+
+            // Hydrate le ou les Ticket(s)
+            foreach ($tickets as $ticket)
+            {
                 $this->container->get('cl_ticketing.hydrateTicket')->hydrate($ticket);
             }
+
+            // Hydrate le ou les Ticket(s)
+            $this->container->get('cl_ticketing.hydratePurchase')->hydrate($purchase);
             // dump($tickets); die;
 
 

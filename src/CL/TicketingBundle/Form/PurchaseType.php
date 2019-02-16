@@ -20,7 +20,7 @@ class PurchaseType extends AbstractType
         ->add('tickets', CollectionType::class, [
             'entry_type' => TicketType::class,
             'allow_add' => true,
-            // 'entry_options' => ['label' => false],
+            'entry_options' => ['label' => false],
         ]);
     }/**
      * {@inheritdoc}

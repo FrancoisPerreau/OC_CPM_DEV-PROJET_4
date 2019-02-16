@@ -39,7 +39,9 @@ class TicketType extends AbstractType
         ->add('birthday', BirthdayType::class, [
             'error_bubbling' => true,
             'required' => true,
-            'label' => 'Date de naissance'
+            'label' => 'Date de naissance',
+            'data' => new \DateTime('1980/01/01')
+
         ])
         ->add('reducedPrice', CheckboxType::class, [
             'required' => false,

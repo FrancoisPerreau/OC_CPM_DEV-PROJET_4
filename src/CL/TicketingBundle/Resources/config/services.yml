@@ -16,9 +16,19 @@ services:
    cl_ticketing.definePriceByBirthday:
        class: CL\TicketingBundle\Services\PriceByBirthday
 
+   cl_ticketing.defineTotalPrice:
+       class: CL\TicketingBundle\Services\AddedPrices
+
    cl_ticketing.hydrateTicket:
        class: CL\TicketingBundle\Services\HydrateTicket
        arguments:
           - "@session"
           - "@cl_ticketing.generateCode"
           - "@cl_ticketing.definePriceByBirthday"
+
+   cl_ticketing.hydratePurchase:
+       class: CL\TicketingBundle\Services\HydratePurchase
+       arguments:
+          - "@session"
+          - "@cl_ticketing.generateCode"
+          - "@cl_ticketing.defineTotalPrice"

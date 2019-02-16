@@ -38,12 +38,9 @@ class HydrateTicket
     $birthday = $ticket->getBirthday();
 
 
-
-
-    $ticket->setVisitDate($ticketType);
+    $ticket->setVisitDate(new \DateTime($date));
     $ticket->setType($data['ticketDayType']);
     $ticket->setCode($ticketCode);
-
 
     if ($ticketType == 0) // Ticket for day
     {
