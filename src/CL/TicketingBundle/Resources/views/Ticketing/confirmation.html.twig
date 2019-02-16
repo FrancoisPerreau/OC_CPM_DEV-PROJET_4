@@ -76,6 +76,9 @@
       </table>
     </div>
   {% endfor %}
+  <div class="total-price text-left">
+    <p><strong>Total de la commande : {{ app.session.get('savePurchase').price }} €</strong></p>
+  </div>
 
 
   {{ dump(app.session.get('savePurchase'))}}
