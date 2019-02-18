@@ -4,6 +4,7 @@
 namespace CL\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ticket
@@ -26,6 +27,11 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
+     * @Assert\NotBlank(message="Ce champ est obligatoir")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Ce champ doit faire au moins {{ limit }} caractères"
+     * )
      */
     private $firstname;
 
@@ -33,6 +39,11 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255)
+     * @Assert\NotBlank(message="Ce champ est obligatoir")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Ce champ doit faire au moins {{ limit }} caractères"
+     * )
      */
     private $lastname;
 
@@ -40,6 +51,8 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     * @Assert\Country
+     * @Assert\NotBlank(message="Ce champ est obligatoir")
      */
     private $country;
 
@@ -47,6 +60,8 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="birthday", type="datetime")
+     *  @Assert\DateTime
+     * @Assert\NotBlank(message="Ce champ est obligatoir")
      */
     private $birthday;
 

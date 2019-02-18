@@ -96,7 +96,7 @@ hr {
 }
 
 .total-price p {
-  margin: 3rem 0;
+  margin: 3rem 0 1.25rem 0;
   padding: .25rem .75rem;
   color:#fff;
 }

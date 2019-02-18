@@ -5,6 +5,7 @@ namespace CL\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Purchase
@@ -27,6 +28,7 @@ class Purchase
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
+     * @Assert\NotBlank
      */
     private $createdAt;
 
@@ -48,10 +50,13 @@ class Purchase
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     *
      */
     private $email;
 
-
+    /**
+     * @Assert\Valid()
+     */
     private $tickets;
 
 

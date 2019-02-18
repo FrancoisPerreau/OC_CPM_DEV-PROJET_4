@@ -15,6 +15,7 @@ use CL\TicketingBundle\Entity\Ticket;
 
 use CL\TicketingBundle\Form\TicketDateChoiceType;
 use CL\TicketingBundle\Form\PurchaseType;
+use CL\TicketingBundle\Form\EmailvalidationType;
 
 
 
@@ -31,8 +32,8 @@ class TicketingController extends Controller
       if ($form->isSubmitted() && $form->isValid())
       {
           $session = new Session;
-
           $session->set('TicketDateChoiceFomData', $form->getData());
+
           return $this->redirectToRoute('purchase_regitration');
       }
 
@@ -74,7 +75,7 @@ class TicketingController extends Controller
                 $this->container->get('cl_ticketing.hydrateTicket')->hydrate($ticket);
             }
 
-            // Hydrate le ou les Ticket(s)
+            // Hydrate Purchase
             $this->container->get('cl_ticketing.hydratePurchase')->hydrate($purchase);
 
             // $session = new Session;
@@ -93,8 +94,27 @@ class TicketingController extends Controller
      */
     public function confirmationAction(Request $request)
     {
+      $form = $this->createForm(EmailvalidationType::class);
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted() && $form->isValid())
+      {
+          $data = $form->getData();
+
+          $session = new Session;
+          $purchase = $session->get('savePurchase');
+
+          $purchase->setEmail($data['email']);
+
+          dump($data);
+          dump($purchase);die;
+
+          // return $this->redirectToRoute('purchase_regitration');
+      }
 
 
-        return $this->render('@CLTicketing/Ticketing/confirmation.html.twig');
+        return $this->render('@CLTicketing/Ticketing/confirmation.html.twig', [
+            'form'=> $form->createView()
+        ]);
     }
 }

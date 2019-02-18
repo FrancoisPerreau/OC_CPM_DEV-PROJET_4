@@ -2,7 +2,7 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {{ form_start(form) }}
-<div class="form-group text-left">
+<div class="form-group">
   {{ form_label(form.ticketDate) }}
   {{ form_errors(form.ticketDate) }}
   <div class="input-group date" id="datetimepicker13" data-target-input="nearest">
@@ -15,13 +15,13 @@
   </div>
 </div>
 
-<div class="form-group text-left">
+<div class="form-group">
   {{ form_label(form.ticketDayType) }}
   {{ form_errors(form.ticketDayType) }}
   {{ form_widget(form.ticketDayType) }}
 </div>
 
-<div class="form-group text-left">
+<div class="form-group">
   {{ form_label(form.TicketNb) }}
   {{ form_errors(form.TicketNb) }}
   {{ form_widget(form.TicketNb) }}

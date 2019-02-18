@@ -4,87 +4,120 @@
 
 {% block body %}
   <h1>Détail de la commande</h1>
+
+  <!-- Détail de la commande -->
+  <!-- ****************************** -->
   <div class="purchase-detail text-left">
     <p>
       Date de la commande :
-      {{ app.session.get('savePurchase').createdAt|localizeddate('long', 'none', app.request.locale) }}
+      {{ app.session.get('savePurchase').createdAt|localizeddate('short', 'none', app.request.locale) }}
       <br>
 
-      N° de la réservation :
+      N° de réservation :
       {{ app.session.get('savePurchase').code }}
     </p>
   </div>
+  <hr>
 
-  <h3>Vous avez commandé
-    {{ app.session.get('savePurchase').tickets|length }}
-    {% if app.session.get('savePurchase').tickets | length < 2 %}
-      billet
-    {% else %}
-      billets
-    {% endif %}
-    :
-  </h3>
+  <!-- Détail des billets -->
+  <!-- ****************************** -->
+  <div class="ticket-detail">
+    <h3>Vous avez commandé
+      {{ app.session.get('savePurchase').tickets|length }}
+      {% if app.session.get('savePurchase').tickets | length < 2 %}
+        billet
+      {% else %}
+        billets
+      {% endif %}
+      :
+    </h3>
 
+    <!-- Billet(s) -->
+    {% for ticket in app.session.get('savePurchase').tickets %}
+      <div class="table-container text-left">
+        {% set counter = (counter | default(0)) + 1 %}
 
-  {% for ticket in app.session.get('savePurchase').tickets %}
-    <div class="table-container text-left">
-      {% set counter = (counter | default(0)) + 1 %}
-
-      <table class="table table-rate">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col" class="td-first">
-              {% if app.session.get('savePurchase').tickets | length > 1 %}
-                Billet n°{{ counter }}
-              {% else %}
-                Billet
-              {% endif %}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Code : {{ ticket.code }}</td>
-          </tr>
-          <tr>
-            <td>
-              Date de la visite :
-              {{ ticket.visitDate|localizeddate('full', 'none', app.request.locale) }}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Type de viste :
+        <table class="table table-rate">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col" class="td-first">
+                {% if app.session.get('savePurchase').tickets | length > 1 %}
+                  Billet n°{{ counter }}
+                {% else %}
+                  Billet
+                {% endif %}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Code :
+                {{ ticket.code }}</td>
+            </tr>
+            <tr>
+              <td>
+                Date de la visite :
+                {{ ticket.visitDate|localizeddate('full', 'none', app.request.locale) }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Type de viste :
                 {% if ticket.type == 0 %}
                   Journée
                 {% else %}
                   Demi-journée
                 {% endif %}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Billet au nom de : {{ ticket.lastname|upper }} {{ ticket.firstname|capitalize }}
-            </td>
-          </tr>
-          <tr class="table-info">
-            <td>
-              <strong>Tarif : {{ ticket.price }} €</strong>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Billet au nom de :
+                {{ ticket.lastname|upper }}
+                {{ ticket.firstname|capitalize }}
+              </td>
+            </tr>
+            <tr class="table-info">
+              <td>
+                <strong>Tarif :
+                  {{ ticket.price }}
+                  €
+                </strong>
+                {% if ticket.reducedPrice == true %}
+                  <br>
+                  <span class="text-comment text-danger">Tarif réduit accordé dans certaines conditions*,
+                    <strong>un justificatif vous sera demandé à l'entrée.</strong>
+                  </span>
+                {% endif %}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        {% if ticket.reducedPrice == true %}
+          <p class="text-muted text-comment">
+            <span class="text-danger asterisque">*</span>
+            Étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…)
+          </p>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <div class="total-price text-left">
+      <p>
+        <strong>Total de la commande :
+          {{ app.session.get('savePurchase').price }}
+          €</strong>
+      </p>
     </div>
-  {% endfor %}
-  <div class="total-price text-left">
-    <p><strong>Total de la commande : {{ app.session.get('savePurchase').price }} €</strong></p>
   </div>
+  <hr>
 
-
-  {{ dump(app.session.get('savePurchase'))}}
+  {#{{ dump(app.session.get('savePurchase'))}}#}
 
   <!-- ============================ -->
   <!-- Formulaire ================= -->
   <!-- ============================ -->
+
+  {% embed "@CLTicketing/Ticketing/form/emailPurchase.html.twig" %}
+  {% endembed %}
 
 {% endblock %}

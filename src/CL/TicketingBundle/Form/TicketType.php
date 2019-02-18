@@ -21,23 +21,19 @@ class TicketType extends AbstractType
     {
         $builder
         ->add('firstname', TextType::class, [
-            'error_bubbling' => true,
             'required' => true,
             'label' => 'Prénom'
         ])
         ->add('lastname', TextType::class, [
-            'error_bubbling' => true,
             'required' => true,
             'label' => 'Nom'
         ])
         ->add('country', CountryType::class, [
-            'error_bubbling' => true,
             'required' => true,
             'label' => 'Pays',
             'preferred_choices' =>['FR']
         ])
         ->add('birthday', BirthdayType::class, [
-            'error_bubbling' => true,
             'required' => true,
             'label' => 'Date de naissance',
             'data' => new \DateTime('1980/01/01')

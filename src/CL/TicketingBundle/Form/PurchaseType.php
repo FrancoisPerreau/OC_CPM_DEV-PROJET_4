@@ -28,7 +28,8 @@ class PurchaseType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'CL\TicketingBundle\Entity\Purchase'
+            'data_class' => 'CL\TicketingBundle\Entity\Purchase',
+            // 'cascade_validation' => true
         ));
     }
 
