@@ -13,7 +13,7 @@ services:
    cl_ticketing.manager:
        class: CL\TicketingBundle\Services\TicketingManager
        arguments:
-         - "@session"
+         - "@doctrine.orm.entity_manager"
 
 
    cl_ticketing.generateCode:

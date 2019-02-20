@@ -4,6 +4,7 @@
 namespace CL\TicketingBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class TicketingManager
 {
@@ -23,6 +24,7 @@ class TicketingManager
   // EntityManager --------------
   public function save($entity)
   {
+    // dump($entity);die;
     return $this
       ->myPersist($entity)
       ->myFlush();
@@ -32,11 +34,15 @@ class TicketingManager
   public function myPersist($entity)
   {
     $this->em->persist($entity);
+
+    return $this;
   }
 
   public function myFlush()
   {
     $this->em->flush();
-  }  
+
+    return $this;
+  }
 
 }

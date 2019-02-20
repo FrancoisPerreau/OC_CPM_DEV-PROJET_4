@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Choice;
 
+use CL\TicketingBundle\Validator\EntireDay;
+use CL\TicketingBundle\Validator\IsOpen;
+
 
 class TicketDateChoiceType extends AbstractType
 {
@@ -24,7 +27,9 @@ class TicketDateChoiceType extends AbstractType
               'required' => true,
               'label' => 'Date',
               'constraints' => [
-                  new NotBlank()
+                  new NotBlank(),
+                  new IsOpen(),
+                  new EntireDay()
                ],
 
             ])
