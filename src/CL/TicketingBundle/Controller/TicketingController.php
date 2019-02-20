@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 // use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+// use Doctrine\Common\Collections\ArrayCollection;
 
 use CL\TicketingBundle\Entity\Purchase;
 use CL\TicketingBundle\Entity\Ticket;
@@ -58,9 +59,11 @@ class TicketingController extends Controller
         for ($i=0; $i < $ticketNb; $i++) {
             $ticket = new Ticket;
 
-            $purchase->getTickets()->add($ticket);
-        }
+            $purchase->addTicket($ticket);
 
+            // $purchase->getTickets()->add($ticket);
+        }
+        // dump($purchase);die;
         $form = $this->createForm(PurchaseType::class, $purchase);
         $form->handleRequest($request);
 
@@ -103,13 +106,32 @@ class TicketingController extends Controller
 
           $session = new Session;
           $purchase = $session->get('savePurchase');
+          $tickets =$purchase->getTickets();
 
           $purchase->setEmail($data['email']);
 
-          dump($data);
-          dump($purchase);die;
 
-          // return $this->redirectToRoute('purchase_regitration');
+          // $today = new \Datetime('today');
+          // dump($today->format('w'));die;
+
+          // dump($data);
+          // dump($purchase);die;
+          // $manager = $this->container->get('cl_ticketing.manager');
+
+          // $manager->myPersist($purchase);
+          // $manager->myPersist($tickets);
+          //
+          // $manger->myFlush();
+
+          // $this->container->get('cl_ticketing.manager')->save($purchase);
+
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($purchase);
+
+
+          $em->flush();
+
+          return $this->redirectToRoute('homepage');
       }
 
 

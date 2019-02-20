@@ -6,6 +6,7 @@ namespace CL\TicketingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
  * Ticket
  *
@@ -101,7 +102,7 @@ class Ticket
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CL\TicketingBundle\Entity\Purchase")
+     * @ORM\ManyToOne(targetEntity="CL\TicketingBundle\Entity\Purchase", inversedBy="tickets", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $purchase;

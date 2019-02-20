@@ -5,6 +5,7 @@ namespace CL\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -55,6 +56,7 @@ class Purchase
     private $email;
 
     /**
+     * @ORM\OneToMany(targetEntity="CL\TicketingBundle\Entity\Ticket", mappedBy="visit", cascade={"persist"})
      * @Assert\Valid()
      */
     private $tickets;
@@ -182,5 +184,34 @@ class Purchase
     public function getTickets()
     {
         return $this->tickets;
+    }
+
+    /**
+     * Add ticket.
+     *
+     * @param \CL\TicketingBundle\Entity\Ticket $ticket
+     *
+     * @return Purchase
+     */
+    public function addTicket(\CL\TicketingBundle\Entity\Ticket $ticket)
+    {
+        $this->tickets[] = $ticket;
+
+        // On lie l'annonce à la candidature
+        $ticket->setPurchase($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove ticket.
+     *
+     * @param \CL\TicketingBundle\Entity\Ticket $ticket
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTicket(\CL\TicketingBundle\Entity\Ticket $ticket)
+    {
+        return $this->tickets->removeElement($ticket);
     }
 }

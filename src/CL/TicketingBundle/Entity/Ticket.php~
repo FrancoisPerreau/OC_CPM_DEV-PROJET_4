@@ -4,6 +4,8 @@
 namespace CL\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Ticket
@@ -26,6 +28,11 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
+     * @Assert\NotBlank(message="Ce champ est obligatoir")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Ce champ doit faire au moins {{ limit }} caractères"
+     * )
      */
     private $firstname;
 
@@ -33,6 +40,11 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255)
+     * @Assert\NotBlank(message="Ce champ est obligatoir")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Ce champ doit faire au moins {{ limit }} caractères"
+     * )
      */
     private $lastname;
 
@@ -40,6 +52,8 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     * @Assert\Country
+     * @Assert\NotBlank(message="Ce champ est obligatoir")
      */
     private $country;
 
@@ -47,6 +61,8 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="birthday", type="datetime")
+     *  @Assert\DateTime
+     * @Assert\NotBlank(message="Ce champ est obligatoir")
      */
     private $birthday;
 
@@ -86,7 +102,7 @@ class Ticket
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CL\TicketingBundle\Entity\Purchase")
+     * @ORM\ManyToOne(targetEntity="CL\TicketingBundle\Entity\Purchase", inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $purchase;
@@ -292,5 +308,53 @@ class Ticket
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set price.
+     *
+     * @param float $price
+     *
+     * @return Ticket
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price.
+     *
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set purchase.
+     *
+     * @param \CL\TicketingBundle\Entity\Purchase $purchase
+     *
+     * @return Ticket
+     */
+    public function setPurchase(\CL\TicketingBundle\Entity\Purchase $purchase)
+    {
+        $this->purchase = $purchase;
+
+        return $this;
+    }
+
+    /**
+     * Get purchase.
+     *
+     * @return \CL\TicketingBundle\Entity\Purchase
+     */
+    public function getPurchase()
+    {
+        return $this->purchase;
     }
 }
