@@ -123,6 +123,7 @@ class TicketingController extends Controller
           //
           // $manger->myFlush();
 
+<<<<<<< HEAD
           $this->container->get('cl_ticketing.manager')->save($purchase);
 
           // $em = $this->getDoctrine()->getManager();
@@ -130,6 +131,15 @@ class TicketingController extends Controller
           //
           //
           // $em->flush();
+=======
+          // $this->container->get('cl_ticketing.manager')->save($purchase);
+
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($purchase);
+
+
+          $em->flush();
+>>>>>>> 0678e8ce8b46f943faf0cbaeb9f7a866b0827cfc
 
           return $this->redirectToRoute('homepage');
       }
