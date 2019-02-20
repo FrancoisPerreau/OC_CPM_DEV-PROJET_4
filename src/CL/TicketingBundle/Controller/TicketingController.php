@@ -123,13 +123,13 @@ class TicketingController extends Controller
           //
           // $manger->myFlush();
 
-          // $this->container->get('cl_ticketing.manager')->save($purchase);
+          $this->container->get('cl_ticketing.manager')->save($purchase);
 
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($purchase);
-
-
-          $em->flush();
+          // $em = $this->getDoctrine()->getManager();
+          // $em->persist($purchase);
+          //
+          //
+          // $em->flush();
 
           return $this->redirectToRoute('homepage');
       }
