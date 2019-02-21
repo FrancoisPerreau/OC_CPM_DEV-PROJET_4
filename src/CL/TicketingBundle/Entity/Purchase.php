@@ -28,17 +28,10 @@ class Purchase
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      * @Assert\NotBlank
      */
     private $createdAt;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="price", type="float")
-     */
-    private $price;
 
     /**
      * @var string
@@ -54,6 +47,32 @@ class Purchase
      *
      */
     private $email;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="visit_date", type="datetime")
+     */
+    private $visitDate;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="visit_type", type="boolean")
+     */
+    private $visitType;
+
+    /**
+     * @ORM\Column(name="ticket_nb", type="integer")
+     */
+     private $ticketNb;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float")
+     */
+    private $price;
 
     /**
      * @ORM\OneToMany(targetEntity="CL\TicketingBundle\Entity\Ticket", mappedBy="visit", cascade={"persist"})
@@ -107,30 +126,6 @@ class Purchase
     }
 
     /**
-     * Set price.
-     *
-     * @param float $price
-     *
-     * @return Purchase
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price.
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
      * Set code.
      *
      * @param string $code
@@ -179,6 +174,103 @@ class Purchase
     }
 
     /**
+     * Set visitDate.
+     *
+     * @param \DateTime $visitDate
+     *
+     * @return Purchase
+     */
+    public function setVisitDate($visitDate)
+    {
+        $this->visitDate = $visitDate;
+
+        return $this;
+    }
+
+    /**
+     * Get visitDate.
+     *
+     * @return \DateTime
+     */
+    public function getVisitDate()
+    {
+        return $this->visitDate;
+    }
+
+    /**
+     * Set visitType.
+     *
+     * @param bool $visitType
+     *
+     * @return Purchase
+     */
+    public function setVisitType($visitType)
+    {
+        $this->visitType = $visitType;
+
+        return $this;
+    }
+
+    /**
+     * Get visitType.
+     *
+     * @return bool
+     */
+    public function getVisitType()
+    {
+        return $this->visitType;
+    }
+
+    /**
+     * Set ticketNb.
+     *
+     * @param int $ticketNb
+     *
+     * @return Purchase
+     */
+    public function setTicketNb($ticketNb)
+    {
+        $this->ticketNb = $ticketNb;
+
+        return $this;
+    }
+
+    /**
+     * Get ticketNb.
+     *
+     * @return int
+     */
+    public function getTicketNb()
+    {
+        return $this->ticketNb;
+    }
+
+    /**
+     * Set price.
+     *
+     * @param float $price
+     *
+     * @return Purchase
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price.
+     *
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+
+    /**
      * Get tickets
      */
     public function getTickets()
@@ -214,4 +306,5 @@ class Purchase
     {
         return $this->tickets->removeElement($ticket);
     }
+
 }

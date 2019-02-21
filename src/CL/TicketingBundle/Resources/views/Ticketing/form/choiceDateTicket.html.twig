@@ -3,9 +3,9 @@
 
 {{ form_start(form) }}
 <div class="form-group">
-  {{ form_label(form.ticketDate) }}
+  {{ form_label(form.visitDate) }}
   <div class="input-group date" id="datetimepicker13" data-target-input="nearest">
-    {{ form_widget(form.ticketDate, {'target' : 'datetimepicker13'}) }}
+    {{ form_widget(form.visitDate, {'target' : 'datetimepicker13'}) }}
     <div class="input-group-append" data-target="#datetimepicker13" data-toggle="datetimepicker">
       <div class="input-group-text">
         <i class="fa fa-calendar"></i>
@@ -15,13 +15,13 @@
 </div>
 
 <div class="form-group">
-  {{ form_label(form.ticketDayType) }}
-  {{ form_widget(form.ticketDayType) }}
+  {{ form_label(form.visitType) }}
+  {{ form_widget(form.visitType) }}
 </div>
 
 <div class="form-group">
-  {{ form_label(form.TicketNb) }}
-  {{ form_widget(form.TicketNb) }}
+  {{ form_label(form.ticketNb) }}
+  {{ form_widget(form.ticketNb) }}
 </div>
 
 <div class="form-group">

@@ -2,6 +2,9 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {{ form_start(form) }}
+
+  {{ form_errors(form) }}
+
   {% for ticket in form.tickets %}
     <div class="ticket-container">
       <h3 class="text-left ticket-title">Billet n°{{ loop.index }}</h3>

@@ -23,7 +23,7 @@ class TicketDateChoiceType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('ticketDate', TextType::class, [
+            ->add('visitDate', TextType::class, [
               'required' => true,
               'label' => 'Date',
               'constraints' => [
@@ -33,7 +33,7 @@ class TicketDateChoiceType extends AbstractType
                ],
 
             ])
-            ->add('ticketDayType', ChoiceType::class, [
+            ->add('visitType', ChoiceType::class, [
               'required' => true,
               'label' => 'Type de billet',
               'choices' => [
@@ -45,7 +45,7 @@ class TicketDateChoiceType extends AbstractType
                   new Choice([0, 1])
                ],
             ])
-            ->add('TicketNb', ChoiceType::class, [
+            ->add('ticketNb', ChoiceType::class, [
               'required' => true,
               'label' =>'Nombre de billet(s)',
               'choices' => [

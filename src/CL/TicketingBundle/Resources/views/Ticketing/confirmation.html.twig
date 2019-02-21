@@ -10,11 +10,11 @@
   <div class="purchase-detail text-left">
     <p>
       Date de la commande :
-      {{ app.session.get('savePurchase').createdAt|localizeddate('short', 'none', app.request.locale) }}
+      {{ purchase.createdAt|localizeddate('short', 'none', app.request.locale) }}
       <br>
 
       N° de réservation :
-      {{ app.session.get('savePurchase').code }}
+      {{ purchase.code }}
     </p>
   </div>
   <hr>
@@ -23,8 +23,8 @@
   <!-- ****************************** -->
   <div class="ticket-detail">
     <h3>Vous avez commandé
-      {{ app.session.get('savePurchase').tickets|length }}
-      {% if app.session.get('savePurchase').tickets | length < 2 %}
+      {{ purchase.tickets|length }}
+      {% if purchase.tickets | length < 2 %}
         billet
       {% else %}
         billets
@@ -33,7 +33,7 @@
     </h3>
 
     <!-- Billet(s) -->
-    {% for ticket in app.session.get('savePurchase').tickets %}
+    {% for ticket in purchase.tickets %}
       <div class="table-container text-left">
         {% set counter = (counter | default(0)) + 1 %}
 
@@ -41,7 +41,7 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col" class="td-first">
-                {% if app.session.get('savePurchase').tickets | length > 1 %}
+                {% if purchase.tickets | length > 1 %}
                   Billet n°{{ counter }}
                 {% else %}
                   Billet
@@ -57,13 +57,13 @@
             <tr>
               <td>
                 Date de la visite :
-                {{ ticket.visitDate|localizeddate('full', 'none', app.request.locale) }}
+                {{ purchase.visitDate|localizeddate('full', 'none', app.request.locale) }}
               </td>
             </tr>
             <tr>
               <td>
                 Type de viste :
-                {% if ticket.type == 0 %}
+                {% if purchase.visitType == 0 %}
                   Journée
                 {% else %}
                   Demi-journée
@@ -104,7 +104,7 @@
     <div class="total-price text-left">
       <p>
         <strong>Total de la commande :
-          {{ app.session.get('savePurchase').price }}
+          {{ purchase.price }}
           €</strong>
       </p>
     </div>

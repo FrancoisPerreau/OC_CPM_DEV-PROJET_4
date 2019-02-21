@@ -26,23 +26,27 @@ class HydrateTicket
 
   public function hydrate(Ticket $ticket)
   {
-    // $session = new Session;
-    $data = $this->session->get('TicketDateChoiceFomData');
-    $date = strtotime($data['ticketDate']);
+    $purchase = $this->session->get('Purchase');
+    // $date = strtotime($purchase->getVisitDate());
+    $date = $purchase->getVisitDate();
+
+    if (is_string($date))
+    {
+    $date = strtotime($purchase->getVisitDate());
+    }
+
     $date = date('Y/m/d');
     $ticketCode = $this
       ->serviceGenerateCode
       ->createTicketCode(new \DateTime($date));
-    $ticketType = $data['ticketDayType'];
+    $visitType = $purchase->getVisitType();
     $reducedPrice = $ticket->getReducedPrice();
     $birthday = $ticket->getBirthday();
 
 
-    $ticket->setVisitDate(new \DateTime($date));
-    $ticket->setType($data['ticketDayType']);
     $ticket->setCode($ticketCode);
 
-    if ($ticketType == 0) // Ticket for day
+    if ($visitType == 0) // Ticket for day
     {
       if ($reducedPrice == true)
       {
@@ -54,7 +58,7 @@ class HydrateTicket
           ->defineDayPrice($birthday));
       }
     }
-    elseif ($ticketType == 1) // Ticket for half day
+    elseif ($visitType == 1) // Ticket for half day
     {
       if ($reducedPrice == true)
       {

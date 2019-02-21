@@ -28,11 +28,6 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
-     * @Assert\NotBlank(message="Ce champ est obligatoir")
-     * @Assert\Length(
-     *      min = 2,
-     *      minMessage = "Ce champ doit faire au moins {{ limit }} caractères"
-     * )
      */
     private $firstname;
 
@@ -40,11 +35,6 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255)
-     * @Assert\NotBlank(message="Ce champ est obligatoir")
-     * @Assert\Length(
-     *      min = 2,
-     *      minMessage = "Ce champ doit faire au moins {{ limit }} caractères"
-     * )
      */
     private $lastname;
 
@@ -53,7 +43,6 @@ class Ticket
      *
      * @ORM\Column(name="country", type="string", length=255)
      * @Assert\Country
-     * @Assert\NotBlank(message="Ce champ est obligatoir")
      */
     private $country;
 
@@ -62,7 +51,6 @@ class Ticket
      *
      * @ORM\Column(name="birthday", type="datetime")
      *  @Assert\DateTime
-     * @Assert\NotBlank(message="Ce champ est obligatoir")
      */
     private $birthday;
 
@@ -72,20 +60,6 @@ class Ticket
      * @ORM\Column(name="reducedPrice", type="boolean")
      */
     private $reducedPrice;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="visitDate", type="datetime")
-     */
-    private $visitDate;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="type", type="boolean")
-     */
-    private $type;
 
     /**
      * @var string
@@ -236,54 +210,6 @@ class Ticket
     public function getReducedPrice()
     {
         return $this->reducedPrice;
-    }
-
-    /**
-     * Set visitDate.
-     *
-     * @param \DateTime $visitDate
-     *
-     * @return Ticket
-     */
-    public function setVisitDate($visitDate)
-    {
-        $this->visitDate = $visitDate;
-
-        return $this;
-    }
-
-    /**
-     * Get visitDate.
-     *
-     * @return \DateTime
-     */
-    public function getVisitDate()
-    {
-        return $this->visitDate;
-    }
-
-    /**
-     * Set type.
-     *
-     * @param bool $type
-     *
-     * @return Ticket
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type.
-     *
-     * @return bool
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**

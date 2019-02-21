@@ -74,20 +74,6 @@ class Ticket
     private $reducedPrice;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="visitDate", type="datetime")
-     */
-    private $visitDate;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="type", type="boolean")
-     */
-    private $type;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255, unique=true)
@@ -102,7 +88,7 @@ class Ticket
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CL\TicketingBundle\Entity\Purchase", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="CL\TicketingBundle\Entity\Purchase", inversedBy="tickets", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $purchase;
@@ -236,54 +222,6 @@ class Ticket
     public function getReducedPrice()
     {
         return $this->reducedPrice;
-    }
-
-    /**
-     * Set visitDate.
-     *
-     * @param \DateTime $visitDate
-     *
-     * @return Ticket
-     */
-    public function setVisitDate($visitDate)
-    {
-        $this->visitDate = $visitDate;
-
-        return $this;
-    }
-
-    /**
-     * Get visitDate.
-     *
-     * @return \DateTime
-     */
-    public function getVisitDate()
-    {
-        return $this->visitDate;
-    }
-
-    /**
-     * Set type.
-     *
-     * @param bool $type
-     *
-     * @return Ticket
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type.
-     *
-     * @return bool
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**

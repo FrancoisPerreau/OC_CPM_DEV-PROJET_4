@@ -28,17 +28,10 @@ class Purchase
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      * @Assert\NotBlank
      */
     private $createdAt;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="price", type="float")
-     */
-    private $price;
 
     /**
      * @var string
@@ -54,6 +47,32 @@ class Purchase
      *
      */
     private $email;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="visit_date", type="datetime")
+     */
+    private $visitDate;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="visit_type", type="boolean")
+     */
+    private $visitType;
+
+    /**
+     * @ORM\Column(name="ticket_nb", type="integer")
+     */
+     private $ticketNb;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float")
+     */
+    private $price;
 
     /**
      * @ORM\OneToMany(targetEntity="CL\TicketingBundle\Entity\Ticket", mappedBy="visit", cascade={"persist"})
@@ -184,5 +203,34 @@ class Purchase
     public function getTickets()
     {
         return $this->tickets;
+    }
+
+    /**
+     * Add ticket.
+     *
+     * @param \CL\TicketingBundle\Entity\Ticket $ticket
+     *
+     * @return Purchase
+     */
+    public function addTicket(\CL\TicketingBundle\Entity\Ticket $ticket)
+    {
+        $this->tickets[] = $ticket;
+
+        // On lie l'annonce à la candidature
+        $ticket->setPurchase($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove ticket.
+     *
+     * @param \CL\TicketingBundle\Entity\Ticket $ticket
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTicket(\CL\TicketingBundle\Entity\Ticket $ticket)
+    {
+        return $this->tickets->removeElement($ticket);
     }
 }

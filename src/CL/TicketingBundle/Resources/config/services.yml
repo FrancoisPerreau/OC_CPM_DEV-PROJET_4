@@ -35,5 +35,6 @@ services:
    cl_ticketing.hydratePurchase:
        class: CL\TicketingBundle\Services\HydratePurchase
        arguments:
+          - "@session"
           - "@cl_ticketing.generateCode"
           - "@cl_ticketing.defineTotalPrice"
