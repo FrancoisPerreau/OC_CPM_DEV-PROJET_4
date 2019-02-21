@@ -2,6 +2,7 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {{ form_start(form) }}
+{{ form_errors(form) }}
 <div class="form-group">
   {{ form_label(form.visitDate) }}
   <div class="input-group date" id="datetimepicker13" data-target-input="nearest">

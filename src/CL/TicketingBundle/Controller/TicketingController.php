@@ -27,22 +27,25 @@ class TicketingController extends Controller
      */
     public function indexAction(Request $request)
     {
-      $purchase = new Purchase;
+        $session = new Session;
+        $session->invalidate();
 
-      $form = $this->createForm(PurchaseDateChoiceType::class, $purchase);
-      $form->handleRequest($request);
+        $purchase = new Purchase;
 
-      if ($form->isSubmitted() && $form->isValid())
-      {
-          $session = new Session;
-          $session->set('Purchase', $form->getData());
-          // dump($purchase);die;
-          return $this->redirectToRoute('purchase_regitration');
-      }
+        $form = $this->createForm(PurchaseDateChoiceType::class, $purchase);
+        $form->handleRequest($request);
 
-      return $this->render('@CLTicketing/Ticketing/homepage.html.twig',[
-          'form' => $form->createView(),
-      ]);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $session = new Session;
+            $session->set('Purchase', $form->getData());
+            // dump($purchase);die;
+            return $this->redirectToRoute('purchase_regitration');
+        }
+
+        return $this->render('@CLTicketing/Ticketing/homepage.html.twig',[
+        'form' => $form->createView(),
+        ]);
     }
 
 
@@ -61,10 +64,11 @@ class TicketingController extends Controller
 
 
         // Collection de formulaires
-        if (count($tickets) === 0) {
-            for ($i=0; $i < $ticketNb; $i++) {
+        if (count($tickets) === 0)
+        {
+            for ($i=0; $i < $ticketNb; $i++)
+            {
                 $ticket = new Ticket;
-
                 $purchase->addTicket($ticket);
             }
         }

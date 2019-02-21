@@ -3,18 +3,18 @@
 
 {{ form_start(form) }}
 
-<div class="form-group">
-  {{ form_label(form.email.first) }}
-  {{ form_widget(form.email.first) }}
-</div>
-<div class="form-group">
-  {{ form_label(form.email.second) }}
-  {{ form_widget(form.email.second) }}
-</div>
+  <div class="form-group">
+    {{ form_label(form.email.first) }}
+    {{ form_widget(form.email.first) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.email.second) }}
+    {{ form_widget(form.email.second) }}
+  </div>
 
-<div class="form-group">
-  <button class="btn btn-info" type="submit">Validez la commande</button>
-</div>
+  <div class="form-group">
+    <button class="btn btn-info" type="submit">Validez la commande</button>
+  </div>
 
-{{ form_rest(form) }}
+  {{ form_rest(form) }}
 {{ form_end(form) }}

@@ -71,6 +71,7 @@ class PurchaseDateChoiceType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'CL\TicketingBundle\Entity\Purchase',
+            'csrf_protection' => false,
             // 'cascade_validation' => true
         ));
     }

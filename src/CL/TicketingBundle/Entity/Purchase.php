@@ -5,14 +5,19 @@ namespace CL\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Symfony\Component\Validator\Constraints as Assert;
+use CL\TicketingBundle\Validator as TicketingAssert;
+
+// use CL\TicketingBundle\Validator\IsOpen;
+// // use CL\TicketingBundle\Validator\EntireDay;
+// // use CL\TicketingBundle\Validator\EntireDayValidator;
 
 /**
  * Purchase
  *
  * @ORM\Table(name="PURCHASE")
  * @ORM\Entity(repositoryClass="CL\TicketingBundle\Repository\PurchaseRepository")
+ * @TicketingAssert\EntireDay
  */
 class Purchase
 {
@@ -52,6 +57,7 @@ class Purchase
      * @var \DateTime
      *
      * @ORM\Column(name="visit_date", type="datetime")
+     * @TicketingAssert\IsOpen()
      */
     private $visitDate;
 

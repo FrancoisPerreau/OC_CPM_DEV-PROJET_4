@@ -14,7 +14,10 @@ class PurchaseType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+
+    }
 
     /**
      * {@inheritdoc}
