@@ -60,8 +60,6 @@ class TicketingController extends Controller
             $ticket = new Ticket;
 
             $purchase->addTicket($ticket);
-
-            // $purchase->getTickets()->add($ticket);
         }
         // dump($purchase);die;
         $form = $this->createForm(PurchaseType::class, $purchase);
@@ -110,7 +108,6 @@ class TicketingController extends Controller
 
           $purchase->setEmail($data['email']);
 
-
           // $today = new \Datetime('today');
           // dump($today->format('w'));die;
 
@@ -123,23 +120,11 @@ class TicketingController extends Controller
           //
           // $manger->myFlush();
 
-<<<<<<< HEAD
-          $this->container->get('cl_ticketing.manager')->save($purchase);
-
           // $em = $this->getDoctrine()->getManager();
           // $em->persist($purchase);
-          //
-          //
           // $em->flush();
-=======
-          // $this->container->get('cl_ticketing.manager')->save($purchase);
 
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($purchase);
-
-
-          $em->flush();
->>>>>>> 0678e8ce8b46f943faf0cbaeb9f7a866b0827cfc
+          $this->container->get('cl_ticketing.manager')->save($purchase);
 
           return $this->redirectToRoute('homepage');
       }

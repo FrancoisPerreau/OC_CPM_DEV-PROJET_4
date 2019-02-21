@@ -197,12 +197,9 @@ class Purchase
     {
         $this->tickets[] = $ticket;
 
-<<<<<<< HEAD
         // On lie l'annonce à la candidature
         $ticket->setPurchase($this);
 
-=======
->>>>>>> 0678e8ce8b46f943faf0cbaeb9f7a866b0827cfc
         return $this;
     }
 
