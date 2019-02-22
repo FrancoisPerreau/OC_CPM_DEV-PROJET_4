@@ -18,18 +18,20 @@ class EntireDayValidator extends ConstraintValidator
    */
   public function validate($value, Constraint $constraint)
   {
-    dump($value);
-    // $value = '19/02/2019';
+    // if (!is_a($value, 'Purchase'))
+    // {
+    //   return;
+    // }
 
     $choiceDate = $value->getVisitDate();
     $visitType = $value->getVisitType();
-    dump($choiceDate);
-    dump($visitType);
 
-    $choiceDate = date_create_from_format('d/m/Y', $choiceDate);
-    // dump($choiceDate);die;
+    if (is_string($choiceDate)) {
+      $choiceDate = date_create_from_format('d/m/Y', $choiceDate);
+    }
 
     $now = new \DateTime('now');
+
 
     if ($now->format('d') == $choiceDate->format('d') &&
         $now->format('m') == $choiceDate->format('m') &&
@@ -43,21 +45,6 @@ class EntireDayValidator extends ConstraintValidator
                 ->atPath('visitType')
                 ->addViolation();
     }
-
-
-    // if ($value == 0)
-    // {
-    //   $now = new \DateTime('now');
-    //   $hoursPourchase = $now->format('H');
-    //   dump($hoursPourchase);
-    //   dump(DayClosedAndHourLimit::HALF_DAY_HOUR);
-    //   die;
-    //
-    //   if ($hoursPourchase > DayClosedAndHourLimit::HALF_DAY_HOUR)
-    //   {
-    //     $this->context->addViolation($constraint->message);
-    //   }
-    // }
   }
 
 }

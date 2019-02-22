@@ -18,6 +18,8 @@ services:
 
    cl_ticketing.generateCode:
        class: CL\TicketingBundle\Services\GenerateCodeWithDate
+       arguments:
+          - "@doctrine.orm.entity_manager"
 
    cl_ticketing.definePriceByBirthday:
        class: CL\TicketingBundle\Services\PriceByBirthday

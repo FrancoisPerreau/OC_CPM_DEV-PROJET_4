@@ -39,7 +39,7 @@ class TicketingController extends Controller
         {
             $session = new Session;
             $session->set('Purchase', $form->getData());
-            // dump($purchase);die;
+
             return $this->redirectToRoute('purchase_regitration');
         }
 
@@ -57,10 +57,7 @@ class TicketingController extends Controller
         $session = new Session;
         $purchase = $session->get('Purchase');
         $tickets = $purchase->getTickets();
-        // dump(count($tickets));
-        // die;
         $ticketNb = $purchase->getTicketNb();
-        // dump($ticketNb);die;
 
 
         // Collection de formulaires
@@ -73,22 +70,13 @@ class TicketingController extends Controller
             }
         }
 
-        // dump($ticketNb);die;
-        // dump($purchase);die;
+
         $form = $this->createForm(PurchaseTicketType::class, $purchase);
         $form->handleRequest($request);
-        // dump($ticketNb);die;
+
         if ($form->isSubmitted() && $form->isValid())
         {
-            // dump($ticketNb);
-            // dump($purchase);
-            // $formTicket = $form->getData();
-            // dump($purchase);die;
             $tickets = $purchase->getTickets();
-
-            // dump($purchase);
-            // dump($tickets);
-            // die;
 
             // Hydrate le ou les Ticket(s)
             foreach ($tickets as $ticket)
@@ -96,20 +84,11 @@ class TicketingController extends Controller
                 $this->container->get('cl_ticketing.hydrateTicket')->hydrate($ticket);
             }
 
-            // dump($purchase);
-            // dump($tickets);
-            // die;
-
             // Hydrate Purchase
             $this->container->get('cl_ticketing.hydratePurchase')->hydrate($purchase);
 
-            // dump($purchase);
-            // dump($tickets);
-            // die;
-
             // $session = new Session;
             $session->set('Purchase', $purchase);
-            // dump($formTicket); die;
 
             return $this->redirectToRoute('purchase_confirmation');
         }
@@ -127,33 +106,21 @@ class TicketingController extends Controller
         $session = new Session;
         $purchase = $session->get('Purchase');
 
-      $form = $this->createForm(PurchaseEmailType::class, $purchase);
-      $form->handleRequest($request);
+        $form = $this->createForm(PurchaseEmailType::class, $purchase);
+        $form->handleRequest($request);
 
-      if ($form->isSubmitted() && $form->isValid())
-      {
-          $data = $form->getData();
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            // $data = $form->getData();
+            $session = new Session;
+            $purchase = $session->get('Purchase');
 
-          $session = new Session;
-          $purchase = $session->get('Purchase');
-          // $tickets =$purchase->getTickets();
+            dump($purchase);die;
+            
+            $this->container->get('cl_ticketing.manager')->save($purchase);
 
-          // $purchase->setEmail($data['email']);
-
-          // $today = new \Datetime('today');
-          // dump($today->format('w'));die;
-
-          // dump($data);
-          // dump($purchase);die;
-          // $manager = $this->container->get('cl_ticketing.manager');
-
-
-
-          dump($purchase);die;
-          $this->container->get('cl_ticketing.manager')->save($purchase);
-
-          return $this->redirectToRoute('homepage');
-      }
+            return $this->redirectToRoute('homepage');
+        }
 
 
         return $this->render('@CLTicketing/Ticketing/confirmation.html.twig', [

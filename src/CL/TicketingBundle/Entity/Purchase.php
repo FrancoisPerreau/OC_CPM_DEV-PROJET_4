@@ -8,10 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use CL\TicketingBundle\Validator as TicketingAssert;
 
-// use CL\TicketingBundle\Validator\IsOpen;
-// // use CL\TicketingBundle\Validator\EntireDay;
-// // use CL\TicketingBundle\Validator\EntireDayValidator;
-
 /**
  * Purchase
  *
@@ -57,6 +53,7 @@ class Purchase
      * @var \DateTime
      *
      * @ORM\Column(name="visit_date", type="datetime")
+     * @Assert\NotBlank
      * @TicketingAssert\IsOpen()
      */
     private $visitDate;
@@ -65,11 +62,13 @@ class Purchase
      * @var bool
      *
      * @ORM\Column(name="visit_type", type="boolean")
+     * @Assert\NotBlank
      */
     private $visitType;
 
     /**
      * @ORM\Column(name="ticket_nb", type="integer")
+     * @Assert\NotBlank
      */
      private $ticketNb;
 

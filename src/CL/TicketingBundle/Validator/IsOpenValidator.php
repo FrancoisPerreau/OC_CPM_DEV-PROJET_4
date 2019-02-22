@@ -18,10 +18,13 @@ class IsOpenValidator extends ConstraintValidator
   public function validate($value, Constraint $constraint)
   {
     // $value = "25/12/2019";
+    if (is_string($value)) {
+      $value = date_create_from_format('d/m/Y', $value);
+    }
 
-    $choiceDate = date_create_from_format('d/m/Y', $value);
-    $choiceDay = $choiceDate->format('d');
-    $choiceMonth = $choiceDate->format('m');
+    // $value = date_create_from_format('d/m/Y', $value);
+    $choiceDay = $value->format('d');
+    $choiceMonth = $value->format('m');
 
     $today = new \Datetime('today');
     $thisYear = $today->format('Y');
