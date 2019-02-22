@@ -29,10 +29,10 @@ class PurchaseEmailType extends AbstractType
           'required' => true,
           'first_options'  => ['label' => 'Email'],
           'second_options' => ['label' => 'Confirmation de l\'email'],
-          // 'constraints' => [
-          //     new NotBlank(),
-          //     new Email(),
-          //  ],
+          'constraints' => [
+              new NotBlank(),
+              new Email(),
+           ],
         ])
         ;
     }

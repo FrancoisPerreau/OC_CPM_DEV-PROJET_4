@@ -28,6 +28,8 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=2, minMessage = "Ce champ doit faire au moins {{ limit }} caractères")
      */
     private $firstname;
 
@@ -35,6 +37,8 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=2, minMessage = "Ce champ doit faire au moins {{ limit }} caractères")
      */
     private $lastname;
 
@@ -42,6 +46,7 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     * @Assert\NotBlank
      * @Assert\Country
      */
     private $country;
@@ -50,7 +55,8 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="birthday", type="datetime")
-     *  @Assert\DateTime
+     * @Assert\NotBlank
+     * @Assert\DateTime
      */
     private $birthday;
 
@@ -58,6 +64,7 @@ class Ticket
      * @var bool
      *
      * @ORM\Column(name="reducedPrice", type="boolean")
+     * @Assert\Type("bool")
      */
     private $reducedPrice;
 

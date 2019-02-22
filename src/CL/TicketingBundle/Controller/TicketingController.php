@@ -116,7 +116,7 @@ class TicketingController extends Controller
             $purchase = $session->get('Purchase');
 
             dump($purchase);die;
-            
+
             $this->container->get('cl_ticketing.manager')->save($purchase);
 
             return $this->redirectToRoute('homepage');

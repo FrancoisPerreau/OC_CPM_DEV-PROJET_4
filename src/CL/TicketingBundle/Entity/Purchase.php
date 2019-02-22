@@ -45,7 +45,6 @@ class Purchase
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
-     *
      */
     private $email;
 
@@ -55,6 +54,7 @@ class Purchase
      * @ORM\Column(name="visit_date", type="datetime")
      * @Assert\NotBlank
      * @TicketingAssert\IsOpen()
+     * @TicketingAssert\NoTuesday()
      */
     private $visitDate;
 
@@ -62,13 +62,21 @@ class Purchase
      * @var bool
      *
      * @ORM\Column(name="visit_type", type="boolean")
-     * @Assert\NotBlank
+     * @Assert\NotBlank* @Assert\Choice(
+     *     choices = { "0", "1" },
+     *     message = "Ce type de billet n'est pas valide."
+     * )
      */
     private $visitType;
 
     /**
      * @ORM\Column(name="ticket_nb", type="integer")
      * @Assert\NotBlank
+     * @Assert\Type("int")
+     * @Assert\Choice(
+     *     choices = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+     *     message = "Ce nombre de billets n'est pas valide."
+     * )
      */
      private $ticketNb;
 
