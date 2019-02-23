@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 
-class NoTuesdayValidator extends ConstraintValidator
+class NoPastDaysValidator extends ConstraintValidator
 {
   /**
    * @param  $value
@@ -15,14 +15,12 @@ class NoTuesdayValidator extends ConstraintValidator
    */
   public function validate($value, Constraint $constraint)
   {
-    // $value = "12/02/2019";
-    if (is_string($value)) {
-      $value = date_create_from_format('d/m/Y', $value);
-    }
+    // $value = "22/02/2019";
 
-    $choiceWeekDay = $value->format('w');
+    $value = date_create_from_format('d/m/Y', $value);
+    $today = new \DateTime(date('Y-m-d'));
 
-    if ($choiceWeekDay == 2)
+    if ($today > $value)
     {
       $this->context->addViolation($constraint->message);
     }

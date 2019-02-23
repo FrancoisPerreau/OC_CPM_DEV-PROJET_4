@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class EntireDay extends Constraint
 {
-  public $message = "Après 14h00, vous ne pouvez plus choisir un billet à la journée pour le jour même";
+  public $message = "Après 14h00, vous ne pouvez plus choisir un billet à la journée pour le jour même.";
 
   public function getTargets()
   {

@@ -18,10 +18,6 @@ class EntireDayValidator extends ConstraintValidator
    */
   public function validate($value, Constraint $constraint)
   {
-    // if (!is_a($value, 'Purchase'))
-    // {
-    //   return;
-    // }
 
     $choiceDate = $value->getVisitDate();
     $visitType = $value->getVisitType();
@@ -31,7 +27,6 @@ class EntireDayValidator extends ConstraintValidator
     }
 
     $now = new \DateTime('now');
-
 
     if ($now->format('d') == $choiceDate->format('d') &&
         $now->format('m') == $choiceDate->format('m') &&

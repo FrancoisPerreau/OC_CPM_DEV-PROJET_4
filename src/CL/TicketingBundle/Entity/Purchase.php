@@ -55,6 +55,7 @@ class Purchase
      * @Assert\NotBlank
      * @TicketingAssert\IsOpen()
      * @TicketingAssert\NoTuesday()
+     * @TicketingAssert\NoPastDays
      */
     private $visitDate;
 
