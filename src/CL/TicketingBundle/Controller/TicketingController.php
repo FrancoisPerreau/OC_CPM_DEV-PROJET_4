@@ -115,11 +115,13 @@ class TicketingController extends Controller
             $session = new Session;
             $purchase = $session->get('Purchase');
 
-            dump($purchase);die;
+            // dump($purchase);die;
 
             $this->container->get('cl_ticketing.manager')->save($purchase);
 
-            return $this->redirectToRoute('homepage');
+            $this->addFlash('success', 'Votre commande a bien enregistrée !');
+
+            return $this->redirectToRoute('purchase_confirmation');
         }
 
 

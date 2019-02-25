@@ -2,6 +2,8 @@
 
 namespace CL\TicketingBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
+
 /**
  * IndentRepository
  *
@@ -10,4 +12,24 @@ namespace CL\TicketingBundle\Repository;
  */
 class PurchaseRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function findNbTicketsOnDate(\DateTime $date)
+  {
+    $qb = $this->createQueryBuilder('p');
+
+    $qb->select('sum(p.ticketNb)')
+        // ->select('p.ticketNb')
+        ->where('p.visitDate = :date')
+        ->setParameter('date', $date)
+        ;
+// dump($date);
+// dump($qb
+// ->getQuery()
+// ->getResult());
+// die;
+        return $qb
+       ->getQuery()
+       // ->getResult()
+       ->getSingleScalarResult();
+     ;
+  }
 }

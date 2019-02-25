@@ -12,33 +12,29 @@ class HydrateTicket
   private $session;
   private $serviceGenerateCode;
   private $servicedefinePriceByBirthday;
+  private $serviceConvertDatePicker;
 
   public function __construct(
     Session $session,
     GenerateCodeWithDate $serviceGenerateCode,
-    PriceByBirthday $servicedefinePriceByBirthday
+    PriceByBirthday $servicedefinePriceByBirthday,
+    ConvertDatepickerInDatetime $serviceConvertDatePicker
     )
   {
     $this->session = $session;
     $this->serviceGenerateCode = $serviceGenerateCode;
     $this->servicedefinePriceByBirthday = $servicedefinePriceByBirthday;
+    $this->serviceConvertDatePicker = $serviceConvertDatePicker;
   }
 
   public function hydrate(Ticket $ticket)
   {
-    $purchase = $this->session->get('Purchase');
-    // $date = strtotime($purchase->getVisitDate());
+    $purchase = $this->session->get('Purchase');    
     $date = $purchase->getVisitDate();
+    $date = $this->serviceConvertDatePicker->convertDatepicker($date);
 
-    if (is_string($date))
-    {
-    $date = strtotime($purchase->getVisitDate());
-    }
-
-    $date = date('Y/m/d');
-    $ticketCode = $this
-      ->serviceGenerateCode
-      ->createTicketCode(new \DateTime($date));
+    $ticketCode = $this->serviceGenerateCode
+                       ->createTicketCode($date);
     $visitType = $purchase->getVisitType();
     $reducedPrice = $ticket->getReducedPrice();
     $birthday = $ticket->getBirthday();

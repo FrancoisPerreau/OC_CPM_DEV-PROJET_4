@@ -37,8 +37,9 @@ class EntireDayValidator extends ConstraintValidator
     {
       // $this->context->addViolation($constraint->message);
       $this->context->buildViolation($constraint->message)
-                ->atPath('visitType')
-                ->addViolation();
+                    ->atPath('visitType')
+                    ->addViolation()
+                    ;
     }
   }
 

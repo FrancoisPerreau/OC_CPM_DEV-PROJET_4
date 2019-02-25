@@ -3,6 +3,10 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
+  {% for msg in app.session.flashBag.get('success') %}
+    <p class="alert alert-success" role="alert">{{ msg }}</p>
+  {% endfor %}
+
   <h1>Détail de la commande</h1>
 
   <!-- Détail de la commande -->

@@ -19,19 +19,17 @@
   <script type="text/javascript">
     $(function() {
       var today = new Date();
-      // alert(
-      // today.getFullYear()
-      // );
-      $('#datetimepicker13').datetimepicker(
-        {locale: '{{ app.request.getLocale() }}',
+      // alert( today.getFullYear() );
+      $('#datetimepicker13').datetimepicker({
+        locale: '{{ app.request.getLocale() }}',
         format: 'L',
         daysOfWeekDisabled: [2],
         minDate: moment(),
         disabledDates: [
-          moment("05/01/"+today.getFullYear()),
-          moment("11/01/"+today.getFullYear()),
-          moment("12/25/"+today.getFullYear())
-        ],
+          moment("05/01/" + today.getFullYear()),
+          moment("11/01/" + today.getFullYear()),
+          moment("12/25/" + today.getFullYear())
+        ]
       });
     });
   </script>
@@ -44,6 +42,7 @@
     Réservez vos tickets en ligne et évitez les files d’attente.
   </p>
   <hr>
+  
 
   <!-- ============================ -->
   <!-- HORAIRES =================== -->
@@ -171,8 +170,7 @@
   <div class="table-container">
     <h2>Réservation</h2>
 
-    {% embed "@CLTicketing/Ticketing/form/choiceDateTicket.html.twig" %}
-    {% endembed %}
+    {% embed "@CLTicketing/Ticketing/form/choiceDateTicket.html.twig" %}{% endembed %}
 
   </div>
 

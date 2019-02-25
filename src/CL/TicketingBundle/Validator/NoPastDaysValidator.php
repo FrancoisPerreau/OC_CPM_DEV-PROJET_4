@@ -5,6 +5,7 @@ namespace CL\TicketingBundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use CL\TicketingBundle\Services\ConvertDatepickerInDatetime;
 
 
 class NoPastDaysValidator extends ConstraintValidator
@@ -17,7 +18,11 @@ class NoPastDaysValidator extends ConstraintValidator
   {
     // $value = "22/02/2019";
 
+    if (is_string($value))
+    {
     $value = date_create_from_format('d/m/Y', $value);
+    }
+
     $today = new \DateTime(date('Y-m-d'));
 
     if ($today > $value)

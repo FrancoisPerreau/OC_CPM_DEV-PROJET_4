@@ -14,6 +14,7 @@ use CL\TicketingBundle\Validator as TicketingAssert;
  * @ORM\Table(name="PURCHASE")
  * @ORM\Entity(repositoryClass="CL\TicketingBundle\Repository\PurchaseRepository")
  * @TicketingAssert\EntireDay
+ * @TicketingAssert\NoMore
  */
 class Purchase
 {
@@ -55,7 +56,7 @@ class Purchase
      * @Assert\NotBlank
      * @TicketingAssert\IsOpen()
      * @TicketingAssert\NoTuesday()
-     * @TicketingAssert\NoPastDays
+     * @TicketingAssert\NoPastDays()
      */
     private $visitDate;
 
@@ -78,6 +79,7 @@ class Purchase
      *     choices = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
      *     message = "Ce nombre de billets n'est pas valide."
      * )
+     *
      */
      private $ticketNb;
 

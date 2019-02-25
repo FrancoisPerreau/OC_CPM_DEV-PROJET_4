@@ -10,30 +10,28 @@ class HydratePurchase
   private $session;
   private $serviceGenerateCode;
   private $serviceAddedPrices;
+  private $serviceConvertDatePicker;
 
   public function __construct(
     Session $session,
     GenerateCodeWithDate $serviceGenerateCode,
-    AddedPrices $serviceAddedPrices
+    AddedPrices $serviceAddedPrices,
+    ConvertDatepickerInDatetime $serviceConvertDatePicker
     )
   {
     $this->session = $session;
     $this->serviceGenerateCode = $serviceGenerateCode;
     $this->serviceAddedPrices = $serviceAddedPrices;
+    $this->serviceConvertDatePicker = $serviceConvertDatePicker;
   }
 
   public function hydrate(Purchase $purchase)
   {
     $purchase = $this->session->get('Purchase');
-    // $date = strtotime($purchase->getVisitDate());
     $date = $purchase->getVisitDate();
 
-    if (is_string($date))
-    {
-    $date = strtotime($purchase->getVisitDate());
-    }
-
-    $date = date('Y/m/d');
+    $date = $this->serviceConvertDatePicker
+                 ->convertDatepicker($date);
     // dump($date);die;
 
     $purchaseCode = $this
@@ -41,12 +39,11 @@ class HydratePurchase
       ->createPurchaseCode($purchase->getCreatedAt());
 
     $tickets = $purchase->getTickets();
-    $totalPrice = $this
-      ->serviceAddedPrices
-      ->totalPrice($tickets);
+    $totalPrice = $this->serviceAddedPrices
+                       ->totalPrice($tickets);
 
 
-    $purchase->setVisitDate(new \DateTime($date));
+    $purchase->setVisitDate($date);
     $purchase->setCode($purchaseCode);
     $purchase->setPrice($totalPrice);
     }
