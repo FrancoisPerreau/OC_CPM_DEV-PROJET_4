@@ -7,11 +7,20 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+use CL\TicketingBundle\Services\ConvertDatepickerInDatetime;
 use CL\TicketingBundle\TicketingConstants\DayClosedAndHourLimit;
 
 
 class EntireDayValidator extends ConstraintValidator
 {
+  private $serviceConvertDatePicker;
+
+  public function __construct(ConvertDatepickerInDatetime $serviceConvertDatePicker)
+  {
+     $this->serviceConvertDatePicker = $serviceConvertDatePicker;
+   }
+
+
   /**
    * @param  $value
    * @param  Constraint $constraint
@@ -21,12 +30,11 @@ class EntireDayValidator extends ConstraintValidator
 
     $choiceDate = $value->getVisitDate();
     $visitType = $value->getVisitType();
-
-    if (is_string($choiceDate)) {
-      $choiceDate = date_create_from_format('d/m/Y', $choiceDate);
-    }
-
+    // $choiceDate = '26/02/2019';
+    $choiceDate = $this->serviceConvertDatePicker
+                       ->convertDatepicker($choiceDate);
     $now = new \DateTime('now');
+
 
     if ($now->format('d') == $choiceDate->format('d') &&
         $now->format('m') == $choiceDate->format('m') &&

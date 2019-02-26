@@ -6,25 +6,32 @@ namespace CL\TicketingBundle\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
+use CL\TicketingBundle\Services\ConvertDatepickerInDatetime;
 use CL\TicketingBundle\TicketingConstants\DayClosedAndHourLimit;
 
 
 class IsOpenValidator extends ConstraintValidator
 {
+  private $serviceConvertDatePicker;
+
+  public function __construct(ConvertDatepickerInDatetime $serviceConvertDatePicker)
+  {
+     $this->serviceConvertDatePicker = $serviceConvertDatePicker;
+   }
+
+
   /**
    * @param  $value
    * @param  Constraint $constraint
    */
   public function validate($value, Constraint $constraint)
   {
-    // $value = "25/12/2019";
-    if (is_string($value)) {
-      $value = date_create_from_format('d/m/Y', $value);
-    }
+    // $value = "25/12/2021";
+    $choiceDate = $this->serviceConvertDatePicker
+                       ->convertDatepicker($value);
 
-    // $value = date_create_from_format('d/m/Y', $value);
-    $choiceDay = $value->format('d');
-    $choiceMonth = $value->format('m');
+    $choiceDay = $choiceDate->format('d');
+    $choiceMonth = $choiceDate->format('m');
 
     $today = new \Datetime('today');
     $thisYear = $today->format('Y');

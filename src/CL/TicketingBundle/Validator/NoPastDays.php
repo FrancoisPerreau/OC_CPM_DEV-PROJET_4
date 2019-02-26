@@ -10,4 +10,9 @@ use Symfony\Component\Validator\Constraint;
 class NoPastDays extends Constraint
 {
   public $message = "Désolé, cette date est déjà passée.";
+
+  public function validateBy()
+  {
+    return 'ticketing_noPastDays';
+  }
 }

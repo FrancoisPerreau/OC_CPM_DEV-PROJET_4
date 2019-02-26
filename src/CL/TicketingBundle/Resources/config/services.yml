@@ -49,6 +49,21 @@ services:
           - %locale%
 
 
+# Services Validator
+# ==============================
+   cl_ticketing.validator.entireDay:
+       class: CL\TicketingBundle\Validator\EntireDayValidator
+       arguments:
+         - "@cl_ticketing.convertDatepickerInDatetime"
+       tags:
+         - { name: validator.constraint_validator, alias: ticketing_entireDay }
+
+   cl_ticketing.validator.isOpen:
+       class: CL\TicketingBundle\Validator\IsOpenValidator
+       arguments:
+         - "@cl_ticketing.convertDatepickerInDatetime"
+       tags:
+         - { name: validator.constraint_validator, alias: ticketing_isOpen }
 
    cl_ticketing.validator.noMore:
        class: CL\TicketingBundle\Validator\NoMoreValidator
@@ -57,3 +72,17 @@ services:
          - "@cl_ticketing.convertDatepickerInDatetime"
        tags:
          - { name: validator.constraint_validator, alias: ticketing_noMore }
+
+   cl_ticketing.validator.noPastDays:
+       class: CL\TicketingBundle\Validator\NoPastDaysValidator
+       arguments:
+         - "@cl_ticketing.convertDatepickerInDatetime"
+       tags:
+         - { name: validator.constraint_validator, alias: ticketing_noPastDays }
+
+   cl_ticketing.validator.noTuesday:
+       class: CL\TicketingBundle\Validator\NoTuesdayValidator
+       arguments:
+         - "@cl_ticketing.convertDatepickerInDatetime"
+       tags:
+         - { name: validator.constraint_validator, alias: ticketing_noTuesday }

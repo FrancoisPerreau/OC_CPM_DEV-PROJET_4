@@ -6,9 +6,18 @@ namespace CL\TicketingBundle\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
+use CL\TicketingBundle\Services\ConvertDatepickerInDatetime;
+
 
 class NoTuesdayValidator extends ConstraintValidator
 {
+  private $serviceConvertDatePicker;
+
+  public function __construct(ConvertDatepickerInDatetime $serviceConvertDatePicker)
+  {
+     $this->serviceConvertDatePicker = $serviceConvertDatePicker;
+   }
+
   /**
    * @param  $value
    * @param  Constraint $constraint
@@ -16,11 +25,10 @@ class NoTuesdayValidator extends ConstraintValidator
   public function validate($value, Constraint $constraint)
   {
     // $value = "12/02/2019";
-    if (is_string($value)) {
-      $value = date_create_from_format('d/m/Y', $value);
-    }
+    $choiceDate = $this->serviceConvertDatePicker
+                       ->convertDatepicker($value);
 
-    $choiceWeekDay = $value->format('w');
+    $choiceWeekDay = $choiceDate->format('w');
 
     if ($choiceWeekDay == 2)
     {

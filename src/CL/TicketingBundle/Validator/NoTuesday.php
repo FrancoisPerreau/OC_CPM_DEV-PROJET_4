@@ -10,4 +10,9 @@ use Symfony\Component\Validator\Constraint;
 class NoTuesday extends Constraint
 {
   public $message = "Désolé, le musée est fermé le mardi.";
+
+  public function validateBy()
+  {
+    return 'ticketing_noTuesday';
+  }
 }

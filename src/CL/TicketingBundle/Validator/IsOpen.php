@@ -10,4 +10,9 @@ use Symfony\Component\Validator\Constraint;
 class IsOpen extends Constraint
 {
   public $message = "Désolé, le musée est fermé ce jour là.";
+
+  public function validateBy()
+  {
+    return 'ticketing_isOpen';
+  }
 }

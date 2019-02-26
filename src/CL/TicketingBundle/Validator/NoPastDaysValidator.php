@@ -8,8 +8,17 @@ use Symfony\Component\Validator\ConstraintValidator;
 use CL\TicketingBundle\Services\ConvertDatepickerInDatetime;
 
 
+
 class NoPastDaysValidator extends ConstraintValidator
 {
+  private $serviceConvertDatePicker;
+
+  public function __construct(ConvertDatepickerInDatetime $serviceConvertDatePicker)
+  {
+     $this->serviceConvertDatePicker = $serviceConvertDatePicker;
+   }
+
+
   /**
    * @param  $value
    * @param  Constraint $constraint
@@ -18,14 +27,12 @@ class NoPastDaysValidator extends ConstraintValidator
   {
     // $value = "22/02/2019";
 
-    if (is_string($value))
-    {
-    $value = date_create_from_format('d/m/Y', $value);
-    }
+    $choiceDate = $this->serviceConvertDatePicker
+                       ->convertDatepicker($value);
 
     $today = new \DateTime(date('Y-m-d'));
 
-    if ($today > $value)
+    if ($today > $choiceDate)
     {
       $this->context->addViolation($constraint->message);
     }

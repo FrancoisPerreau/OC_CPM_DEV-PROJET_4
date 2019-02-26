@@ -7,8 +7,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 use Doctrine\ORM\EntityManager;
-// use Doctrine\ORM\EntityRepository;
-// use Doctrine\ORM\EntityManagerInterface;
+
 use CL\TicketingBundle\Entity\Purchase;
 use CL\TicketingBundle\Services\ConvertDatepickerInDatetime;
 use CL\TicketingBundle\TicketingConstants\TicketingGeneral;
