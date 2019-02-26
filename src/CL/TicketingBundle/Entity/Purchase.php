@@ -91,7 +91,7 @@ class Purchase
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity="CL\TicketingBundle\Entity\Ticket", mappedBy="visit", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="CL\TicketingBundle\Entity\Ticket", mappedBy="purchase", cascade={"persist"})
      * @Assert\Valid()
      */
     private $tickets;

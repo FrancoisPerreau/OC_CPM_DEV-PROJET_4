@@ -132,4 +132,18 @@ class TicketingController extends Controller
 
     );
     }
+
+
+    /**
+     * @Route("/mail", name="template_mail")
+     */
+    public function mailAction(Request $request)
+    {
+        $session = new Session;
+        $purchase = $session->get('Purchase');
+
+        return $this->render('@CLTicketing/Ticketing/Emails/notification.html.twig',[
+            'purchase' => $purchase
+        ]);
+    }
 }

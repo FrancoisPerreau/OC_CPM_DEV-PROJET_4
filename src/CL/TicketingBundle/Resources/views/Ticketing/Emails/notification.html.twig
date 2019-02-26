@@ -1,0 +1,259 @@
+{# src/CL/TicketingBundle/Resources/views/Ticketing/Emails/notification.html.twig #}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Louvre | Commande</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      /* Fonts and Content */
+      body,
+      td {
+        /* padding: 10px; */
+        font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif;
+        font-size: 14px;
+      }
+      .tab-billets {
+        margin-bottom: 30px;
+      }
+      .tab-billets th,
+      .tab-billets td {
+        padding: 5px;
+      }
+      .tab-billets td {
+        border-top: 1px solid #dee2e6;
+      }
+      .total-price {
+        background-color: purple;
+      }
+      .total-price p {
+        margin: 10px 0 30px 0;
+        padding: .25rem .75rem;
+        color:#fff;
+      }
+      .asterisque {
+        font-size: 14px;
+        font-weight: 600;
+        color: #dc3545!important
+      }
+      .text-comment{
+        margin-bottom: 5px;
+        font-size: 12px;
+        line-height: 12px;
+        text-align: left;
+        color: #6c757d!important
+      }
+      .text-danger {
+        color: #dc3545!important
+      }
+      body {
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+        -webkit-text-size-adjust: none;
+        -ms-text-size-adjust: none;
+      }
+      h2 {
+        padding-top: 12px;
+        /* ne fonctionnera pas sous Outlook 2007+ */
+        color: #138496;
+        font-size: 22px;
+      }
+    </style>
+
+  </head>
+  <body style="margin:0px; padding:0px; -webkit-text-size-adjust:none;">
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#fff">
+      <tbody>
+        <tr>
+          <td align="center" bgcolor="#fff">
+            <table cellpadding="0" cellspacing="0" border="0">
+              <tbody>
+                <!-- entete -->
+                <tr class="pagetoplogo">
+                  <td class="w640" width="640">
+                    <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#000">
+                      <tbody>
+                        <tr>
+                          <td class="w140" width="140" valign="top">
+                            <div class="pagetoplogo-content">
+                              <img style="text-decoration: none; display: block; border: solid 1px #fff; margin: 10px 0px 10px 10px" src="{{asset('theme/img/logo_louvre.jpg')}}" alt="Logo du Louvre" width="131" height="40"/>
+                            </div>
+                          </td>
+                          <!-- <td width="10"></td> -->
+                          <td width="410" valign="top">
+                            <div align="left" class="article-content" style="padding-left:20px;">
+                              <h2 style="padding: 0px!important; color: #fff; text-transform: uppercase;">Votre commande</h2>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- commande -->
+                <tr class="content">
+                  <td class="w640" width="640" bgcolor="#ffffff">
+                    <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0">
+                      <tbody>
+                        <tr>
+                          <td class="w30" width="30"></td>
+                          <td class="w580" width="580">
+                            <!-- une zone de contenu -->
+                            <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+                              <tbody>
+                                <tr>
+                                  <td class="w580" width="580">
+                                    <h2 style="color:#0E7693; font-size:22px; padding-top:12px;">
+                                      Détail de la commande
+                                    </h2>
+
+                                    <div align="left" class="article-content">
+                                      <p>
+                                        <strong>
+                                          Date de la commande :
+                                        </strong>
+                                        {{ purchase.createdAt|localizeddate('short', 'none', app.request.locale) }}
+                                        <br>
+                                        <strong>
+                                          N° de réservation :
+                                        </strong>
+                                        {{ purchase.code }}
+                                      </p>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="w580" width="580" height="1" bgcolor="#c7c5c5"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <!-- fin zone -->
+
+                            <!-- billets -->
+                            <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+                              <tbody>
+                                <tr>
+                                  <td class="w580" width="580">
+                                    <div >
+                                      <h3>Vous avez commandé
+                                        {{ purchase.tickets|length }}
+                                        {% if purchase.tickets | length < 2 %}
+                                          billet
+                                        {% else %}
+                                          billets
+                                        {% endif %}
+                                        :
+                                      </h3>
+
+                                      {% for ticket in purchase.tickets %}
+                                        <div style="text-align: left;">
+                                          {% set counter = (counter | default(0)) + 1 %}
+
+                                          <table class="w580 tab-billets" width="580" cellpadding="0" cellspacing="0" border="0">
+                                            <thead class="w580" width="580">
+                                              <tr class="w580" width="580" style="background-color: #138496">
+
+                                                <th scope="col" style="color:#fff;">
+                                                  {% if purchase.tickets | length > 1 %}
+                                                    Billet n°{{ counter }}
+                                                  {% else %}
+                                                    Billet
+                                                  {% endif %}
+                                                </th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <tr>
+                                                <td>Code :
+                                                  {{ ticket.code }}</td>
+                                              </tr>
+                                              <tr>
+                                                <td>
+                                                  Date de la visite :
+                                                  {{ purchase.visitDate|localizeddate('full', 'none', app.request.locale) }}
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td>
+                                                  Type de viste :
+                                                  {% if purchase.visitType == 0 %}
+                                                    Journée
+                                                  {% else %}
+                                                    Demi-journée
+                                                  {% endif %}
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td>
+                                                  Billet au nom de :
+                                                  {{ ticket.lastname|upper }}
+                                                  {{ ticket.firstname|capitalize }}
+                                                </td>
+                                              </tr>
+                                              <tr style="background-color: #bee5eb!important;">
+                                                <td>
+                                                  <strong>Tarif :
+                                                    {{ ticket.price }}
+                                                    €
+                                                  </strong>
+                                                  {% if ticket.reducedPrice == true %}
+                                                    <br>
+                                                    <span class="text-comment text-danger">Tarif réduit accordé dans certaines conditions*,
+                                                      <strong>un justificatif vous sera demandé à l'entrée.</strong>
+                                                    </span>
+                                                  {% endif %}
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                          {% if ticket.reducedPrice == true %}
+                                            <p class="text-muted text-comment">
+                                              <span class="asterisque">*</span>
+                                              Étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…)
+                                            </p>
+                                          {% endif %}
+                                        </div>
+                                      {% endfor %}
+
+                                      <div class="total-price text-left">
+                                        <p>
+                                          <strong>Total de la commande :
+                                            {{ purchase.price }}
+                                            €</strong>
+                                        </p>
+                                      </div>
+
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="w580" width="580" height="1" bgcolor="#c7c5c5"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+
+
+
+                          </td>
+                          <td class="w30" width="30"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+
+
+
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+
+</html>
