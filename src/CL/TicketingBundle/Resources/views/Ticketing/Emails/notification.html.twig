@@ -16,8 +16,8 @@
       .tab-billets {
         margin-bottom: 30px;
       }
-      .tab-billets th,
-      .tab-billets td {
+      .tab-billets td,
+      .tab-billets th {
         padding: 5px;
       }
       .tab-billets td {
@@ -27,24 +27,24 @@
         background-color: purple;
       }
       .total-price p {
-        margin: 10px 0 30px 0;
-        padding: .25rem .75rem;
-        color:#fff;
+        margin: 10px 0 30px;
+        padding: 0.25rem 0.75rem;
+        color: #fff;
       }
       .asterisque {
         font-size: 14px;
         font-weight: 600;
-        color: #dc3545!important
+        color: #dc3545!important;
       }
-      .text-comment{
+      .text-comment {
         margin-bottom: 5px;
         font-size: 12px;
         line-height: 12px;
         text-align: left;
-        color: #6c757d!important
+        color: #6c757d!important;
       }
       .text-danger {
-        color: #dc3545!important
+        color: #dc3545!important;
       }
       body {
         background-color: #fff;
@@ -218,7 +218,7 @@
                                         </div>
                                       {% endfor %}
 
-                                      <div class="total-price text-left">
+                                      <div class="total-price">
                                         <p>
                                           <strong>Total de la commande :
                                             {{ purchase.price }}
@@ -235,9 +235,6 @@
                               </tbody>
                             </table>
 
-
-
-
                           </td>
                           <td class="w30" width="30"></td>
                         </tr>
@@ -245,9 +242,6 @@
                     </table>
                   </td>
                 </tr>
-
-
-
               </tbody>
             </table>
           </td>
