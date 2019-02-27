@@ -1,0 +1,21 @@
+{# app/Resources/TwigBundle/views/Exception/error404.html.twig #}
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+  {{ status_text }} - {{parent()}}
+{% endblock %}
+
+{% block body %}
+  <div class="text-center">
+    <h2>
+      Une erreur {{ status_code }} est survenue ({{ status_text }})
+    </h2>
+    <p>
+      <br>
+      <a href="{{ path('homepage') }}" class="btn btn-info">
+        Revenir à l'accueil
+      </a>
+    </p>
+  </div>
+
+{% endblock %}
