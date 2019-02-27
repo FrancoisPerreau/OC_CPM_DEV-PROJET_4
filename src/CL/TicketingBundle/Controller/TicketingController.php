@@ -94,7 +94,8 @@ class TicketingController extends Controller
         }
 
         return $this->render('@CLTicketing/Ticketing/purchase.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'purchase' => $purchase
         ]);
     }
 
@@ -119,9 +120,9 @@ class TicketingController extends Controller
 
             $this->container->get('cl_ticketing.manager')->save($purchase);
 
-            $this->addFlash('success', 'Votre commande a bien enregistrée !');
+            $this->addFlash('success', 'Votre commande a bien été enregistrée !');
 
-            return $this->redirectToRoute('purchase_confirmation');
+            return $this->redirectToRoute('purchase_thanks');
         }
 
 
@@ -135,12 +136,28 @@ class TicketingController extends Controller
 
 
     /**
+     * @Route("/thanks", name="purchase_thanks")
+     */
+    public function thanksAction()
+    {
+        $session = new Session;
+        $purchase = $session->get('Purchase');
+
+        return $this->render('@CLTicketing/Ticketing/thanks.html.twig',[
+            'purchase' => $purchase
+        ]);
+    }
+
+
+    /**
      * @Route("/mail", name="template_mail")
      */
     public function mailAction(Request $request)
     {
         $session = new Session;
         $purchase = $session->get('Purchase');
+
+        $session->invalidate();
 
         return $this->render('@CLTicketing/Ticketing/Emails/notification.html.twig',[
             'purchase' => $purchase

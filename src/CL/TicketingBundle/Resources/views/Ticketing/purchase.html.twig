@@ -2,13 +2,21 @@
 
 {% extends 'layout.html.twig' %}
 
+{% block title %}
+  {% if purchase.ticketNb  < 2 %}
+    Billet
+  {% else %}
+    Billets
+  {% endif %}
+  - {{parent()}}
+{% endblock %}
+
 {% block body %}
   <h1>Création des billets</h1>
 
   <!-- ============================ -->
   <!-- Formulaire ================= -->
   <!-- ============================ -->
-  {% embed "@CLTicketing/Ticketing/form/createTicket.html.twig" %}
-  {% endembed %}
+  {% embed "@CLTicketing/Ticketing/form/createTicket.html.twig" %}{% endembed %}
 
 {% endblock %}
