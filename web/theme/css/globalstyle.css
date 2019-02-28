@@ -100,3 +100,18 @@ hr {
   padding: .25rem .75rem;
   color:#fff;
 }
+
+
+/* button.stripe-button-el,
+button.stripe-button-el>span {
+  background-color: #17a2b8 !important;
+  background-image: none;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+button.stripe-button-el:hover,
+button.stripe-button-el>span:hover {
+  color: #fff;
+  background-color: #138496!important;
+  border-color: #117a8b;
+} */

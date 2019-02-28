@@ -46,7 +46,7 @@ services:
    cl_ticketing.convertDatepickerInDatetime:
        class: CL\TicketingBundle\Services\ConvertDatepickerInDatetime
        arguments:
-          - %locale%
+          - "%locale%"
 
 
 # Services Validator
@@ -93,7 +93,7 @@ services:
    cl_ticketing.email.ticketingMailler:
        class: CL\TicketingBundle\Email\TicketingMailler
        arguments:
-         - "@mailer"         
+         - "@mailer"
          - "@templating"
 
    cl_ticketing.doctrineListener.ticketingCreationListener:

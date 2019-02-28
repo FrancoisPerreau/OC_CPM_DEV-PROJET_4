@@ -123,4 +123,44 @@
   {% embed "@CLTicketing/Ticketing/form/emailPurchase.html.twig" %}
   {% endembed %}
 
+
+
+  <!-- ============================ -->
+  <!-- STRIPE ================= -->
+  <!-- ============================ -->
+
+  <form action="{{ path('purchase_thanks') }}" method="POST">
+    <script
+      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-key="pk_test_eeAb1jAaE5nmIbHsMg9HGLHz"
+      data-image="{{ asset('theme/img/Louvre_Museum_icon.png') }}"
+      data-locale="{{ app.request.locale }}"
+      data-name="Louvre"
+      data-description="Billetterie"
+      data-amount="{{ (purchase.price) * 100 }}"
+      data-currency="eur"
+      data-email="{{ purchase.email }}"
+      data-allow-remember-me="false"
+      data-zip-code="true"
+      data-label="Validez la commande"
+      >
+    </script>
+  </form>
+
+
+
+  <!-- <div class="form-group">
+    <button id="myStripeButton" class="btn btn-info" type="submit">Validez la commande</button>
+  </div> -->
+{% endblock %}
+
+
+
+{% block javascripts %}
+  {{ parent() }}
+  <script>
+    $(function() {
+      $(".stripe-button-el").replaceWith('<button type="submit" class="btn btn-info">Validez la commande</button>');
+    });
+  </script>
 {% endblock %}
