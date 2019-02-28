@@ -27,6 +27,7 @@ class TicketingController extends Controller
      */
     public function indexAction(Request $request)
     {
+        // On vide la session en arrivant sur la home
         $session = new Session;
         $session->invalidate();
 
@@ -56,6 +57,13 @@ class TicketingController extends Controller
     {
         $session = new Session;
         $purchase = $session->get('Purchase');
+
+        // Si la session n'existe pas on retourne à la home
+        if (!$purchase) {
+          return $this->redirectToRoute('homepage');
+        }
+
+
         $tickets = $purchase->getTickets();
         $ticketNb = $purchase->getTicketNb();
 
@@ -88,7 +96,7 @@ class TicketingController extends Controller
             $this->container->get('cl_ticketing.hydratePurchase')->hydrate($purchase);
 
             // $session = new Session;
-            $session->set('Purchase', $purchase);
+            $session->set('PurchaseTickets', $purchase);
 
             return $this->redirectToRoute('purchase_confirmation');
         }
@@ -105,7 +113,12 @@ class TicketingController extends Controller
     public function confirmationAction(Request $request)
     {
         $session = new Session;
-        $purchase = $session->get('Purchase');
+        $purchase = $session->get('PurchaseTickets');
+
+        // Si la session n'existe pas on retourne à la home
+        if (!$purchase) {
+          return $this->redirectToRoute('homepage');
+        }
 
         $form = $this->createForm(PurchaseEmailType::class, $purchase);
         $form->handleRequest($request);
@@ -122,6 +135,20 @@ class TicketingController extends Controller
 
             $this->addFlash('success', 'Votre commande a bien été enregistrée !');
 
+
+            // TEST STRIPE
+            // ======================================
+            \Stripe\Stripe::setApiKey("sk_test_06rIziB73choWZTDUFoNNMXt");
+
+            $charge = \Stripe\Charge::create([
+                'amount' => 999,
+                'currency' => 'usd',
+                'source' => 'tok_visa',
+                'receipt_email' => 'jenny.rosen@example.com',
+            ]);
+            dump($charge);die;
+
+            // ======================================
             return $this->redirectToRoute('purchase_thanks');
         }
 
