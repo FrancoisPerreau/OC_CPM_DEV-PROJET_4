@@ -5,14 +5,16 @@ namespace CL\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Symfony\Component\Validator\Constraints as Assert;
+use CL\TicketingBundle\Validator as TicketingAssert;
 
 /**
  * Purchase
  *
  * @ORM\Table(name="PURCHASE")
  * @ORM\Entity(repositoryClass="CL\TicketingBundle\Repository\PurchaseRepository")
+ * @TicketingAssert\EntireDay
+ * @TicketingAssert\NoMore
  */
 class Purchase
 {
@@ -44,7 +46,6 @@ class Purchase
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
-     *
      */
     private $email;
 
@@ -52,6 +53,10 @@ class Purchase
      * @var \DateTime
      *
      * @ORM\Column(name="visit_date", type="datetime")
+     * @Assert\NotBlank
+     * @TicketingAssert\IsOpen()
+     * @TicketingAssert\NoTuesday()
+     * @TicketingAssert\NoPastDays()
      */
     private $visitDate;
 
@@ -59,11 +64,22 @@ class Purchase
      * @var bool
      *
      * @ORM\Column(name="visit_type", type="boolean")
+     * @Assert\NotBlank* @Assert\Choice(
+     *     choices = { "0", "1" },
+     *     message = "Ce type de billet n'est pas valide."
+     * )
      */
     private $visitType;
 
     /**
      * @ORM\Column(name="ticket_nb", type="integer")
+     * @Assert\NotBlank
+     * @Assert\Type("int")
+     * @Assert\Choice(
+     *     choices = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+     *     message = "Ce nombre de billets n'est pas valide."
+     * )
+     *
      */
      private $ticketNb;
 
@@ -75,10 +91,17 @@ class Purchase
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity="CL\TicketingBundle\Entity\Ticket", mappedBy="visit", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="CL\TicketingBundle\Entity\Ticket", mappedBy="purchase", cascade={"persist"})
      * @Assert\Valid()
      */
     private $tickets;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="stripe_id", type="string", length=255)
+     */
+    private $stripeChargeId;
 
 
     // **********************************
@@ -123,30 +146,6 @@ class Purchase
     public function getCreatedAt()
     {
         return $this->createdAt;
-    }
-
-    /**
-     * Set price.
-     *
-     * @param float $price
-     *
-     * @return Purchase
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price.
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
     }
 
     /**
@@ -198,6 +197,103 @@ class Purchase
     }
 
     /**
+     * Set visitDate.
+     *
+     * @param \DateTime $visitDate
+     *
+     * @return Purchase
+     */
+    public function setVisitDate($visitDate)
+    {
+        $this->visitDate = $visitDate;
+
+        return $this;
+    }
+
+    /**
+     * Get visitDate.
+     *
+     * @return \DateTime
+     */
+    public function getVisitDate()
+    {
+        return $this->visitDate;
+    }
+
+    /**
+     * Set visitType.
+     *
+     * @param bool $visitType
+     *
+     * @return Purchase
+     */
+    public function setVisitType($visitType)
+    {
+        $this->visitType = $visitType;
+
+        return $this;
+    }
+
+    /**
+     * Get visitType.
+     *
+     * @return bool
+     */
+    public function getVisitType()
+    {
+        return $this->visitType;
+    }
+
+    /**
+     * Set ticketNb.
+     *
+     * @param int $ticketNb
+     *
+     * @return Purchase
+     */
+    public function setTicketNb($ticketNb)
+    {
+        $this->ticketNb = $ticketNb;
+
+        return $this;
+    }
+
+    /**
+     * Get ticketNb.
+     *
+     * @return int
+     */
+    public function getTicketNb()
+    {
+        return $this->ticketNb;
+    }
+
+    /**
+     * Set price.
+     *
+     * @param float $price
+     *
+     * @return Purchase
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price.
+     *
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+
+    /**
      * Get tickets
      */
     public function getTickets()
@@ -233,4 +329,5 @@ class Purchase
     {
         return $this->tickets->removeElement($ticket);
     }
+
 }

@@ -25,7 +25,13 @@
 
   </p>
   <p>
-    Merci de les présenter à l'accueil, le jour de votre visite, <strong>ainsi que les éventuels justificatifs si vous bénéficiez du tarif réduit.</strong>
+    Merci de
+    {% if purchase.ticketNb < 2 %}
+      le présenter
+    {% else %}
+      les présenter
+    {% endif %}
+     à l'accueil, le jour de votre visite, <strong>ainsi que les éventuels justificatifs si vous bénéficiez du tarif réduit.</strong>
   </p>
 
 

@@ -58,7 +58,7 @@ body {
   margin-top: -1rem;
   margin-left: -1rem;
   margin-right: -1rem;
-  margin-bottom: 2.5rem;
+  /* margin-bottom: 2.5rem; */
 
   padding: 1rem;
 
@@ -96,13 +96,20 @@ body {
   border-bottom-color: #fff;
 }
 
+.masthead-brand {
+  float: left;
+}
+.nav-masthead {
+  float: right;
+}
+
 @media (min-width: 48em) {
-  .masthead-brand {
+  /* .masthead-brand {
     float: left;
   }
   .nav-masthead {
     float: right;
-  }
+  } */
 }
 
 

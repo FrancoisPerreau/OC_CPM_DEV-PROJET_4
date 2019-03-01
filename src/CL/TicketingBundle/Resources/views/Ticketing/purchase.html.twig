@@ -12,7 +12,16 @@
 {% endblock %}
 
 {% block body %}
-  <h1>Création des billets</h1>
+  {% embed "@CLTicketing/Ticketing/ariane.html.twig" %}{% endembed %}
+
+  <h1>
+    Création
+    {% if purchase.ticketNb  < 2 %}
+      du billet
+    {% else %}
+      des billets
+    {% endif %}
+  </h1>
 
   <!-- ============================ -->
   <!-- Formulaire ================= -->

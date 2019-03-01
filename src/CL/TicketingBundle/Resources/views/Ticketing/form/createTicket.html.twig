@@ -7,7 +7,9 @@
 
   {% for ticket in form.tickets %}
     <div class="ticket-container">
-      <h3 class="text-left ticket-title">Billet n°{{ loop.index }}</h3>
+      {% if purchase.ticketNb  > 1 %}
+        <h3 class="text-left ticket-title">Billet n°{{ loop.index }}</h3>
+      {% endif %}
 
       <div class="form-group text-left">
         {{ form_label(ticket.firstname) }}
@@ -32,6 +34,9 @@
       <div class="form-group text-left">
         {{ form_label(ticket.reducedPrice) }}
         {{ form_widget(ticket.reducedPrice) }}
+        <p class="text-muted text-comment">          
+          Tarif accordé dans certaines conditions (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…)
+        </p>
       </div>
 
       {{ form_rest(ticket) }}
@@ -44,6 +49,6 @@
   <div class="form-group">
     <button class="btn btn-info" type="submit">Réservez vos billets</button>
   </div>
-  
+
   {{ form_rest(form) }}
 {{ form_end(form) }}

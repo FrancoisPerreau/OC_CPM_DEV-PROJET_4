@@ -40,7 +40,7 @@ class EntireDayValidator extends ConstraintValidator
         $now->format('m') == $choiceDate->format('m') &&
         $now->format('Y') == $choiceDate->format('Y') &&
         $visitType == 0 &&
-        $now->format('H') > DayClosedAndHourLimit::HALF_DAY_HOUR
+        $now->format('H') > DayClosedAndHourLimit::HALF_DAY_HOUR - 1
         )
     {
       // $this->context->addViolation($constraint->message);

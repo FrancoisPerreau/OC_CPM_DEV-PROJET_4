@@ -5,6 +5,14 @@ body {
   text-align: left;
 }
 
+.mastfoot .inner p {
+  font-size: .75rem!important;
+}
+
+h1 {
+  margin-top: 2.5rem;
+}
+
 
 .container-bg {
   background-color: #f5f5f5;
@@ -17,6 +25,37 @@ hr {
 .btn-submit {
   background-color: #138496;
 }
+
+
+/* ============ ARIANE ============ */
+.ariane {
+  margin-top: .5rem;
+}
+
+.ariane p {
+  font-weight: bold;
+  font-size: .75rem;
+}
+
+.ariane a {
+  font-weight: 400;
+  color: inherit;
+  text-decoration: underline;
+
+  transition: .5s;
+}
+
+.ariane a:hover {
+  font-weight: bold;
+  color: #000;
+
+}
+
+.ariane_active {
+
+  color: #138496;
+}
+
 
 /* ============= HOME ============= */
 .intro {

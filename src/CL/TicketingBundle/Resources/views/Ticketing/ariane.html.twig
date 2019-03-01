@@ -1,0 +1,19 @@
+{# src/CL/TicketingBundle/Resources/views/Ticketing/ariane.html.twig #}
+
+<div class="ariane text-muted">
+  <p>
+    Billetterie |
+    {% if app.request.attributes.get('_route') == 'purchase_regitration' %}
+      <span class="ariane_active">création de la commande</span>
+    {% endif %}
+
+    {% if app.request.attributes.get('_route') == 'purchase_confirmation' %}
+      <a href="{{ path('purchase_regitration') }}">création de la commande</a>
+      <span class="ariane_active">
+        | Validation</span>
+
+    {% endif %}
+
+  </p>
+
+</div>

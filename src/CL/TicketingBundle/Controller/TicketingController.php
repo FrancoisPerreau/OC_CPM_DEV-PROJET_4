@@ -5,18 +5,15 @@ namespace CL\TicketingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-// use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Routing\Annotation\Route;
-// use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-// use Doctrine\Common\Collections\ArrayCollection;
 
 use CL\TicketingBundle\Entity\Purchase;
 use CL\TicketingBundle\Entity\Ticket;
 
 use CL\TicketingBundle\Form\PurchaseDateChoiceType;
 use CL\TicketingBundle\Form\PurchaseTicketType;
-use CL\TicketingBundle\Form\PurchaseEmailType;
+// use CL\TicketingBundle\Form\PurchaseEmailType;
 
 
 
@@ -28,17 +25,17 @@ class TicketingController extends Controller
     public function indexAction(Request $request)
     {
         // On vide la session en arrivant sur la home
-        $session = new Session;
+        $session = $this->get('session');
         $session->invalidate();
 
         $purchase = new Purchase;
 
+        // Formulaire
         $form = $this->createForm(PurchaseDateChoiceType::class, $purchase);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $session = new Session;
             $session->set('Purchase', $form->getData());
 
             return $this->redirectToRoute('purchase_regitration');
@@ -64,11 +61,11 @@ class TicketingController extends Controller
         }
 
 
+        // Collection de formulaires,
+        // Création des instances de Ticket en fonction du nb renseigné
         $tickets = $purchase->getTickets();
         $ticketNb = $purchase->getTicketNb();
 
-
-        // Collection de formulaires
         if (count($tickets) === 0)
         {
             for ($i=0; $i < $ticketNb; $i++)
@@ -78,7 +75,7 @@ class TicketingController extends Controller
             }
         }
 
-
+        // Formulaire
         $form = $this->createForm(PurchaseTicketType::class, $purchase);
         $form->handleRequest($request);
 
@@ -95,7 +92,6 @@ class TicketingController extends Controller
             // Hydrate Purchase
             $this->container->get('cl_ticketing.hydratePurchase')->hydrate($purchase);
 
-            // $session = new Session;
             $session->set('PurchaseTickets', $purchase);
 
             return $this->redirectToRoute('purchase_confirmation');
@@ -112,7 +108,7 @@ class TicketingController extends Controller
      */
     public function confirmationAction()
     {
-        $session = new Session;
+        $session = $this->get('session');
         $purchase = $session->get('PurchaseTickets');
 
         // Si la session n'existe pas on retourne à la home
@@ -120,41 +116,7 @@ class TicketingController extends Controller
           return $this->redirectToRoute('homepage');
         }
 
-        // $form = $this->createForm(PurchaseEmailType::class, $purchase);
-        // $form->handleRequest($request);
-
-        // if ($form->isSubmitted() && $form->isValid())
-        // {
-        //     // $data = $form->getData();
-        //     $session = new Session;
-        //     $purchase = $session->get('Purchase');
-        //
-        //     // dump($purchase);die;
-        //
-        //     $this->container->get('cl_ticketing.manager')->save($purchase);
-        //
-        //     $this->addFlash('success', 'Votre commande a bien été enregistrée !');
-        //
-        //
-        //     // TEST STRIPE
-        //     // ======================================
-        //     \Stripe\Stripe::setApiKey("sk_test_06rIziB73choWZTDUFoNNMXt");
-        //
-        //     $charge = \Stripe\Charge::create([
-        //         'amount' => 999,
-        //         'currency' => 'usd',
-        //         'source' => 'tok_visa',
-        //         'receipt_email' => 'jenny.rosen@example.com',
-        //     ]);
-        //     dump($charge);die;
-        //
-        //     // ======================================
-        //     return $this->redirectToRoute('purchase_thanks');
-        // }
-
-
         return $this->render('@CLTicketing/Ticketing/confirmation.html.twig', [
-            // 'form'=> $form->createView(),
             'purchase' => $purchase
         ]
 
@@ -174,24 +136,14 @@ class TicketingController extends Controller
             return $this->redirectToRoute('homepage');
         }
 
+        $session = $this->get('session');
+        $purchase = $session->get('PurchaseTickets');
 
         $stripeToken = $data['stripeToken'];
-        // dump($data);
-        // dump($stripeToken);
-        // die;
-
-
-
-        $session = new Session;
-        $purchase = $session->get('PurchaseTickets');
 
 
         // Si le stripeToken existe on effectue le payement
         \Stripe\Stripe::setApiKey("sk_test_QLXj1J6fsBOBO2vsXejztsOO");
-
-        // Token is created using Checkout or Elements!
-        // Get the payment token ID submitted by the form:
-        // $token = $_POST['stripeToken'];
 
         $charge = \Stripe\Charge::create([
             'amount' => $purchase->getPrice() * 100,
@@ -199,6 +151,10 @@ class TicketingController extends Controller
             'description' => 'Billetterie',
             'source' => $stripeToken,
         ]);
+
+        // On associe l'id de la charge Stripe à Purchase
+        $chargeId = $charge['id'];
+        $purchase->setStripeChargeId($chargeId);
 
         // Et on entre la commande en BDD
         $this->container->get('cl_ticketing.manager')->save($purchase);
@@ -209,6 +165,15 @@ class TicketingController extends Controller
         return $this->render('@CLTicketing/Ticketing/thanks.html.twig',[
             'purchase' => $purchase
         ]);
+    }
+
+    /**
+     * @Route("/contact", name="ticketing_contact")
+     */
+    public function contactAction(Request $request)
+    {
+
+        return $this->render('@CLTicketing/Ticketing/contact.html.twig');
     }
 
 

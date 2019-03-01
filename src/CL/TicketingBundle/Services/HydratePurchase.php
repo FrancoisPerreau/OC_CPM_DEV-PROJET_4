@@ -32,7 +32,6 @@ class HydratePurchase
 
     $date = $this->serviceConvertDatePicker
                  ->convertDatepicker($date);
-    // dump($date);die;
 
     $purchaseCode = $this
       ->serviceGenerateCode

@@ -29,12 +29,11 @@ class HydrateTicket
 
   public function hydrate(Ticket $ticket)
   {
-    $purchase = $this->session->get('Purchase');    
+    $purchase = $this->session->get('Purchase');
     $date = $purchase->getVisitDate();
     $date = $this->serviceConvertDatePicker->convertDatepicker($date);
 
-    $ticketCode = $this->serviceGenerateCode
-                       ->createTicketCode($date);
+    $ticketCode = $this->serviceGenerateCode->createTicketCode($date);
     $visitType = $purchase->getVisitType();
     $reducedPrice = $ticket->getReducedPrice();
     $birthday = $ticket->getBirthday();

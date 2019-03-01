@@ -96,6 +96,13 @@ class Purchase
      */
     private $tickets;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="stripe_id", type="string", length=255)
+     */
+    private $stripeChargeId;
+
 
     // **********************************
     // CONSTRUCTEUR
@@ -323,4 +330,28 @@ class Purchase
         return $this->tickets->removeElement($ticket);
     }
 
+
+    /**
+     * Set stripeChargeId.
+     *
+     * @param string $stripeChargeId
+     *
+     * @return Purchase
+     */
+    public function setStripeChargeId($stripeChargeId)
+    {
+        $this->stripeChargeId = $stripeChargeId;
+
+        return $this;
+    }
+
+    /**
+     * Get stripeChargeId.
+     *
+     * @return string
+     */
+    public function getStripeChargeId()
+    {
+        return $this->stripeChargeId;
+    }
 }
