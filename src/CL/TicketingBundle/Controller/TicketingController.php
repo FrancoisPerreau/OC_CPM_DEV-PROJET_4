@@ -110,7 +110,7 @@ class TicketingController extends Controller
     /**
      * @Route("/confirmation", name="purchase_confirmation")
      */
-    public function confirmationAction(Request $request)
+    public function confirmationAction()
     {
         $session = new Session;
         $purchase = $session->get('PurchaseTickets');
@@ -120,41 +120,41 @@ class TicketingController extends Controller
           return $this->redirectToRoute('homepage');
         }
 
-        $form = $this->createForm(PurchaseEmailType::class, $purchase);
-        $form->handleRequest($request);
+        // $form = $this->createForm(PurchaseEmailType::class, $purchase);
+        // $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            // $data = $form->getData();
-            $session = new Session;
-            $purchase = $session->get('Purchase');
-
-            // dump($purchase);die;
-
-            $this->container->get('cl_ticketing.manager')->save($purchase);
-
-            $this->addFlash('success', 'Votre commande a bien été enregistrée !');
-
-
-            // TEST STRIPE
-            // ======================================
-            \Stripe\Stripe::setApiKey("sk_test_06rIziB73choWZTDUFoNNMXt");
-
-            $charge = \Stripe\Charge::create([
-                'amount' => 999,
-                'currency' => 'usd',
-                'source' => 'tok_visa',
-                'receipt_email' => 'jenny.rosen@example.com',
-            ]);
-            dump($charge);die;
-
-            // ======================================
-            return $this->redirectToRoute('purchase_thanks');
-        }
+        // if ($form->isSubmitted() && $form->isValid())
+        // {
+        //     // $data = $form->getData();
+        //     $session = new Session;
+        //     $purchase = $session->get('Purchase');
+        //
+        //     // dump($purchase);die;
+        //
+        //     $this->container->get('cl_ticketing.manager')->save($purchase);
+        //
+        //     $this->addFlash('success', 'Votre commande a bien été enregistrée !');
+        //
+        //
+        //     // TEST STRIPE
+        //     // ======================================
+        //     \Stripe\Stripe::setApiKey("sk_test_06rIziB73choWZTDUFoNNMXt");
+        //
+        //     $charge = \Stripe\Charge::create([
+        //         'amount' => 999,
+        //         'currency' => 'usd',
+        //         'source' => 'tok_visa',
+        //         'receipt_email' => 'jenny.rosen@example.com',
+        //     ]);
+        //     dump($charge);die;
+        //
+        //     // ======================================
+        //     return $this->redirectToRoute('purchase_thanks');
+        // }
 
 
         return $this->render('@CLTicketing/Ticketing/confirmation.html.twig', [
-            'form'=> $form->createView(),
+            // 'form'=> $form->createView(),
             'purchase' => $purchase
         ]
 
@@ -165,10 +165,46 @@ class TicketingController extends Controller
     /**
      * @Route("/thanks", name="purchase_thanks")
      */
-    public function thanksAction()
+    public function thanksAction(Request $request)
     {
+        $data = $request->request->all();
+
+        // Si le stripeToken n'existe pas on retourne à la home
+        if (!isset($data['stripeToken'])) {
+            return $this->redirectToRoute('homepage');
+        }
+
+
+        $stripeToken = $data['stripeToken'];
+        // dump($data);
+        // dump($stripeToken);
+        // die;
+
+
+
         $session = new Session;
-        $purchase = $session->get('Purchase');
+        $purchase = $session->get('PurchaseTickets');
+
+
+        // Si le stripeToken existe on effectue le payement
+        \Stripe\Stripe::setApiKey("sk_test_QLXj1J6fsBOBO2vsXejztsOO");
+
+        // Token is created using Checkout or Elements!
+        // Get the payment token ID submitted by the form:
+        // $token = $_POST['stripeToken'];
+
+        $charge = \Stripe\Charge::create([
+            'amount' => $purchase->getPrice() * 100,
+            'currency' => 'eur',
+            'description' => 'Billetterie',
+            'source' => $stripeToken,
+        ]);
+
+        // Et on entre la commande en BDD
+        $this->container->get('cl_ticketing.manager')->save($purchase);
+
+        $this->addFlash('success', 'Votre commande a bien été enregistrée !');
+
 
         return $this->render('@CLTicketing/Ticketing/thanks.html.twig',[
             'purchase' => $purchase
@@ -182,7 +218,7 @@ class TicketingController extends Controller
     public function mailAction(Request $request)
     {
         $session = new Session;
-        $purchase = $session->get('Purchase');
+        $purchase = $session->get('PurchaseTickets');
 
         $session->invalidate();
 

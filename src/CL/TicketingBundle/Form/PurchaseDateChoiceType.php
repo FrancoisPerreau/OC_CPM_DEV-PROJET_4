@@ -10,6 +10,10 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Email;
 
 
 class PurchaseDateChoiceType extends AbstractType
@@ -20,6 +24,18 @@ class PurchaseDateChoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        ->add('email', RepeatedType::class, [
+          'type' => EmailType::class,
+          'invalid_message' => 'Ces deux champs doivent être identiques',
+          // 'options' => ['attr' => ['class' => 'password-field']],
+          'required' => true,
+          'first_options'  => ['label' => 'E-mail'],
+          'second_options' => ['label' => 'Confirmation de l\'e-mail'],
+          'constraints' => [
+              new NotBlank(),
+              new Email(),
+           ],
+        ])
         ->add('visitDate', TextType::class, [
           'required' => true,
           'label' => 'Date',

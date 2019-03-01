@@ -115,16 +115,6 @@
     </div>
   </div>
   <hr>
-
-  <!-- ============================ -->
-  <!-- Formulaire ================= -->
-  <!-- ============================ -->
-
-  {% embed "@CLTicketing/Ticketing/form/emailPurchase.html.twig" %}
-  {% endembed %}
-
-
-
   <!-- ============================ -->
   <!-- STRIPE ================= -->
   <!-- ============================ -->
@@ -132,7 +122,7 @@
   <form action="{{ path('purchase_thanks') }}" method="POST">
     <script
       src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-      data-key="pk_test_eeAb1jAaE5nmIbHsMg9HGLHz"
+      data-key="pk_test_0bh9YrCupJZrLLyLN86toNdC"
       data-image="{{ asset('theme/img/Louvre_Museum_icon.png') }}"
       data-locale="{{ app.request.locale }}"
       data-name="Louvre"
@@ -147,11 +137,6 @@
     </script>
   </form>
 
-
-
-  <!-- <div class="form-group">
-    <button id="myStripeButton" class="btn btn-info" type="submit">Validez la commande</button>
-  </div> -->
 {% endblock %}
 
 

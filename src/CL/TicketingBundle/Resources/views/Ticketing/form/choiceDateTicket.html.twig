@@ -3,6 +3,18 @@
 
 {{ form_start(form) }}
 {{ form_errors(form) }}
+
+<div class="form-group">
+  {{ form_label(form.email.first) }}
+  {{ form_widget(form.email.first) }}
+</div>
+<div class="form-group">
+  {{ form_label(form.email.second) }}
+  {{ form_widget(form.email.second) }}
+</div>
+
+<hr>
+
 <div class="form-group">
   {{ form_label(form.visitDate) }}
   <div class="input-group date" id="datetimepicker13" data-target-input="nearest">
