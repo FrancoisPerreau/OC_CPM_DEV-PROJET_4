@@ -133,30 +133,38 @@
       </thead>
       <tbody>
         <tr>
-          <td class="td-first">Normal (à partir de 12 ans)</td>
-          <td>16 €</td>
-          <td>9 €</td>
+          <td class="td-first">
+            Normal (à partir de {{ constant('CHILD_AGE_MAXI', AgeRanges) }} ans)
+          </td>
+          <td>{{ constant('NORMAL_PRICE_DAY', TicketPrices) }} €</td>
+          <td>{{ constant('NORMAL_PRICE_HALF', TicketPrices) }} €</td>
         </tr>
         <tr>
-          <td class="td-first">Enfant (de 4 à 12 ans)</td>
-          <td>8 €</td>
-          <td>5 €</td>
+          <td class="td-first">
+            Enfant (de {{ constant('CHILD_AGE_MINI', AgeRanges) }}
+             à
+            {{ constant('CHILD_AGE_MAXI', AgeRanges) }} ans)
+          </td>
+          <td>{{ constant('CHILD_PRICE_DAY', TicketPrices) }} €</td>
+          <td>{{ constant('CHILD_PRICE_HALF', TicketPrices) }} €</td>
         </tr>
         <tr>
-          <td class="td-first">Senior (à partir de 60 ans)</td>
-          <td>12 €</td>
-          <td>7 €</td>
+          <td class="td-first">
+            Senior (à partir de {{ constant('SENIOR_AGE_MINI', AgeRanges) }} ans)
+          </td>
+          <td>{{ constant('SENIOR_PRICE_DAY', TicketPrices) }} €</td>
+          <td>{{ constant('SENIOR_PRICE_HALF', TicketPrices) }} €</td>
         </tr>
         <tr>
           <td class="td-first">Réduit<span class="text-danger asterisque">**</span></td>
-          <td>10 €</td>
-          <td>6 €</td>
+          <td>{{ constant('REDUCED_PRICE_DAY', TicketPrices) }} €</td>
+          <td>{{ constant('REDUCED_PRICE_HALF', TicketPrices) }} €</td>
         </tr>
       </tbody>
     </table>
     <p class="text-muted text-comment">
       <span class="text-danger asterisque">*</span>
-      À partir de 14h00.</p>
+      À partir de {{ constant('HALF_DAY_HOUR', HourLimit) }}h00.</p>
     <p class="text-muted text-comment">
       <span class="text-danger asterisque">**</span>
       Tarif accordé dans certaines conditions (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…)

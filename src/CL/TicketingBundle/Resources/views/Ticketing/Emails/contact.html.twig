@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>Louvre | Commande</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      /* Fonts and Content */
+      body {
+        font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif;
+        font-size: 14px;
+      }
+
+      .container-contact-mail {
+        padding: 30px;
+        background-color: #f5f5f5;
+      }
+    </style>
+
+  </head>
+
+  <body >
+    <div class="container-contact-mail">
+      <p>
+        <strong>Mail de :
+        </strong>
+        {{ formData.lastname | upper }}
+        {{ formData.firstname | capitalize }}
+      </p>
+      <p>
+        <a href="'mailto:'.{{ formData.email }}">{{ formData.email }}</a>
+      </p>
+      <p>
+        <strong>SUJET :
+          {{ formData.subject }}</strong>
+      </p>
+      <p>
+        {{ formData.message }}
+      </p>
+    </div>
+  </body>
+</html>

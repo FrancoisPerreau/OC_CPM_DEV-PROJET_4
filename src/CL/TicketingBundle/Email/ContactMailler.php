@@ -1,14 +1,11 @@
 <?php
-// src/CL/TicketingBundle/Email/TicketingMailler.php
+// src/CL/TicketingBundle/Email/ContactMailler.php
 
 namespace CL\TicketingBundle\Email;
-
 use Symfony\Component\Templating\EngineInterface;
 
-use CL\TicketingBundle\Entity\Purchase;
 
-
-class TicketingMailler
+class ContactMailler
 {
   private $mailer;
   protected $templating;
@@ -20,19 +17,24 @@ class TicketingMailler
     $this->templating = $templating;
   }
 
-  public function sendPurchaseNotification(Purchase $purchase)
+  public function sendContactmail($formData)
   {
+    // $firstname = $formData["firstname"];
+    // $lastname = $formData["lastname"];
+    $email = $formData["email"];
+    // $sbject = $formData["subject"];
+    // $message = $formData["message"];
+
     $message = new \Swift_Message(
-      'Merci de votre commande',
-      'Voici le détail:'
+      'Message de la billetterie du louvre'
     );
 
     $message
-      ->setFrom('noreply@louvre.fr')
-      ->setTo($purchase->getEmail())
+      ->setFrom($email)
+      ->setTo('f.perreau@orange.fr')
       ->setBody(
         $this->templating->render(
-          '@CLTicketing/Ticketing/Emails/notification.html.twig', ['purchase' => $purchase]
+          '@CLTicketing/Ticketing/Emails/contact.html.twig', ['formData' => $formData]
           ),
         'text/html'
       );

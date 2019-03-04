@@ -6,5 +6,20 @@
 {% endblock %}
 
 {% block body %}
-bob
+
+  {% for msg in app.session.flashBag.get('successContact') %}
+    <p class="alert alert-success" role="alert">{{ msg }}</p>
+  {% endfor %}
+
+  {% for msg in app.session.flashBag.get('echecContact') %}
+    <p class="alert alert-danger" role="alert">{{ msg }}</p>
+  {% endfor %}
+
+  <h1>Une question ?</h1>
+  <!-- ============================ -->
+  <!-- Formulaire ================= -->
+  <!-- ============================ -->
+  <div class="table-container">
+    {% embed "@CLTicketing/Ticketing/form/contactForm.html.twig" %}{% endembed %}
+  </div>
 {% endblock %}

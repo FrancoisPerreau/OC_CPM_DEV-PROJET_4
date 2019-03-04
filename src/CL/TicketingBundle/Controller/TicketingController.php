@@ -7,12 +7,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 use CL\TicketingBundle\Entity\Purchase;
 use CL\TicketingBundle\Entity\Ticket;
+use CL\TicketingBundle\TicketingConstants\TicketPrices;
+use CL\TicketingBundle\TicketingConstants\AgeRanges;
+use CL\TicketingBundle\TicketingConstants\DayClosedAndHourLimit;
 
 use CL\TicketingBundle\Form\PurchaseDateChoiceType;
 use CL\TicketingBundle\Form\PurchaseTicketType;
+use CL\TicketingBundle\Form\ContactType;
 // use CL\TicketingBundle\Form\PurchaseEmailType;
 
 
@@ -29,6 +34,10 @@ class TicketingController extends Controller
         $session->invalidate();
 
         $purchase = new Purchase;
+        $TicketPrices = new TicketPrices;
+        $AgeRanges = new AgeRanges;
+        $DayClosedAndHourLimit = new DayClosedAndHourLimit;
+
 
         // Formulaire
         $form = $this->createForm(PurchaseDateChoiceType::class, $purchase);
@@ -43,6 +52,9 @@ class TicketingController extends Controller
 
         return $this->render('@CLTicketing/Ticketing/homepage.html.twig',[
         'form' => $form->createView(),
+        'TicketPrices' => $TicketPrices,
+        'AgeRanges' => $AgeRanges,
+        'HourLimit' => $DayClosedAndHourLimit
         ]);
     }
 
@@ -102,6 +114,7 @@ class TicketingController extends Controller
             'purchase' => $purchase
         ]);
     }
+
 
     /**
      * @Route("/confirmation", name="purchase_confirmation")
@@ -167,13 +180,57 @@ class TicketingController extends Controller
         ]);
     }
 
+
     /**
      * @Route("/contact", name="ticketing_contact")
      */
     public function contactAction(Request $request)
     {
+        //Formulaire
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
 
-        return $this->render('@CLTicketing/Ticketing/contact.html.twig');
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $formData = $form->getData();
+            // dump($formData);
+            // die;
+            try {
+                $this->container
+                    ->get('cl_ticketing.email.contactMailler')
+                    ->sendContactmail($formData);
+
+                $this->addFlash('successContact', 'Votre message à bien été envoyé');
+
+            }
+            catch (\Exception $e)
+            {
+                throw new Exception("Une erreur est survenue lors de l'envoi de votre message");
+                
+                $this->addFlash('echecContact',$e->getMessage());
+            }
+        }
+        // $form = $this->createForm('CL\TicketingBundle\Form\ContactType', null,[
+        //     'action' => $this->generateUrl('ticketing_contact'),
+        //     'method' => 'POST'
+        // ]);
+
+        // $form = $this->createForm(ContactType::class);
+
+        // if ($request->isMethod('POST'))
+        // {
+        //     $form->handleRequest($request);
+        //
+        //     if ($form->isValid())
+        //     {
+        //         // code...
+        //     }
+        //
+        // }
+
+        return $this->render('@CLTicketing/Ticketing/contact.html.twig',[
+            'form' => $form->createView()
+        ]);
     }
 
 

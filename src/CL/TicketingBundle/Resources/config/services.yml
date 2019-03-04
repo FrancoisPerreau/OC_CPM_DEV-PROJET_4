@@ -1,6 +1,6 @@
 # src/CL/TicketingBundle/Resources/config/services.yml
 
-services:   
+services:
 
    twig.extension.intl:
        class: Twig_Extensions_Extension_Intl
@@ -98,3 +98,9 @@ services:
          - "@cl_ticketing.email.ticketingMailler"
        tags:
          - { name: doctrine.event_listener, event: postPersist }
+
+   cl_ticketing.email.contactMailler:
+       class: CL\TicketingBundle\Email\ContactMailler
+       arguments:
+         - "@mailer"
+         - "@templating"
