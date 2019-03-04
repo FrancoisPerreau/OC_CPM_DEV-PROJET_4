@@ -125,15 +125,14 @@ class TicketingController extends Controller
         $purchase = $session->get('PurchaseTickets');
 
         // Si la session n'existe pas on retourne à la home
-        if (!$purchase) {
+        if (!$purchase)
+        {
           return $this->redirectToRoute('homepage');
         }
 
         return $this->render('@CLTicketing/Ticketing/confirmation.html.twig', [
             'purchase' => $purchase
-        ]
-
-    );
+        ]);
     }
 
 
@@ -193,8 +192,7 @@ class TicketingController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             $formData = $form->getData();
-            // dump($formData);
-            // die;
+
             try {
                 $this->container
                     ->get('cl_ticketing.email.contactMailler')
@@ -206,46 +204,14 @@ class TicketingController extends Controller
             catch (\Exception $e)
             {
                 throw new Exception("Une erreur est survenue lors de l'envoi de votre message");
-                
+
                 $this->addFlash('echecContact',$e->getMessage());
             }
         }
-        // $form = $this->createForm('CL\TicketingBundle\Form\ContactType', null,[
-        //     'action' => $this->generateUrl('ticketing_contact'),
-        //     'method' => 'POST'
-        // ]);
-
-        // $form = $this->createForm(ContactType::class);
-
-        // if ($request->isMethod('POST'))
-        // {
-        //     $form->handleRequest($request);
-        //
-        //     if ($form->isValid())
-        //     {
-        //         // code...
-        //     }
-        //
-        // }
 
         return $this->render('@CLTicketing/Ticketing/contact.html.twig',[
             'form' => $form->createView()
         ]);
     }
-
-
-    /**
-     * @Route("/mail", name="template_mail")
-     */
-    public function mailAction(Request $request)
-    {
-        $session = new Session;
-        $purchase = $session->get('PurchaseTickets');
-
-        $session->invalidate();
-
-        return $this->render('@CLTicketing/Ticketing/Emails/notification.html.twig',[
-            'purchase' => $purchase
-        ]);
-    }
+    
 }

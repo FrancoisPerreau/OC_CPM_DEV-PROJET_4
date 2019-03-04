@@ -3,8 +3,6 @@
 
 namespace CL\TicketingBundle\Services;
 
-// use CL\TicketingBundle\Entity\Ticket;
-
 class AddedPrices
 {
 

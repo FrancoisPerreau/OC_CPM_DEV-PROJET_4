@@ -31,8 +31,7 @@ class GenerateCodeWithDate
       // echo('Je suis dans la base');
       $code = $this->generateCode($date);
     }
-
-    // dump('C-' . $code);die;
+    
     return 'C-' . $code;
   }
 

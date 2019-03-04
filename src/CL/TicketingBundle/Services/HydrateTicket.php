@@ -11,19 +11,19 @@ class HydrateTicket
 {
   private $session;
   private $serviceGenerateCode;
-  private $servicedefinePriceByBirthday;
+  private $serviceDefinePriceByBirthday;
   private $serviceConvertDatePicker;
 
   public function __construct(
     Session $session,
     GenerateCodeWithDate $serviceGenerateCode,
-    PriceByBirthday $servicedefinePriceByBirthday,
+    PriceByBirthday $serviceDefinePriceByBirthday,
     ConvertDatepickerInDatetime $serviceConvertDatePicker
     )
   {
     $this->session = $session;
     $this->serviceGenerateCode = $serviceGenerateCode;
-    $this->servicedefinePriceByBirthday = $servicedefinePriceByBirthday;
+    $this->serviceDefinePriceByBirthday = $serviceDefinePriceByBirthday;
     $this->serviceConvertDatePicker = $serviceConvertDatePicker;
   }
 
@@ -49,7 +49,7 @@ class HydrateTicket
       }
       else {
         $ticket->setPrice($this
-          ->servicedefinePriceByBirthday
+          ->serviceDefinePriceByBirthday
           ->defineDayPrice($birthday));
       }
     }
@@ -61,7 +61,7 @@ class HydrateTicket
       }
       else {
         $ticket->setPrice($this
-          ->servicedefinePriceByBirthday
+          ->serviceDefinePriceByBirthday
           ->defineHalfDayPrice($birthday));
       }
     }
