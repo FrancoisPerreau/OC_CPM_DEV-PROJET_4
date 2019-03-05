@@ -6,6 +6,7 @@ namespace CL\TicketingBundle\TicketingConstants;
 final class DayClosedAndHourLimit
 {
   const HALF_DAY_HOUR = 14;
+  const PAST_DAY_HOUR = 16.30;
 
   const DAYS_CLOSED = ["05-01", "11-01", "12-25"];
 }

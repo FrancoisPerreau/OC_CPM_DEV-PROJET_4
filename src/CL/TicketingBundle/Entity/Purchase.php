@@ -15,6 +15,7 @@ use CL\TicketingBundle\Validator as TicketingAssert;
  * @ORM\Entity(repositoryClass="CL\TicketingBundle\Repository\PurchaseRepository")
  * @TicketingAssert\EntireDay
  * @TicketingAssert\NoMore
+ * @TicketingAssert\NoPastHour()
  */
 class Purchase
 {

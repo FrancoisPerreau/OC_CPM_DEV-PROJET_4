@@ -1,17 +1,17 @@
 <?php
-// src/CL/TicketingBundle/Validator/EntireDayValidator.php
+// src/CL/TicketingBundle/Validator/NoPastHourValidator.php
 
 namespace CL\TicketingBundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-// use Symfony\Component\HttpFoundation\Session\Session;
 
 use CL\TicketingBundle\Services\ConvertDatepickerInDatetime;
 use CL\TicketingBundle\TicketingConstants\DayClosedAndHourLimit;
 
 
-class EntireDayValidator extends ConstraintValidator
+
+class NoPastHourValidator extends ConstraintValidator
 {
   private $serviceConvertDatePicker;
 
@@ -27,25 +27,32 @@ class EntireDayValidator extends ConstraintValidator
    */
   public function validate($value, Constraint $constraint)
   {
-
+    // dump($value);die;
     $choiceDate = $value->getVisitDate();
-    $visitType = $value->getVisitType();
-    // $choiceDate = '26/02/2019';
+    // dump($choiceDate);
+
     $choiceDate = $this->serviceConvertDatePicker
                        ->convertDatepicker($choiceDate);
     $now = new \DateTime('now');
+
+    // dump($now->format('H.i'));
+    // dump(DayClosedAndHourLimit::PAST_DAY_HOUR);
+    // dump($now->format('H') > DayClosedAndHourLimit::PAST_DAY_HOUR);
+    // die;
+
+    // $choiceDate = new \DateTime('05-03-2019');
+    // $now = new \DateTime('05-03-2019 17:00');
 
 
     if ($now->format('d') == $choiceDate->format('d') &&
         $now->format('m') == $choiceDate->format('m') &&
         $now->format('Y') == $choiceDate->format('Y') &&
-        $visitType == 0 &&
-        $now->format('H') > DayClosedAndHourLimit::HALF_DAY_HOUR - 1
+        $now->format('H') > DayClosedAndHourLimit::PAST_DAY_HOUR
         )
     {
       // $this->context->addViolation($constraint->message);
       $this->context->buildViolation($constraint->message)
-                    ->atPath('visitType')
+                    ->atPath('visitDate')
                     ->addViolation()
                     ;
     }

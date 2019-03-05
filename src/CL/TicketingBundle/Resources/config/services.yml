@@ -54,6 +54,13 @@ services:
        tags:
          - { name: validator.constraint_validator, alias: ticketing_entireDay }
 
+   cl_ticketing.validator.noPastHour:
+       class: CL\TicketingBundle\Validator\NoPastHourValidator
+       arguments:
+         - "@cl_ticketing.convertDatepickerInDatetime"
+       tags:
+         - { name: validator.constraint_validator, alias: ticketing_noPastHour }
+
    cl_ticketing.validator.isOpen:
        class: CL\TicketingBundle\Validator\IsOpenValidator
        arguments:

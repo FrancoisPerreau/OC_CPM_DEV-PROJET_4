@@ -80,8 +80,7 @@ hr {
 }
 
 .table-rate td,
-.table-rate th
-{
+.table-rate th {
   padding: .25rem;
   background-color: #fff;
   font-size: .875rem!important;
@@ -89,8 +88,7 @@ hr {
 }
 
 .th-first,
-.td-first
-{
+.td-first {
   text-align: left;
   padding-left: 1rem!important;
 }
@@ -100,11 +98,16 @@ hr {
   background-color: #bee5eb!important;
 }
 
-.text-comment {
+.text-comment,
+.text-comment-mail {
   margin-bottom: .275rem;
   font-size: .75rem;
   line-height: .875rem;
   text-align: left;
+}
+
+.text-comment-mail {
+  margin-bottom: 1.5rem ;
 }
 
 .asterisque {
@@ -112,7 +115,7 @@ hr {
   font-weight: 600;
 }
 
-.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover{
+.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
   background-color: #138496!important;
 }
 

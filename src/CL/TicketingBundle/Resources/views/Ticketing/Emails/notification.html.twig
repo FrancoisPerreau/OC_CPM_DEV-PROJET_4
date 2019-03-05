@@ -59,6 +59,9 @@
         color: #138496;
         font-size: 22px;
       }
+      .text-muted {
+        color: #6c757d !important;
+      }
     </style>
 
   </head>
@@ -210,7 +213,7 @@
                                             </tbody>
                                           </table>
                                           {% if ticket.reducedPrice == true %}
-                                            <p class="text-muted text-comment">
+                                            <p class="text-muted text-comment-mail">
                                               <span class="asterisque">*</span>
                                               Étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…)
                                             </p>
@@ -225,7 +228,10 @@
                                             €</strong>
                                         </p>
                                       </div>
-
+                                      <p class="text-muted">
+                                        <a href="{{ absolute_url(path('ticketing_contact')) }}">
+                                        Une question ?</a>
+                                      </p>
                                     </div>
                                   </td>
                                 </tr>
@@ -247,7 +253,9 @@
           </td>
         </tr>
       </tbody>
+
     </table>
+
   </body>
 
 </html>
