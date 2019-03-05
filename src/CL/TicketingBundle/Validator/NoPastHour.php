@@ -4,7 +4,6 @@ namespace CL\TicketingBundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 
-
 /**
  * @Annotation
  */
