@@ -27,23 +27,17 @@ class PurchaseDateChoiceType extends AbstractType
         ->add('email', RepeatedType::class, [
           'type' => EmailType::class,
           'invalid_message' => 'Ces deux champs doivent être identiques',
-          // 'options' => ['attr' => ['class' => 'password-field']],
           'required' => true,
           'first_options'  => ['label' => 'E-mail'],
           'second_options' => ['label' => 'Confirmation de l\'e-mail'],
           'constraints' => [
               new NotBlank(),
               new Email(),
-           ],
+           ]
         ])
         ->add('visitDate', TextType::class, [
           'required' => true,
           'label' => 'Date',
-          // 'constraints' => [
-          //     new NotBlank(),
-          //     new IsOpen(),
-          //     new EntireDay()
-          //  ],
 
         ])
         ->add('visitType', ChoiceType::class, [
@@ -52,11 +46,7 @@ class PurchaseDateChoiceType extends AbstractType
           'choices' => [
             'Journée' => 0,
             'Demi-journée' => 1
-          ],
-          // 'constraints' => [
-          //     new NotBlank(),
-          //     new Choice([0, 1])
-          //  ],
+          ]
         ])
         ->add('ticketNb', ChoiceType::class, [
           'required' => true,
@@ -71,12 +61,13 @@ class PurchaseDateChoiceType extends AbstractType
             '7' => 7,
             '8' => 8,
             '9' => 9
-          ],
-          // 'constraints' => [
-          //     new NotBlank(),
-          //     new Choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-          //  ]
+          ]
         ])
+        ->remove('createdAt')
+        ->remove('code')
+        ->remove('price')
+        ->remove('tickets')
+        ->remove('stripeChargeId')
         ;
     }
 
@@ -87,8 +78,7 @@ class PurchaseDateChoiceType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'CL\TicketingBundle\Entity\Purchase',
-            'csrf_protection' => false,
-            // 'cascade_validation' => true
+            // 'csrf_protection' => false,
         ));
     }
 
@@ -99,5 +89,6 @@ class PurchaseDateChoiceType extends AbstractType
     {
         return 'cl_ticketingbundle_purchase';
     }
+
 
 }

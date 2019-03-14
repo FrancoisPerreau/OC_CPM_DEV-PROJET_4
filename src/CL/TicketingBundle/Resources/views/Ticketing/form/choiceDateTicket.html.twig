@@ -2,44 +2,44 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {{ form_start(form) }}
-{{ form_errors(form) }}
+  {{ form_errors(form) }}
 
-<div class="form-group">
-  {{ form_label(form.email.first) }}
-  {{ form_widget(form.email.first) }}
-</div>
-<div class="form-group">
-  {{ form_label(form.email.second) }}
-  {{ form_widget(form.email.second) }}
-</div>
+  <div class="form-group">
+    {{ form_label(form.email.first) }}
+    {{ form_widget(form.email.first) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.email.second) }}
+    {{ form_widget(form.email.second) }}
+  </div>
 
-<hr>
+  <hr>
 
-<div class="form-group">
-  {{ form_label(form.visitDate) }}
-  <div class="input-group date" id="datetimepicker13" data-target-input="nearest">
-    {{ form_widget(form.visitDate, {'target' : 'datetimepicker13'}) }}
-    <div class="input-group-append" data-target="#datetimepicker13" data-toggle="datetimepicker">
-      <div class="input-group-text">
-        <i class="fa fa-calendar"></i>
+  <div class="form-group">
+    {{ form_label(form.visitDate) }}
+    <div class="input-group date" id="datetimepicker13" data-target-input="nearest">
+      {{ form_widget(form.visitDate, {'target' : 'datetimepicker13'}) }}
+      <div class="input-group-append" data-target="#datetimepicker13" data-toggle="datetimepicker">
+        <div class="input-group-text">
+          <i class="fa fa-calendar"></i>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="form-group">
-  {{ form_label(form.visitType) }}
-  {{ form_widget(form.visitType) }}
-</div>
+  <div class="form-group">
+    {{ form_label(form.visitType) }}
+    {{ form_widget(form.visitType) }}
+  </div>
 
-<div class="form-group">
-  {{ form_label(form.ticketNb) }}
-  {{ form_widget(form.ticketNb) }}
-</div>
+  <div class="form-group">
+    {{ form_label(form.ticketNb) }}
+    {{ form_widget(form.ticketNb) }}
+  </div>
 
-<div class="form-group">
-  <button class="btn btn-info" type="submit">Réservez vos billets</button>
-</div>
+  <div class="form-group">
+    <button class="btn btn-info" type="submit">Réservez vos billets</button>
+  </div>
 
-{{ form_rest(form) }}
+  {{ form_rest(form) }}
 {{ form_end(form) }}

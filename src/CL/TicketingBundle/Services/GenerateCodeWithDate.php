@@ -24,14 +24,13 @@ class GenerateCodeWithDate
   public function createPurchaseCode (\DateTime $date)
   {
     $code = $this->generateCode($date);
-    // $code = '20190221-181313-8a84ad8fcb8ea9ad';
 
+    // Pour être sur d'avoir un code unique
     while ($this->em->getRepository(Purchase::class)->findOneByCode($code))
     {
-      // echo('Je suis dans la base');
       $code = $this->generateCode($date);
     }
-    
+
     return 'C-' . $code;
   }
 
@@ -39,8 +38,8 @@ class GenerateCodeWithDate
   public function createTicketCode (\DateTime $date)
   {
     $code = $this->generateCode($date);
-    // $code = '20190221-181313-8a84ad8fcb8ea9ad';
 
+    // Pour être sur d'avoir un code unique
     while ($this->em->getRepository(Ticket::class)->findOneByCode($code))
     {
       $code = $this->generateCode($date);

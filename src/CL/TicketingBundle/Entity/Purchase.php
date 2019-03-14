@@ -64,10 +64,12 @@ class Purchase
     /**
      * @var bool
      *
-     * @ORM\Column(name="visit_type", type="boolean")
-     * @Assert\NotBlank* @Assert\Choice(
-     *     choices = { "0", "1" },
-     *     message = "Ce type de billet n'est pas valide."
+     * @ORM\Column(name="visit_type", type="integer")
+     * @Assert\NotBlank
+     * @Assert\Choice(
+     *     choices = { 0, 1 },
+     *     message = "Ce type de billet n'est pas valide.",
+     *     strict = true
      * )
      */
     private $visitType;
@@ -77,8 +79,9 @@ class Purchase
      * @Assert\NotBlank
      * @Assert\Type("int")
      * @Assert\Choice(
-     *     choices = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
-     *     message = "Ce nombre de billets n'est pas valide."
+     *     choices = { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+     *     message = "Ce nombre de billets n'est pas valide.",
+     *     strict = true
      * )
      *
      */

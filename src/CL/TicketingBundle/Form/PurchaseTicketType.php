@@ -25,21 +25,21 @@ class PurchaseTicketType extends AbstractType
     }
 
     /**
-       * {@inheritdoc}
-       */
-      public function configureOptions(OptionsResolver $resolver)
-      {
-          $resolver->setDefaults(array(
-              'data_class' => 'CL\TicketingBundle\Entity\Purchase',
-              // 'cascade_validation' => true
-          ));
-      }
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'CL\TicketingBundle\Entity\Purchase',
+            // 'cascade_validation' => true
+        ));
+    }
 
-      /**
-       * {@inheritdoc}
-       */
-      public function getBlockPrefix()
-      {
-          return 'cl_ticketingbundle_purchase';
-      }
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'cl_ticketingbundle_purchase';
+    }
 }

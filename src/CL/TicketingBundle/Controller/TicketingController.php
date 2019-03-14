@@ -31,7 +31,12 @@ class TicketingController extends Controller
     {
         // On vide la session en arrivant sur la home
         $session = $this->get('session');
-        $session->invalidate();
+        $session->remove('Purchase');
+        $session->remove('PurchaseTickets');
+        
+        // $session->invalidate();
+        $session->start();
+
 
         $purchase = new Purchase;
         $TicketPrices = new TicketPrices;
@@ -46,7 +51,6 @@ class TicketingController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             $session->set('Purchase', $form->getData());
-
             return $this->redirectToRoute('purchase_regitration');
         }
 
@@ -64,7 +68,7 @@ class TicketingController extends Controller
      */
     public function orderAction(Request $request)
     {
-        $session = new Session;
+        $session = $this->get('session');
         $purchase = $session->get('Purchase');
 
         // Si la session n'existe pas on retourne à la home
@@ -86,6 +90,7 @@ class TicketingController extends Controller
                 $purchase->addTicket($ticket);
             }
         }
+
 
         // Formulaire
         $form = $this->createForm(PurchaseTicketType::class, $purchase);
@@ -213,5 +218,5 @@ class TicketingController extends Controller
             'form' => $form->createView()
         ]);
     }
-    
+
 }

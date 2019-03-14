@@ -26,9 +26,9 @@
         daysOfWeekDisabled: [2],
         minDate: moment(),
         disabledDates: [
-          moment("05/01/" + today.getFullYear()),
-          moment("11/01/" + today.getFullYear()),
-          moment("12/25/" + today.getFullYear())
+          moment("05/01/" + today.getFullYear(), 'ddd, DD MMM YYYY'),
+          moment("11/01/" + today.getFullYear(), 'ddd, DD MMM YYYY'),
+          moment("12/25/" + today.getFullYear(), 'ddd, DD MMM YYYY')
         ]
       });
     });
