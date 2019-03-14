@@ -25,7 +25,6 @@ class NoPastDaysValidator extends ConstraintValidator
    */
   public function validate($value, Constraint $constraint)
   {
-    // $value = "22/02/2019";
     $choiceDate = $this->serviceConvertDatePicker
                        ->convertDatepicker($value);
 

@@ -26,7 +26,6 @@ class IsOpenValidator extends ConstraintValidator
    */
   public function validate($value, Constraint $constraint)
   {
-    // $value = "25/12/2021";
     $choiceDate = $this->serviceConvertDatePicker
                        ->convertDatepicker($value);
 

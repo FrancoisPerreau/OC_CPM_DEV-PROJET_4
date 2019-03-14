@@ -9,7 +9,11 @@ use CL\TicketingBundle\Email\TicketingMailler;
 use CL\TicketingBundle\Entity\Purchase;
 
 
-
+/**
+ * Listener
+ * Déclenche l'envoi du mail de la commande (service Email/TicketingMailler)
+ * après l'enregistrement en BDD de Purchase
+ */
 class TicketingCreationListener
 {
   private $ticketingMailler;

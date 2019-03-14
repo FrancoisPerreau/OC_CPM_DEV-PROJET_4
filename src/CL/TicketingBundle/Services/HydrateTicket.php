@@ -24,6 +24,12 @@ class HydrateTicket
     $this->serviceConvertDatePicker = $serviceConvertDatePicker;
   }
 
+  /**
+   * Hydrate Ticket
+   * @param  Ticket $ticket
+   * @param  $visitDate
+   * @param  $visitType
+   */
   public function hydrate(Ticket $ticket, $visitDate, $visitType)
   {
     $date = $this->serviceConvertDatePicker->convertDatepicker($visitDate);

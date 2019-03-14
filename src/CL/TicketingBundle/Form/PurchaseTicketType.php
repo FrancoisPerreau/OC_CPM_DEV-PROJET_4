@@ -19,8 +19,7 @@ class PurchaseTicketType extends AbstractType
         $builder
         ->add('tickets', CollectionType::class, [
             'entry_type' => TicketType::class,
-            'allow_add' => true,
-            // 'entry_options' => ['label' => false],
+            'allow_add' => true
         ]);
     }
 
@@ -30,8 +29,7 @@ class PurchaseTicketType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'CL\TicketingBundle\Entity\Purchase',
-            // 'cascade_validation' => true
+            'data_class' => 'CL\TicketingBundle\Entity\Purchase'            
         ));
     }
 

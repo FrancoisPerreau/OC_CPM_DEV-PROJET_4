@@ -20,7 +20,11 @@ class GenerateCodeWithDate
     $this->em = $em;
   }
 
-
+  /**
+   * Create a purchase code
+   * @param  DateTime $date
+   * @return $code
+   */
   public function createPurchaseCode (\DateTime $date)
   {
     $code = $this->generateCode($date);
@@ -34,7 +38,11 @@ class GenerateCodeWithDate
     return 'C-' . $code;
   }
 
-
+  /**
+   * Create a ticket code
+   * @param  DateTime $date
+   * @return $code
+   */
   public function createTicketCode (\DateTime $date)
   {
     $code = $this->generateCode($date);
@@ -49,7 +57,11 @@ class GenerateCodeWithDate
   }
 
 
-
+  /**
+   * Generate a string according to the date
+   * @param  DateTime $date
+   * @return string
+   */
   public function generateCode(\DateTime $date)
   {
     $dateToString = $date->format('Ymd');

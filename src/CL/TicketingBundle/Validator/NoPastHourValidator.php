@@ -27,22 +27,11 @@ class NoPastHourValidator extends ConstraintValidator
    */
   public function validate($value, Constraint $constraint)
   {
-    // dump($value);die;
     $choiceDate = $value->getVisitDate();
-    // dump($choiceDate);
 
     $choiceDate = $this->serviceConvertDatePicker
                        ->convertDatepicker($choiceDate);
     $now = new \DateTime('now');
-
-    // dump($now->format('H.i'));
-    // dump(DayClosedAndHourLimit::PAST_DAY_HOUR);
-    // dump($now->format('H') > DayClosedAndHourLimit::PAST_DAY_HOUR);
-    // die;
-
-    // $choiceDate = new \DateTime('05-03-2019');
-    // $now = new \DateTime('05-03-2019 17:00');
-
 
     if ($now->format('d') == $choiceDate->format('d') &&
         $now->format('m') == $choiceDate->format('m') &&

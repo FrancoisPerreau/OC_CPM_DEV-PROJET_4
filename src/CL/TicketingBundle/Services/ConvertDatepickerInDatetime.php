@@ -20,19 +20,19 @@ class ConvertDatepickerInDatetime
     $this->locale = $locale;
   }
 
-
+  /**
+   * Convert string in DateTime according to the local
+   * @param  $date
+   * @return DateTime
+   */
   public function convertDatepicker ($date)
   {
-    // $date = '02/21/2019';
-    // $locale = 'en';
-    // dump($date);die;
     if ($this->locale == 'fr') {
       if (is_string($date))
       {
         $date = str_replace('/', '-', $date);
 
-        $date = new \DateTime($date);;
-
+        $date = new \DateTime($date);
       }
     }
 
@@ -49,7 +49,7 @@ class ConvertDatepickerInDatetime
         $date = new \DateTime($d.'-'.$m.'-'.$y);
       }
     }
-    // dump($date);die;
+
     return $date;
   }
 

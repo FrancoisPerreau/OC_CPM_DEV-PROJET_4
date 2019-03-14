@@ -8,8 +8,11 @@ use CL\TicketingBundle\TicketingConstants\AgeRanges;
 
 class PriceByBirthday
 {
-  // PRIX POUR LA JOURNÉÉ
-  // =============================
+  /**
+   * Define Price by age for entire day
+   * @param  DateTime
+   * @return $price
+   */
   public function defineDayPrice(\DateTime $date)
   {
     $today = new \DateTime('today');
@@ -36,8 +39,11 @@ class PriceByBirthday
     }
   }
 
-  // PRIX POUR LA DEMI-JOURNÉÉ
-  // =============================
+  /**
+   * Define Price by age for half day
+   * @param  DateTime
+   * @return $price
+   */
   public function defineHalfDayPrice(\DateTime $date)
   {
     $today = new \DateTime('today');

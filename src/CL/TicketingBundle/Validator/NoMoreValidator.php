@@ -33,7 +33,6 @@ class NoMoreValidator extends ConstraintValidator
    */
   public function validate($value, Constraint $constraint)
   {
-    // $choiceDate = '21/02/2019';
     $choiceDate = $value->getVisitDate();
 
     $choiceDate = $this->serviceConvertDatePicker->convertDatepicker($choiceDate);

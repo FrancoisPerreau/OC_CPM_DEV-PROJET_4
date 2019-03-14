@@ -17,12 +17,15 @@ class HydratePurchase
     ConvertDatepickerInDatetime $serviceConvertDatePicker
     )
   {
-    // $this->session = $session;
     $this->serviceGenerateCode = $serviceGenerateCode;
     $this->serviceAddedPrices = $serviceAddedPrices;
     $this->serviceConvertDatePicker = $serviceConvertDatePicker;
   }
 
+  /**
+   * Hydrate Purchase
+   * @param  Purchase $purchase
+   */
   public function hydrate(Purchase $purchase)
   {
     $date = $purchase->getVisitDate();

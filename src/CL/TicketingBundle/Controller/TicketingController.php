@@ -11,14 +11,13 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 
 use CL\TicketingBundle\Entity\Purchase;
 use CL\TicketingBundle\Entity\Ticket;
-use CL\TicketingBundle\TicketingConstants\TicketPrices;
 use CL\TicketingBundle\TicketingConstants\AgeRanges;
 use CL\TicketingBundle\TicketingConstants\DayClosedAndHourLimit;
+use CL\TicketingBundle\TicketingConstants\TicketPrices;
 
+use CL\TicketingBundle\Form\ContactType;
 use CL\TicketingBundle\Form\PurchaseDateChoiceType;
 use CL\TicketingBundle\Form\PurchaseTicketType;
-use CL\TicketingBundle\Form\ContactType;
-// use CL\TicketingBundle\Form\PurchaseEmailType;
 
 
 
@@ -29,12 +28,11 @@ class TicketingController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // On vide la session en arrivant sur la home
+        // On vide les sessions en arrivant sur la home
         $session = $this->get('session');
         $session->remove('Purchase');
         $session->remove('PurchaseTickets');
 
-        // $session->invalidate();
         $session->start();
 
 
@@ -98,9 +96,9 @@ class TicketingController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $tickets = $purchase->getTickets();
             $visitDate = $purchase->getVisitDate();
             $visitType = $purchase->getVisitType();
-            $tickets = $purchase->getTickets();
 
             // Hydrate le ou les Ticket(s)
             foreach ($tickets as $ticket)
@@ -157,9 +155,7 @@ class TicketingController extends Controller
 
         $session = $this->get('session');
         $purchase = $session->get('PurchaseTickets');
-
         $stripeToken = $data['stripeToken'];
-
 
         // Si le stripeToken existe on effectue le payement
         \Stripe\Stripe::setApiKey("sk_test_QLXj1J6fsBOBO2vsXejztsOO");
@@ -200,13 +196,13 @@ class TicketingController extends Controller
         {
             $formData = $form->getData();
 
-            try {
+            try
+            {
                 $this->container
                     ->get('cl_ticketing.email.contactMailler')
                     ->sendContactmail($formData);
 
                 $this->addFlash('successContact', 'Votre message à bien été envoyé');
-
             }
             catch (\Exception $e)
             {

@@ -42,14 +42,10 @@ class TicketType extends AbstractType
         ->add('reducedPrice', CheckboxType::class, [
             'required' => false,
             'label' => 'Tarif réduit'
-        ])
-        // ->add('visitDate')
-        // ->add('type')
-        // ->add('code')
-        // ->add('purchase')
-        ;
+        ]);
+    }
 
-    }/**
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -66,6 +62,5 @@ class TicketType extends AbstractType
     {
         return 'cl_ticketingbundle_ticket';
     }
-
 
 }

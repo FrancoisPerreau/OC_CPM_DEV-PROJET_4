@@ -90,5 +90,4 @@ class PurchaseDateChoiceType extends AbstractType
         return 'cl_ticketingbundle_purchase';
     }
 
-
 }

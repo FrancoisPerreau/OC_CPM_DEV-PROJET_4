@@ -24,7 +24,6 @@ class ContactType extends AbstractType
     {
       $builder
       ->add('firstname', TextType::class,[
-        // 'attr' => ['placeholder' => 'Votre prénom'],
         'required' => true,
         'label' => 'Prénom',
         'constraints' => [
@@ -32,7 +31,6 @@ class ContactType extends AbstractType
          ],
       ])
       ->add('lastname', TextType::class,[
-        // 'attr' => ['placeholder' => 'Votre nom'],
         'required' => true,
         'label' => 'Nom',
         'constraints' => [
@@ -40,7 +38,6 @@ class ContactType extends AbstractType
          ],
       ])
       ->add('email', EmailType::class,[
-        // 'attr' => ['placeholder' => 'Votre e-mail'],
         'required' => true,
         'label' => 'E-mail',
         'constraints' => [
@@ -49,7 +46,6 @@ class ContactType extends AbstractType
          ],
       ])
       ->add('subject', TextType::class,[
-        // 'attr' => ['placeholder' => 'Sujet'],
         'required' => true,
         'label' => 'Sujet de votre message',
         'constraints' => [
@@ -63,11 +59,8 @@ class ContactType extends AbstractType
         'constraints' => [
             new NotBlank()
          ],
-      ])
-      ;
-
+      ]);
     }
-
 
     public function setDefaultOptions(OptionsResolver $resolver)
     {
@@ -75,8 +68,6 @@ class ContactType extends AbstractType
             'error_bubbling' => true
         ]);
     }
-
-
 
     public function getName()
     {

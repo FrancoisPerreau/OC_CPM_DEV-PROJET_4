@@ -19,11 +19,7 @@ class ContactMailler
 
   public function sendContactmail($formData)
   {
-    // $firstname = $formData["firstname"];
-    // $lastname = $formData["lastname"];
     $email = $formData["email"];
-    // $sbject = $formData["subject"];
-    // $message = $formData["message"];
 
     $message = new \Swift_Message(
       'Message de la billetterie du louvre'
@@ -38,8 +34,8 @@ class ContactMailler
           ),
         'text/html'
       );
-      // dump($message);
-      // die;
+
     $this->mailer->send($message);
   }
+  
 }

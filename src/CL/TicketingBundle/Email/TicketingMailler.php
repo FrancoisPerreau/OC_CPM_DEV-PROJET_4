@@ -36,8 +36,8 @@ class TicketingMailler
           ),
         'text/html'
       );
-      // dump($message);
-      // die;
+
     $this->mailer->send($message);
   }
+  
 }

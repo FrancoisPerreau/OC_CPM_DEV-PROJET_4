@@ -6,7 +6,11 @@ namespace CL\TicketingBundle\Services;
 class AddedPrices
 {
 
-
+  /**
+   * Add tickets prices
+   * @param  Ticket $tickets
+   * @return $totalPrice
+   */
   public function totalPrice($tickets)
   {
     $totalPrice = 0;
