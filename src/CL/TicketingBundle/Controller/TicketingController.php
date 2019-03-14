@@ -33,7 +33,7 @@ class TicketingController extends Controller
         $session = $this->get('session');
         $session->remove('Purchase');
         $session->remove('PurchaseTickets');
-        
+
         // $session->invalidate();
         $session->start();
 
@@ -98,12 +98,14 @@ class TicketingController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $visitDate = $purchase->getVisitDate();
+            $visitType = $purchase->getVisitType();
             $tickets = $purchase->getTickets();
 
             // Hydrate le ou les Ticket(s)
             foreach ($tickets as $ticket)
             {
-                $this->container->get('cl_ticketing.hydrateTicket')->hydrate($ticket);
+                $this->container->get('cl_ticketing.hydrateTicket')->hydrate($ticket, $visitDate, $visitType);
             }
 
             // Hydrate Purchase

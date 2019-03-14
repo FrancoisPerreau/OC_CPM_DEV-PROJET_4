@@ -7,19 +7,17 @@ use CL\TicketingBundle\Entity\Purchase;
 
 class HydratePurchase
 {
-  private $session;
   private $serviceGenerateCode;
   private $serviceAddedPrices;
   private $serviceConvertDatePicker;
 
   public function __construct(
-    Session $session,
     GenerateCodeWithDate $serviceGenerateCode,
     AddedPrices $serviceAddedPrices,
     ConvertDatepickerInDatetime $serviceConvertDatePicker
     )
   {
-    $this->session = $session;
+    // $this->session = $session;
     $this->serviceGenerateCode = $serviceGenerateCode;
     $this->serviceAddedPrices = $serviceAddedPrices;
     $this->serviceConvertDatePicker = $serviceConvertDatePicker;
@@ -27,7 +25,6 @@ class HydratePurchase
 
   public function hydrate(Purchase $purchase)
   {
-    $purchase = $this->session->get('Purchase');
     $date = $purchase->getVisitDate();
 
     $date = $this->serviceConvertDatePicker

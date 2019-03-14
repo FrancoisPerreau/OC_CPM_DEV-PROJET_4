@@ -41,8 +41,8 @@ class HydratePurchaseTest extends TestCase
 
 
     // Session ------------------------------
-    $session = new Session(new MockArraySessionStorage());
-    $session->set('Purchase', $purchase);
+    // $session = new Session(new MockArraySessionStorage());
+    // $session->set('Purchase', $purchase);
 
     // ServiceGenerateCode ------------------
     $purchaseCode = 'C-20200225-3FB86D80';
@@ -68,7 +68,7 @@ class HydratePurchaseTest extends TestCase
 
 
     // HydratePurchase
-    $hydratePurchase = new HydratePurchase($session, $serviceGenerateCode, $serviceAddedPrices, $serviceConvertDatePicker);
+    $hydratePurchase = new HydratePurchase($serviceGenerateCode, $serviceAddedPrices, $serviceConvertDatePicker);
 
 
     // Assertions --------------
@@ -83,7 +83,7 @@ class HydratePurchaseTest extends TestCase
     $purchaseDate = $purchaseDate->format('Y-m-m');
 
     $this->assertEquals($dateToCompare, $purchaseDate);
-    
+
 
     // Test hydratation code
     $this->assertSame($purchaseCode, $purchase->getCode());

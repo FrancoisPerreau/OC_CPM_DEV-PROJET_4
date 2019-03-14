@@ -9,32 +9,26 @@ use CL\TicketingBundle\TicketingConstants\TicketPrices;
 
 class HydrateTicket
 {
-  private $session;
   private $serviceGenerateCode;
   private $serviceDefinePriceByBirthday;
   private $serviceConvertDatePicker;
 
   public function __construct(
-    Session $session,
     GenerateCodeWithDate $serviceGenerateCode,
     PriceByBirthday $serviceDefinePriceByBirthday,
     ConvertDatepickerInDatetime $serviceConvertDatePicker
     )
   {
-    $this->session = $session;
     $this->serviceGenerateCode = $serviceGenerateCode;
     $this->serviceDefinePriceByBirthday = $serviceDefinePriceByBirthday;
     $this->serviceConvertDatePicker = $serviceConvertDatePicker;
   }
 
-  public function hydrate(Ticket $ticket)
+  public function hydrate(Ticket $ticket, $visitDate, $visitType)
   {
-    $purchase = $this->session->get('Purchase');
-    $date = $purchase->getVisitDate();
-    $date = $this->serviceConvertDatePicker->convertDatepicker($date);
+    $date = $this->serviceConvertDatePicker->convertDatepicker($visitDate);
 
     $ticketCode = $this->serviceGenerateCode->createTicketCode($date);
-    $visitType = $purchase->getVisitType();
     $reducedPrice = $ticket->getReducedPrice();
     $birthday = $ticket->getBirthday();
 

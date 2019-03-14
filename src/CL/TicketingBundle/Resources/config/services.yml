@@ -26,7 +26,6 @@ services:
    cl_ticketing.hydrateTicket:
        class: CL\TicketingBundle\Services\HydrateTicket
        arguments:
-          - "@session"
           - "@cl_ticketing.generateCode"
           - "@cl_ticketing.definePriceByBirthday"
           - "@cl_ticketing.convertDatepickerInDatetime"
@@ -34,7 +33,6 @@ services:
    cl_ticketing.hydratePurchase:
        class: CL\TicketingBundle\Services\HydratePurchase
        arguments:
-          - "@session"
           - "@cl_ticketing.generateCode"
           - "@cl_ticketing.defineTotalPrice"
           - "@cl_ticketing.convertDatepickerInDatetime"
