@@ -28,8 +28,26 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column container-bg">
 
       <header class="masthead">
-        {% embed "@CLTicketing/Ticketing/navbar.html.twig" %}
-        {% endembed %}
+        <div class="inner">
+          <h3 class="masthead-brand"><img src="{{asset('theme/img/logo_louvre.jpg')}}" class="" alt="logo du musée du Louvre"></h3>
+          <nav class="nav nav-masthead justify-content-center">
+            <a class="nav-link
+              {% if app.request.attributes.get('_route') == 'homepage' %}
+                active
+              {% endif %}
+               " href="{{ path('homepage') }}">
+              Accueil
+            </a>
+
+            <a class="nav-link
+              {% if app.request.attributes.get('_route') == 'ticketing-contact' %}
+                active
+              {% endif %}
+              " href="{{ path('ticketing_contact') }}">
+              Contact
+            </a>
+          </nav>
+        </div>
       </header>
 
       <main role="main" class="inner cover">
