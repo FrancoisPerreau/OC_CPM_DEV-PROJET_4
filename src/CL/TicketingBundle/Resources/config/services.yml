@@ -42,6 +42,16 @@ services:
        arguments:
           - "%locale%"
 
+   cl_ticketing.definePaques:
+       class: CL\TicketingBundle\Services\DefinePaques
+
+   cl_ticketing.defineAscension:
+       class: CL\TicketingBundle\Services\DefineAscension
+
+   cl_ticketing.definePentecote:
+       class: CL\TicketingBundle\Services\DefinePentecote
+
+
 
 # Services Validator
 # ==============================
@@ -63,6 +73,9 @@ services:
        class: CL\TicketingBundle\Validator\IsOpenValidator
        arguments:
          - "@cl_ticketing.convertDatepickerInDatetime"
+         - "@cl_ticketing.definePaques"
+         - "@cl_ticketing.defineAscension"
+         - "@cl_ticketing.definePentecote"
        tags:
          - { name: validator.constraint_validator, alias: ticketing_isOpen }
 
