@@ -21,25 +21,31 @@
   <script type="text/javascript">
     $(function() {
       var day = moment();
+      var year = day.year();
+      var disabledDates = [];
+
+      for (var i = year; i < 2100; i++) {
+        var firstDayOfYear = moment(i + '-01-01');
+
+        disabledDates.push(firstDayOfYear.lundiDePaques()),
+        disabledDates.push(firstDayOfYear.ascension()),
+        disabledDates.push(firstDayOfYear.pentecote()),
+        disabledDates.push(firstDayOfYear.jourDeLAn()),
+        disabledDates.push(firstDayOfYear.feteDuTravail()),
+        disabledDates.push(firstDayOfYear.victoireDeAllies()),
+        disabledDates.push(firstDayOfYear.feteNationale()),
+        disabledDates.push(firstDayOfYear.assomption()),
+        disabledDates.push(firstDayOfYear.toussaint()),
+        disabledDates.push(firstDayOfYear.armistice()),
+        disabledDates.push(firstDayOfYear.noel())
+      }
 
       $('#datetimepicker13').datetimepicker({
         locale: '{{ app.request.getLocale() }}',
         format: 'L',
-        daysOfWeekDisabled: [2],
+        daysOfWeekDisabled: [0,2],
         minDate: moment(),
-        disabledDates: [          
-          day.lundiDePaques(),
-          day.ascension(),
-          day.pentecote(),
-          day.jourDeLAn(),
-          day.feteDuTravail(),
-          day.victoireDeAllies(),
-          day.feteNationale(),
-          day.assomption(),
-          day.toussaint(),
-          day.armistice(),
-          day.noel()
-        ]
+        disabledDates: disabledDates
       });
     });
   </script>

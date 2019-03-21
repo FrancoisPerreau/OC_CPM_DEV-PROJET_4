@@ -56,7 +56,6 @@ class Purchase
      * @ORM\Column(name="visit_date", type="datetime")
      * @Assert\NotBlank
      * @TicketingAssert\IsOpen()
-     * @TicketingAssert\NoTuesday()
      * @TicketingAssert\NoPastDays()
      */
     private $visitDate;

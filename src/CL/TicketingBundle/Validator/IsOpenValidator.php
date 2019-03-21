@@ -48,6 +48,7 @@ class IsOpenValidator extends ConstraintValidator
     $choiceDay = $choiceDate->format('d');
     $choiceMonth = $choiceDate->format('m');
     $choiceYear = $choiceDate->format('Y');
+    $choiceWeekDay = $choiceDate->format('w');
 
     $today = new \Datetime('today');
     $thisYear = $today->format('Y');
@@ -68,6 +69,12 @@ class IsOpenValidator extends ConstraintValidator
     $pentecote = $this->servicePentecote->definePentecoteByPaques($sundayPaques);
     $pentecoteDay = $pentecote->format('d');
     $pentecoteMonth = $pentecote->format('m');
+
+
+    if ($choiceWeekDay == 0 || $choiceWeekDay == 2)
+    {
+      $this->context->addViolation($constraint->message);
+    }
 
 
     foreach (DayClosedAndHourLimit::DAYS_CLOSED as $dayClosed)

@@ -94,13 +94,6 @@ services:
        tags:
          - { name: validator.constraint_validator, alias: ticketing_noPastDays }
 
-   cl_ticketing.validator.noTuesday:
-       class: CL\TicketingBundle\Validator\NoTuesdayValidator
-       arguments:
-         - "@cl_ticketing.convertDatepickerInDatetime"
-       tags:
-         - { name: validator.constraint_validator, alias: ticketing_noTuesday }
-
 
 # Service Email
 # ==============================
