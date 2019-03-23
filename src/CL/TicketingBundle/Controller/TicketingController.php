@@ -217,4 +217,13 @@ class TicketingController extends Controller
         ]);
     }
 
+
+    /**
+     * @Route("/cgv", name="ticketing_cgv")
+     */
+    public function cgvAction()
+    {        
+        return $this->render('@CLTicketing/Ticketing/cgv.html.twig');
+    }
+
 }

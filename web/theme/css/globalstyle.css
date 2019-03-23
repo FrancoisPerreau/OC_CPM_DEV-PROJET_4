@@ -5,6 +5,10 @@ body {
   text-align: left;
 }
 
+footer a {
+  text-decoration: underline;
+}
+
 .mastfoot .inner p {
   font-size: .75rem!important;
 }
@@ -144,6 +148,17 @@ hr {
 }
 
 
+
+/* ============= CGV ============= */
+
+.cgv-container h3 {
+  padding-top: 2rem;
+}
+
+.cgv-link {
+  color: #138496!important;
+  text-decoration: underline;
+}
 /* button.stripe-button-el,
 button.stripe-button-el>span {
   background-color: #17a2b8 !important;

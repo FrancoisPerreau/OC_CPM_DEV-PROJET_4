@@ -29,7 +29,7 @@
 
       <header class="masthead">
         <div class="inner">
-          <h3 class="masthead-brand"><img src="{{asset('theme/img/logo_louvre.jpg')}}" class="" alt="logo du musée du Louvre"></h3>
+          <h3 class="masthead-brand"><img src="{{asset('theme/img/logo_louvre.jpg')}}" alt="logo du musée du Louvre"></h3>
           <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link
               {% if app.request.attributes.get('_route') == 'homepage' %}
@@ -58,6 +58,7 @@
 
       <footer class="mastfoot">
         <div class="inner">
+          <p><a href="{{ path('ticketing_cgv') }}">Conditions générales de vente</a></p>
           <p>@ {{ "now"|date("Y") }} - François Perreau (Formation Openclassrooms | Chef de projet multimédia - Développement | projet 4)
         </div>
       </footer>
