@@ -157,25 +157,37 @@ class TicketingController extends Controller
         $purchase = $session->get('PurchaseTickets');
         $stripeToken = $data['stripeToken'];
 
-        // Si le stripeToken existe on effectue le payement
-        \Stripe\Stripe::setApiKey("sk_test_QLXj1J6fsBOBO2vsXejztsOO");
 
-        $charge = \Stripe\Charge::create([
-            'amount' => $purchase->getPrice() * 100,
-            'currency' => 'eur',
-            'description' => 'Billetterie',
-            'source' => $stripeToken,
-        ]);
+        try
+        {
+          // Si le stripeToken existe on effectue le payement
+          \Stripe\Stripe::setApiKey("sk_test_QLXj1J6fsBOBO2vsXejztsOO");
 
-        // On associe l'id de la charge Stripe à Purchase
-        $chargeId = $charge['id'];
-        $purchase->setStripeChargeId($chargeId);
+          $charge = \Stripe\Charge::create([
+              'amount' => $purchase->getPrice() * 100,
+              'currency' => 'eur',
+              'description' => 'Billetterie',
+              'source' => $stripeToken,
+          ]);
 
-        // Et on entre la commande en BDD
-        $this->container->get('cl_ticketing.manager')->save($purchase);
+          // On associe l'id de la charge Stripe à Purchase
+          $chargeId = $charge['id'];
+          $purchase->setStripeChargeId($chargeId);
 
-        $this->addFlash('success', 'Votre commande a bien été enregistrée !');
+          // Et on entre la commande en BDD
+          $this->container->get('cl_ticketing.manager')->save($purchase);
 
+          $this->addFlash('success', 'Votre commande a bien été enregistrée !');
+
+        }
+        catch (\Exception $e)
+        {
+            throw new Exception("Une erreur est survenue lors de la transaction");
+
+            $this->addFlash('echecStripeCharge',$e->getMessage());
+
+            return $this->redirectToRoute('purchase_confirmation');
+        }
 
         return $this->render('@CLTicketing/Ticketing/thanks.html.twig',[
             'purchase' => $purchase
@@ -222,7 +234,7 @@ class TicketingController extends Controller
      * @Route("/cgv", name="ticketing_cgv")
      */
     public function cgvAction()
-    {        
+    {
         return $this->render('@CLTicketing/Ticketing/cgv.html.twig');
     }
 
