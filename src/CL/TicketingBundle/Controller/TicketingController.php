@@ -214,7 +214,7 @@ class TicketingController extends Controller
                     ->get('cl_ticketing.email.contactMailler')
                     ->sendContactmail($formData);
 
-                $this->addFlash('successContact', 'Votre message à bien été envoyé');
+                $this->addFlash('successContact', 'Votre message a bien été envoyé');
             }
             catch (\Exception $e)
             {

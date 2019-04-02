@@ -22,7 +22,7 @@ class ContactMailler
     $email = $formData["email"];
 
     $message = new \Swift_Message(
-      'Message de la billetterie du louvre'
+      'Message de la billetterie du Louvre'
     );
 
     $message
@@ -37,5 +37,5 @@ class ContactMailler
 
     $this->mailer->send($message);
   }
-  
+
 }

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class NoPastHour extends Constraint
 {
-  public $message = "Après 16h30, vous ne pouvez plus commander billet pour le jour même.";
+  public $message = "Après 16h30, vous ne pouvez plus commander de billet pour le jour même.";
 
   public function validateBy()
   {
