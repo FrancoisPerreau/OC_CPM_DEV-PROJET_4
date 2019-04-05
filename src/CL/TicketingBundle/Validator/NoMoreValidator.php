@@ -10,21 +10,23 @@ use Doctrine\ORM\EntityManager;
 
 use CL\TicketingBundle\Entity\Purchase;
 use CL\TicketingBundle\Services\ConvertDatepickerInDatetime;
-use CL\TicketingBundle\TicketingConstants\TicketingGeneral;
 
 
 class NoMoreValidator extends ConstraintValidator
 {
   protected $em;
   private $serviceConvertDatePicker;
+  private $ticketingGeneral;
 
    public function __construct(
      EntityManager $em,
-     ConvertDatepickerInDatetime $serviceConvertDatePicker
+     ConvertDatepickerInDatetime $serviceConvertDatePicker,
+     $ticketingGeneral
      )
    {
       $this->em = $em;
       $this->serviceConvertDatePicker = $serviceConvertDatePicker;
+      $this->ticketingGeneral = $ticketingGeneral;
     }
 
   /**
@@ -47,7 +49,7 @@ class NoMoreValidator extends ConstraintValidator
     $totalTickets = (int)$ticketsOnThisDate + $purchaseTickets;
 
 
-    if ($totalTickets > TicketingGeneral::MAX_TICKETS_BY_DAY)
+    if ($totalTickets > $this->ticketingGeneral['max_tickets_by_day'])
     {
       $this->context->buildViolation($constraint->message)
                     ->atPath('ticketNb')

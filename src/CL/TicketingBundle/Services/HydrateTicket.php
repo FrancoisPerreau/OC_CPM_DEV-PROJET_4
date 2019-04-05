@@ -5,23 +5,25 @@ namespace CL\TicketingBundle\Services;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use CL\TicketingBundle\Entity\Ticket;
-use CL\TicketingBundle\TicketingConstants\TicketPrices;
 
 class HydrateTicket
 {
   private $serviceGenerateCode;
   private $serviceDefinePriceByBirthday;
   private $serviceConvertDatePicker;
+  private $ticketPrices;
 
   public function __construct(
     GenerateCodeWithDate $serviceGenerateCode,
     PriceByBirthday $serviceDefinePriceByBirthday,
-    ConvertDatepickerInDatetime $serviceConvertDatePicker
+    ConvertDatepickerInDatetime $serviceConvertDatePicker,
+    $ticketPrices
     )
   {
     $this->serviceGenerateCode = $serviceGenerateCode;
     $this->serviceDefinePriceByBirthday = $serviceDefinePriceByBirthday;
     $this->serviceConvertDatePicker = $serviceConvertDatePicker;
+    $this->ticketPrices = $ticketPrices;
   }
 
   /**
@@ -45,7 +47,7 @@ class HydrateTicket
     {
       if ($reducedPrice == true)
       {
-        $ticket->setPrice(TicketPrices::REDUCED_PRICE_DAY);
+        $ticket->setPrice($this->ticketPrices['reduced_price_day']);
       }
       else {
         $ticket->setPrice($this
@@ -57,7 +59,7 @@ class HydrateTicket
     {
       if ($reducedPrice == true)
       {
-        $ticket->setPrice(TicketPrices::REDUCED_PRICE_HALF);
+        $ticket->setPrice($this->ticketPrices['reduced_price_half']);
       }
       else {
         $ticket->setPrice($this

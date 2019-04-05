@@ -10,7 +10,6 @@ use CL\TicketingBundle\Services\ConvertDatepickerInDatetime;
 use CL\TicketingBundle\Services\DefineAscension;
 use CL\TicketingBundle\Services\DefinePaques;
 use CL\TicketingBundle\Services\DefinePentecote;
-use CL\TicketingBundle\TicketingConstants\DayClosedAndHourLimit;
 
 
 class IsOpenValidator extends ConstraintValidator
@@ -19,20 +18,25 @@ class IsOpenValidator extends ConstraintValidator
   private $serviceDefinePaques;
   private $serviceAscension;
   private $servicePentecote;
+  private $closedDays;
+  private $closedHoliday;
 
 
   public function __construct(
     ConvertDatepickerInDatetime $serviceConvertDatePicker,
     DefinePaques $serviceDefinePaques,
     DefineAscension $serviceAscension,
-    DefinePentecote $servicePentecote
+    DefinePentecote $servicePentecote,
+    $closedDays,
+    $closedHoliday
     )
   {
      $this->serviceConvertDatePicker = $serviceConvertDatePicker;
      $this->serviceDefinePaques = $serviceDefinePaques;
      $this->serviceAscension = $serviceAscension;
      $this->servicePentecote = $servicePentecote;
-
+     $this->closedDays = $closedDays;
+     $this->closedHoliday = $closedHoliday;
    }
 
 
@@ -77,7 +81,8 @@ class IsOpenValidator extends ConstraintValidator
     }
 
 
-    foreach (DayClosedAndHourLimit::DAYS_CLOSED as $dayClosed)
+
+    foreach ($this->closedDays as $dayClosed)
     {
       $dateClosed = new \Datetime($thisYear.'-'.$dayClosed);
       $dayClosedDay = $dateClosed->format('d');
@@ -91,9 +96,9 @@ class IsOpenValidator extends ConstraintValidator
     }
 
 
-    if (DayClosedAndHourLimit::PAQUES_CLOSED === true && $choiceDay == $mondayPaquesdDay && $choiceMonth == $mondayPaquesMonth ||
-        DayClosedAndHourLimit::ASCENSION_CLOSED === true && $choiceDay == $ascensiondDay && $choiceMonth == $ascensionMonth ||
-        DayClosedAndHourLimit::PENTECOTE_CLOSED === true && $choiceDay == $pentecoteDay && $choiceMonth == $pentecoteMonth)
+    if ($this->closedHoliday['paques_closed'] === true && $choiceDay == $mondayPaquesdDay && $choiceMonth == $mondayPaquesMonth ||
+        $this->closedHoliday['ascension_closed'] === true && $choiceDay == $ascensiondDay && $choiceMonth == $ascensionMonth ||
+        $this->closedHoliday['pentecote_closed'] === true && $choiceDay == $pentecoteDay && $choiceMonth == $pentecoteMonth)
     {
       $this->context->addViolation($constraint->message);
     }

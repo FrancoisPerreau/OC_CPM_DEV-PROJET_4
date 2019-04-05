@@ -3,9 +3,6 @@
 
 namespace CL\TicketingBundle\Services;
 
-use CL\TicketingBundle\TicketingConstants\TicketPrices;
-use CL\TicketingBundle\TicketingConstants\AgeRanges;
-
 class PriceByBirthday
 {
   /**
@@ -13,28 +10,40 @@ class PriceByBirthday
    * @param  DateTime
    * @return $price
    */
+
+   private $ageRanges;
+   private $ticketPrices;
+
+   // CONSTRUCTEUR
+   // =======================
+   public function __construct($ticketingAgeRanges, $ticketPrices)
+   {
+     $this->ageRanges = $ticketingAgeRanges;
+     $this->ticketPrices = $ticketPrices;
+   }
+
+
   public function defineDayPrice(\DateTime $date)
   {
     $today = new \DateTime('today');
-
     $diff = date_diff($today, $date)->y;
 
     switch ($diff)
     {
-      case ($diff < AgeRanges::CHILD_AGE_MINI):
+      case ($diff < $this->ageRanges['child_age_mini']):
         return 0;
         break;
 
-      case (AgeRanges::CHILD_AGE_MINI - 1 < $diff && $diff < AgeRanges::CHILD_AGE_MAXI + 1):
-        return TicketPrices::CHILD_PRICE_DAY;
+      case ($this->ageRanges['child_age_mini'] - 1 < $diff && $diff < $this->ageRanges['child_age_maxi'] + 1):
+        return $this->ticketPrices['child_price_day'];
         break;
 
-        case ($diff > AgeRanges::SENIOR_AGE_MINI - 1):
-          return TicketPrices::SENIOR_PRICE_DAY;
+        case ($diff > $this->ageRanges['senior_age_mini'] - 1):
+          return $this->ticketPrices['senior_price_day'];
           break;
 
       default:
-        return TicketPrices::NORMAL_PRICE_DAY;
+        return $this->ticketPrices['normal_price_day'];
         break;
     }
   }
@@ -46,26 +55,26 @@ class PriceByBirthday
    */
   public function defineHalfDayPrice(\DateTime $date)
   {
-    $today = new \DateTime('today');
 
+    $today = new \DateTime('today');
     $diff = date_diff($today, $date)->y;
 
     switch ($diff)
     {
-      case ($diff < AgeRanges::CHILD_AGE_MINI):
+      case ($diff < $this->ageRanges['child_age_mini']):
         return 0;
         break;
 
-      case (AgeRanges::CHILD_AGE_MINI - 1 < $diff && $diff < AgeRanges::CHILD_AGE_MAXI + 1):
-        return TicketPrices::CHILD_PRICE_HALF;
+      case ($this->ageRanges['child_age_mini'] - 1 < $diff && $diff < $this->ageRanges['child_age_maxi'] + 1):
+        return $this->ticketPrices['child_price_half'];
         break;
 
-        case ($diff > AgeRanges::SENIOR_AGE_MINI - 1):
-          return TicketPrices::SENIOR_PRICE_HALF;
+        case ($diff > $this->ageRanges['senior_age_mini'] - 1):
+          return $this->ticketPrices['senior_price_half'];
           break;
 
       default:
-        return TicketPrices::NORMAL_PRICE_HALF;
+        return $this->ticketPrices['normal_price_half'];
         break;
     }
   }

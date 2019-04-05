@@ -11,9 +11,6 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 
 use CL\TicketingBundle\Entity\Purchase;
 use CL\TicketingBundle\Entity\Ticket;
-use CL\TicketingBundle\TicketingConstants\AgeRanges;
-use CL\TicketingBundle\TicketingConstants\DayClosedAndHourLimit;
-use CL\TicketingBundle\TicketingConstants\TicketPrices;
 
 use CL\TicketingBundle\Form\ContactType;
 use CL\TicketingBundle\Form\PurchaseDateChoiceType;
@@ -37,9 +34,9 @@ class TicketingController extends Controller
 
 
         $purchase = new Purchase;
-        $TicketPrices = new TicketPrices;
-        $AgeRanges = new AgeRanges;
-        $DayClosedAndHourLimit = new DayClosedAndHourLimit;
+        $TicketPrices = $this->container->getParameter('ticket_prices');
+        $AgeRanges = $this->container->getParameter('ticketing_age_ranges');
+        $DayClosedAndHourLimit = $this->container->getParameter('ticketing_general');
 
 
         // Formulaire

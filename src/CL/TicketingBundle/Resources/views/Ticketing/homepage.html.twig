@@ -151,37 +151,37 @@
       <tbody>
         <tr>
           <td class="td-first">
-            Normal (à partir de {{ constant('CHILD_AGE_MAXI', AgeRanges) }} ans)
+            Normal (à partir de {{ AgeRanges.child_age_maxi }} ans)
           </td>
-          <td>{{ constant('NORMAL_PRICE_DAY', TicketPrices) }} €</td>
-          <td>{{ constant('NORMAL_PRICE_HALF', TicketPrices) }} €</td>
+          <td>{{ TicketPrices.normal_price_day }} €</td>
+          <td>{{ TicketPrices.normal_price_half }} €</td>
         </tr>
         <tr>
           <td class="td-first">
-            Enfant (de {{ constant('CHILD_AGE_MINI', AgeRanges) }}
+            Enfant (de {{ AgeRanges.child_age_mini }}
              à
-            {{ constant('CHILD_AGE_MAXI', AgeRanges) }} ans)
+            {{ AgeRanges.child_age_maxi }} ans)
           </td>
-          <td>{{ constant('CHILD_PRICE_DAY', TicketPrices) }} €</td>
-          <td>{{ constant('CHILD_PRICE_HALF', TicketPrices) }} €</td>
+          <td>{{ TicketPrices.child_price_day }} €</td>
+          <td>{{ TicketPrices.child_price_half }} €</td>
         </tr>
         <tr>
           <td class="td-first">
-            Senior (à partir de {{ constant('SENIOR_AGE_MINI', AgeRanges) }} ans)
+            Senior (à partir de {{ AgeRanges.senior_age_mini }} ans)
           </td>
-          <td>{{ constant('SENIOR_PRICE_DAY', TicketPrices) }} €</td>
-          <td>{{ constant('SENIOR_PRICE_HALF', TicketPrices) }} €</td>
+          <td>{{ TicketPrices.senior_price_day }} €</td>
+          <td>{{ TicketPrices.senior_price_half }} €</td>
         </tr>
         <tr>
           <td class="td-first">Réduit<span class="text-danger asterisque">**</span></td>
-          <td>{{ constant('REDUCED_PRICE_DAY', TicketPrices) }} €</td>
-          <td>{{ constant('REDUCED_PRICE_HALF', TicketPrices) }} €</td>
+          <td>{{ TicketPrices.reduced_price_day }} €</td>
+          <td>{{ TicketPrices.reduced_price_half }} €</td>
         </tr>
       </tbody>
     </table>
     <p class="text-muted text-comment">
       <span class="text-danger asterisque">*</span>
-      À partir de {{ constant('HALF_DAY_HOUR', HourLimit) }}h00.</p>
+      À partir de {{ HourLimit.half_day_hour }}h00.</p>
     <p class="text-muted text-comment">
       <span class="text-danger asterisque">**</span>
       Tarif accordé dans certaines conditions (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…)

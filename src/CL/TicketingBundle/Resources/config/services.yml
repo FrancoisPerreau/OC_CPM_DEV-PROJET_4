@@ -1,5 +1,25 @@
 # src/CL/TicketingBundle/Resources/config/services.yml
 
+parameters:
+   ticketing_age_ranges: { "child_age_mini": 4, "child_age_maxi":12, "senior_age_mini": 60 }
+
+   ticketing_closed_days:
+       - "01-01"
+       - "05-01"
+       - "05-08"
+       - "07-14"
+       - "08-15"
+       - "11-01"
+       - "11-11"
+       - "12-25"
+
+   ticketing_closed_holiday : { "paques_closed": true, "ascension_closed": true, "pentecote_closed":true }
+
+   ticketing_general: { max_tickets_by_day: 1000, half_day_hour: 14, past_day_hour: 16.30 }
+
+   ticket_prices: { normal_price_day: 16, normal_price_half: 9, child_price_day: 8, child_price_half: 5, senior_price_day: 12, senior_price_half: 7, reduced_price_day: 10, reduced_price_half: 6 }
+
+
 services:
 
    twig.extension.intl:
@@ -19,6 +39,9 @@ services:
 
    cl_ticketing.definePriceByBirthday:
        class: CL\TicketingBundle\Services\PriceByBirthday
+       arguments:
+          - '%ticketing_age_ranges%'
+          - '%ticket_prices%'
 
    cl_ticketing.defineTotalPrice:
        class: CL\TicketingBundle\Services\AddedPrices
@@ -29,6 +52,7 @@ services:
           - "@cl_ticketing.generateCode"
           - "@cl_ticketing.definePriceByBirthday"
           - "@cl_ticketing.convertDatepickerInDatetime"
+          - '%ticket_prices%'
 
    cl_ticketing.hydratePurchase:
        class: CL\TicketingBundle\Services\HydratePurchase
@@ -59,6 +83,7 @@ services:
        class: CL\TicketingBundle\Validator\EntireDayValidator
        arguments:
          - "@cl_ticketing.convertDatepickerInDatetime"
+         - "%ticketing_general%"
        tags:
          - { name: validator.constraint_validator, alias: ticketing_entireDay }
 
@@ -66,6 +91,7 @@ services:
        class: CL\TicketingBundle\Validator\NoPastHourValidator
        arguments:
          - "@cl_ticketing.convertDatepickerInDatetime"
+         - "%ticketing_general%"
        tags:
          - { name: validator.constraint_validator, alias: ticketing_noPastHour }
 
@@ -76,6 +102,8 @@ services:
          - "@cl_ticketing.definePaques"
          - "@cl_ticketing.defineAscension"
          - "@cl_ticketing.definePentecote"
+         - "%ticketing_closed_days%"
+         - "%ticketing_closed_holiday%"
        tags:
          - { name: validator.constraint_validator, alias: ticketing_isOpen }
 
@@ -84,6 +112,7 @@ services:
        arguments:
          - "@doctrine.orm.entity_manager"
          - "@cl_ticketing.convertDatepickerInDatetime"
+         - "%ticketing_general%"
        tags:
          - { name: validator.constraint_validator, alias: ticketing_noMore }
 

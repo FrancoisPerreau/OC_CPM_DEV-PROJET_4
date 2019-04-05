@@ -7,17 +7,18 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 use CL\TicketingBundle\Services\ConvertDatepickerInDatetime;
-use CL\TicketingBundle\TicketingConstants\DayClosedAndHourLimit;
 
 
 
 class NoPastHourValidator extends ConstraintValidator
 {
   private $serviceConvertDatePicker;
+  private $ticketingGeneral;
 
-  public function __construct(ConvertDatepickerInDatetime $serviceConvertDatePicker)
+  public function __construct(ConvertDatepickerInDatetime $serviceConvertDatePicker, $ticketingGeneral)
   {
      $this->serviceConvertDatePicker = $serviceConvertDatePicker;
+     $this->ticketingGeneral = $ticketingGeneral;
    }
 
 
@@ -36,7 +37,7 @@ class NoPastHourValidator extends ConstraintValidator
     if ($now->format('d') == $choiceDate->format('d') &&
         $now->format('m') == $choiceDate->format('m') &&
         $now->format('Y') == $choiceDate->format('Y') &&
-        $now->format('H') > DayClosedAndHourLimit::PAST_DAY_HOUR
+        $now->format('H') > $this->ticketingGeneral['past_day_hour']
         )
     {
       // $this->context->addViolation($constraint->message);

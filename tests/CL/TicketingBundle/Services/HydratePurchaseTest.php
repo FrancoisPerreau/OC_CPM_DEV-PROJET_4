@@ -49,7 +49,7 @@ class HydratePurchaseTest extends TestCase
     $ticketCode = 'T-20200225-3FB86D81';
 
     $serviceGenerateCode = $this
-      -> getMockBuilder('CL\TicketingBundle\Services\GenerateCodeWithDate')
+      ->getMockBuilder('CL\TicketingBundle\Services\GenerateCodeWithDate')
       ->disableOriginalConstructor()
       ->setMethods(['createPurchaseCode', 'createTicketCode'])
       ->getMock();
